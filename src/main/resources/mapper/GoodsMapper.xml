@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.slienceme.project_shop.mapper.GoodsMapper">
+  <resultMap id="BaseResultMap" type="xyz.slienceme.project_shop.dto.Goods">
+    <id column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice" />
+    <result column="price_now" jdbcType="DECIMAL" property="priceNow" />
+    <result column="goods_info" jdbcType="VARCHAR" property="goodsInfo" />
+    <result column="state_on" jdbcType="INTEGER" property="stateOn" />
+    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="goods_img_id" jdbcType="INTEGER" property="goodsImgId" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    goods_id, goods_name, goods_price, price_now, goods_info, state_on, category_id, 
+    user_id, goods_img_id, is_delete, CREATED_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="xyz.slienceme.project_shop.dto.Goods">
+    insert into goods (goods_id, goods_name, goods_price, 
+      price_now, goods_info, state_on, 
+      category_id, user_id, goods_img_id, 
+      is_delete, CREATED_TIME)
+    values (#{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, 
+      #{priceNow,jdbcType=DECIMAL}, #{goodsInfo,jdbcType=VARCHAR}, #{stateOn,jdbcType=INTEGER}, 
+      #{categoryId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{goodsImgId,jdbcType=INTEGER}, 
+      #{isDelete,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="xyz.slienceme.project_shop.dto.Goods">
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="goodsPrice != null">
+        goods_price,
+      </if>
+      <if test="priceNow != null">
+        price_now,
+      </if>
+      <if test="goodsInfo != null">
+        goods_info,
+      </if>
+      <if test="stateOn != null">
+        state_on,
+      </if>
+      <if test="categoryId != null">
+        category_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="goodsImgId != null">
+        goods_img_id,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="createdTime != null">
+        CREATED_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="priceNow != null">
+        #{priceNow,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsInfo != null">
+        #{goodsInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="stateOn != null">
+        #{stateOn,jdbcType=INTEGER},
+      </if>
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsImgId != null">
+        #{goodsImgId,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="xyz.slienceme.project_shop.dto.Goods">
+    update goods
+    <set>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="priceNow != null">
+        price_now = #{priceNow,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsInfo != null">
+        goods_info = #{goodsInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="stateOn != null">
+        state_on = #{stateOn,jdbcType=INTEGER},
+      </if>
+      <if test="categoryId != null">
+        category_id = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsImgId != null">
+        goods_img_id = #{goodsImgId,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null">
+        CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="xyz.slienceme.project_shop.dto.Goods">
+    update goods
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      price_now = #{priceNow,jdbcType=DECIMAL},
+      goods_info = #{goodsInfo,jdbcType=VARCHAR},
+      state_on = #{stateOn,jdbcType=INTEGER},
+      category_id = #{categoryId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      goods_img_id = #{goodsImgId,jdbcType=INTEGER},
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+</mapper>

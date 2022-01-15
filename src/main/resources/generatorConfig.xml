@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+
+<!-- 根据数据库表生成实体类及mapper -->
+<generatorConfiguration>
+    <!--    <properties resource="db.properties" />-->
+    <classPathEntry
+            location="D:\Program Files\JetBrains\maven_repository\mysql\mysql-connector-java\8.0.23\mysql-connector-java-8.0.23.jar"/>
+    <context id="mysql2Beans" targetRuntime="MyBatis3">
+        <commentGenerator type="xyz.slienceme.project_shop.MyCommentGenerator">
+            <!-- 删除代码中带有 代码生成器的注释信息 -->
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+
+            <!-- 是否生成注释代时间戳-->
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+        <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql:///database_shopping?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=GMT%2B8&amp;nullCatalogMeansCurrent=true"
+                        userId="root" password="xian123"/>
+
+        <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
+                 NUMERIC 类型解析为java.math.BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- targetProject:生成PO类的位置 -->
+        <!--生成Model类存放位置 -->
+        <!-- dto class -->
+        <javaModelGenerator targetPackage="xyz.slienceme.project_shop.dto"
+                            targetProject="src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <!-- 是否针对string类型的字段在set的时候进行trim调用 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- targetProject:mapper映射文件生成的位置
+             如果maven工程只是单独的一个工程，targetProject="src/main/java"
+             若果maven工程是分模块的工程，targetProject="所属模块的名称"，例如：
+             targetProject="ecps-manager-mapper"，下同-->
+        <!-- mybatis xml file -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- targetPackage：mapper接口生成的位置 -->
+        <!-- mapper class -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="xyz.slienceme.project_shop.mapper"
+                             targetProject="src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!-- tableName:用于自动生成代码的数据库表；domainObjectName:对应于数据库表的javaBean类名 -->
+        <!--如果不想要CronExample文件怎么办呢？-->
+        <!--不生成帮助类（Exmaples） -->
+        <!-- enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+            enableSelectByExample="false" selectByExampleQueryId="false" -->
+        <!--        <table schema="" tableName="cron"-->
+        <!--               enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false"-->
+        <!--               selectByExampleQueryId="false">-->
+        <!--        </table>-->
+
+        <table schema="" tableName="admin"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table schema="" tableName="auctions"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table schema="" tableName="category"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table schema="" tableName="community_show"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table schema="" tableName="complaint"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table schema="" tableName="complaint_status"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table schema="" tableName="goods"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table schema="" tableName="image"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table schema="" tableName="orders"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table schema="" tableName="user"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+
+
+        <!--domain字段的命名规则，false:默认为驼峰命名 true:按数据库真实命名  -->
+        <!-- 忽略列，不生成bean 字段 -->
+        <!--     <ignoreColumn column="FRED" />   -->
+        <!-- 指定列的java数据类型 -->
+        <!--     <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" />   -->
+
+    </context>
+</generatorConfiguration>
