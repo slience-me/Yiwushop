@@ -126,4 +126,71 @@
       CREATED_BY = #{createdBy,jdbcType=INTEGER}
     where admin_id = #{adminId,jdbcType=INTEGER}
   </update>
+  <!-- 根据用户名密码查询admin-->
+  <!-- 返回值类型:  Admin selectByNameAndPwd -->
+  <!-- 参数: -->
+  <!--  @param username 用户名   -->
+  <!--  @param password      密码   -->
+  <select id="selectByNameAndPwd" resultType="java.util.HashMap">
+    SELECT a.admin_id     as adminId,
+           a.admin_name   as adminName,
+           a.admin_number as adminNumber,
+           a.role_id      as roleId,
+           a.CREATED_TIME  as createdTime,
+           r.role_name    as roleName
+    FROM admin a
+           left join role r on a.role_id = r.role_id
+    where a.is_delete = 0
+      and a.admin_number = #{username}
+      and a.admin_pwd = #{password};
+  </select>
+
+  <!-- 查询是否绑定管理员-->
+  <!-- 返回值类型: List<Admin> selectByRoleId -->
+  <!-- 参数: -->
+  <!--   @param roleId 角色id  -->
+  <select id="selectByRoleId" resultType="xyz.slienceme.project_shop.dto.Admin">
+    SELECT a.*
+    FROM admin a
+    where a.isdelete = 0
+      and a.role_id = #{roleId}
+  </select>
+
+  <!-- 查询管理员列表-->
+  <!-- 返回值类型:  List<HashMap<String, Object>> selectList -->
+  <!-- 参数: -->
+  <!--  @param keyword 关键词   -->
+  <select id="selectList" resultType="java.util.HashMap">
+    SELECT a.admin_id as adminId,
+    a.admin_name as adminName,
+    a.admin_number as adminNumber,
+    a.role_id as roleId,
+    DATE_FORMAT(a.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime,
+    r.role_name as roleName
+    FROM admin a left join role r on a.role_id=r.role_id
+    where
+    a.is_delete=0
+    <if test="keyword!=null and keyword!=''">
+      and CONCAT(a.admin_name,a.admin_number) like concat('%',#{keyword},'%')
+    </if>
+    order by a.CREATED_TIME desc
+  </select>
+
+  <!-- 根据管理员名称查询管理员-->
+  <!-- 返回值类型:  Admin selectByName -->
+  <!-- 参数: -->
+  <!--  @param adminNumber 用户名   -->
+  <select id="selectByName" resultType="xyz.slienceme.project_shop.dto.Admin">
+    SELECT a.admin_id     as                               adminId,
+           a.admin_name   as                               adminName,
+           a.admin_number as                               adminNumber,
+           a.role_id      as                               roleId,
+           DATE_FORMAT(a.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime,
+           r.role_name    as                               roleName
+    FROM admin a
+           left join role r on a.role_id = r.role_id
+    where a.is_delete = 0
+      and a.admin_number = #{username}
+    order by a.CREATED_TIME desc
+  </select>
 </mapper>

@@ -1,0 +1,18 @@
+server:
+  port: 8081
+spring:
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:///database_shopping?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false&allowMultiQueries=true&autoReconnect=true
+    username: root
+    password: xian123
+    hikari:
+      connection-test-query: SELECT 1
+      minimum-idle: 10
+      maximum-pool-size: 100
+      max-lifetime: 30000
+      connection-timeout: 30000

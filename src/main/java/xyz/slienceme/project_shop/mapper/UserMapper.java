@@ -1,6 +1,11 @@
 package xyz.slienceme.project_shop.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import xyz.slienceme.project_shop.dto.User;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -10,6 +15,7 @@ import xyz.slienceme.project_shop.dto.User;
  * @author slience_me
  * @since 2022-01-15
  */
+@Mapper
 public interface UserMapper {
     int deleteByPrimaryKey(Integer userId);
 
@@ -22,4 +28,11 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    User selectByOpenId(@Param("openid") String openid);
+
+    User selectByUserId(@Param("userId") Integer userId);
+
+    List<HashMap<String, Object>> selectList(@Param("keyword") String keyword,
+                                             @Param("openid") String openid);
 }

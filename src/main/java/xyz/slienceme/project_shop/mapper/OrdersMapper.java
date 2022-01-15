@@ -1,6 +1,8 @@
 package xyz.slienceme.project_shop.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import xyz.slienceme.project_shop.dto.Orders;
+
 /**
  * <p>
  * 订单表 Mapper 接口
@@ -9,6 +11,7 @@ import xyz.slienceme.project_shop.dto.Orders;
  * @author slience_me
  * @since 2022-01-15
  */
+@Mapper
 public interface OrdersMapper {
     int deleteByPrimaryKey(Integer ordersId);
 

@@ -1,6 +1,7 @@
 package xyz.slienceme.project_shop.controller;
 
 
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author slience_me
  * @since 2022-01-15
  */
+@Api(tags = "竞拍场次表")
 @RestController
 @RequestMapping("/database_shopping/auctions")
 public class AuctionsController {

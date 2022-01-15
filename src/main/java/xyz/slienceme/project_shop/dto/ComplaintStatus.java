@@ -1,5 +1,7 @@
 package xyz.slienceme.project_shop.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiParam;
 import lombok.Data;
 
 /**
@@ -11,16 +13,19 @@ import lombok.Data;
  * @since 2022-01-15
  */
 @Data
+@ApiModel(value = "ComplaintStatus投诉状态类型表的实体", reference = "ComplaintStatus")
 public class ComplaintStatus {
 
     /**
      * 投诉状态id
      */
+    @ApiParam(value = "投诉状态id", required = true)
     private Integer complaintStatusId;
 
     /**
      * 投诉状态类型名称
      */
+    @ApiParam(value = "投诉状态类型名称")
     private String complaintStatusName;
 
 }
