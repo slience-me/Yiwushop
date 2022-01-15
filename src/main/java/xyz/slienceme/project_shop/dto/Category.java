@@ -39,7 +39,7 @@ public class Category {
      * 创建人
      */
     @ApiParam(value = "创建人")
-    private String createdBy;
+    private Integer createdBy;
 
     /**
      * 创建时间

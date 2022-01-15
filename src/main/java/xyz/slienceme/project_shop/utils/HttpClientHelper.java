@@ -52,17 +52,6 @@ public class HttpClientHelper {
     }
 
     /**
-     * 发送post请求
-     *
-     * @param httpUrl 地址
-     * @return
-     */
-    public String sendHttpPost(String httpUrl) {
-        HttpPost httpPost = new HttpPost(httpUrl);//创建httpPost
-        return sendHttpPost(httpPost);
-    }
-
-    /**
      * 发送 post请求
      *
      * @param httpUrl 地址
@@ -75,27 +64,6 @@ public class HttpClientHelper {
             StringEntity stringEntity = new StringEntity(params, "UTF-8");
             stringEntity.setContentType("application/x-www-form-urlencoded");
             httpPost.setEntity(stringEntity);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return sendHttpPost(httpPost);
-    }
-
-    /**
-     * 发送 post请求
-     *
-     * @param httpUrl 地址
-     * @param maps    参数
-     */
-    public String sendHttpPost(String httpUrl, Map<String, String> maps) {
-        HttpPost httpPost = new HttpPost(httpUrl);//创建httpPost
-        //创建参数队列
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        for (String key : maps.keySet()) {
-            nameValuePairs.add(new BasicNameValuePair(key, maps.get(key)));
-        }
-        try {
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -235,16 +203,6 @@ public class HttpClientHelper {
     }
 
     /**
-     * 发送 get请求Https
-     *
-     * @param httpUrl
-     */
-    public String sendHttpsGet(String httpUrl) {
-        HttpGet httpGet = new HttpGet(httpUrl);// 创建get请求
-        return sendHttpsGet(httpGet);
-    }
-
-    /**
      * 发送 get请求
      *
      * @param httpUrl
@@ -376,46 +334,6 @@ public class HttpClientHelper {
             httpDelete.setConfig(requestConfig);
             // 执行请求
             response = httpClient.execute(httpDelete);
-            entity = response.getEntity();
-            responseContent = EntityUtils.toString(entity, "UTF-8");
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                // 关闭连接,释放资源
-                if (response != null) {
-                    response.close();
-                }
-                if (httpClient != null) {
-                    httpClient.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return responseContent;
-    }
-
-    /**
-     * 发送Get请求Https
-     *
-     * @param httpGet
-     * @return
-     */
-    private String sendHttpsGet(HttpGet httpGet) {
-        CloseableHttpClient httpClient = null;
-        CloseableHttpResponse response = null;
-        HttpEntity entity = null;
-        String responseContent = null;
-        try {
-            // 创建默认的httpClient实例.
-            PublicSuffixMatcher publicSuffixMatcher = PublicSuffixMatcherLoader
-                    .load(new URL(httpGet.getURI().toString()));
-            DefaultHostnameVerifier hostnameVerifier = new DefaultHostnameVerifier();//publicSuffixMatcher
-            httpClient = HttpClients.custom().setSSLHostnameVerifier(hostnameVerifier).build();
-            httpGet.setConfig(requestConfig);
-            // 执行请求
-            response = httpClient.execute(httpGet);
             entity = response.getEntity();
             responseContent = EntityUtils.toString(entity, "UTF-8");
         } catch (Exception e) {
@@ -613,5 +531,87 @@ public class HttpClientHelper {
             }
         }
         return null;
+    }
+
+    /**
+     * 发送post请求
+     *
+     * @param httpUrl 地址
+     * @return
+     */
+    public String sendHttpPost(String httpUrl) {
+        HttpPost httpPost = new HttpPost(httpUrl);//创建httpPost
+        return sendHttpPost(httpPost);
+    }
+
+    /**
+     * 发送 post请求
+     *
+     * @param httpUrl 地址
+     * @param maps    参数
+     */
+    public String sendHttpPost(String httpUrl, Map<String, String> maps) {
+        HttpPost httpPost = new HttpPost(httpUrl);//创建httpPost
+        //创建参数队列
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        for (String key : maps.keySet()) {
+            nameValuePairs.add(new BasicNameValuePair(key, maps.get(key)));
+        }
+        try {
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sendHttpPost(httpPost);
+    }
+
+    /**
+     * 发送 get请求Https
+     *
+     * @param httpUrl
+     */
+    public String sendHttpsGet(String httpUrl) {
+        HttpGet httpGet = new HttpGet(httpUrl);// 创建get请求
+        return sendHttpsGet(httpGet);
+    }
+
+    /**
+     * 发送Get请求Https
+     *
+     * @param httpGet
+     * @return
+     */
+    private String sendHttpsGet(HttpGet httpGet) {
+        CloseableHttpClient httpClient = null;
+        CloseableHttpResponse response = null;
+        HttpEntity entity = null;
+        String responseContent = null;
+        try {
+            // 创建默认的httpClient实例.
+            PublicSuffixMatcher publicSuffixMatcher = PublicSuffixMatcherLoader
+                    .load(new URL(httpGet.getURI().toString()));
+            DefaultHostnameVerifier hostnameVerifier = new DefaultHostnameVerifier();//publicSuffixMatcher
+            httpClient = HttpClients.custom().setSSLHostnameVerifier(hostnameVerifier).build();
+            httpGet.setConfig(requestConfig);
+            // 执行请求
+            response = httpClient.execute(httpGet);
+            entity = response.getEntity();
+            responseContent = EntityUtils.toString(entity, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // 关闭连接,释放资源
+                if (response != null) {
+                    response.close();
+                }
+                if (httpClient != null) {
+                    httpClient.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return responseContent;
     }
 }
