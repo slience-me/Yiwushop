@@ -161,4 +161,60 @@
       CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP}
     where goods_id = #{goodsId,jdbcType=INTEGER}
   </update>
+  <!-- 查询商品列表-->
+  <!-- 返回值类型:  List<HashMap<String, Object>> selectList -->
+  <!-- 参数: -->
+  <!--  @param keyword 关键词   -->
+  <select id="selectList" resultType="java.util.HashMap">
+    SELECT g.goods_id as goodsId,
+    g.goods_name as goodsName,
+    g.goods_price as goodsPrice,
+    g.price_now as priceNow,
+    g.goods_info as goodsInfo,
+    g.state_on as stateOn,
+    g.category_id as categoryId,
+    c.category_name as categoryName,
+    g.user_id as userId,
+    u.user_name as userName,
+    g.goods_img_id as goodsImgId,
+    i.image_url as imageUrl,
+    DATE_FORMAT(g.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime,
+    FROM goods g left join category c on g.category_id=c.category_id
+    left join user u on g.user_id=u.user_id
+    left join image i on g.goods_img_id=i.image_id
+    where
+    g.is_delete=0
+    <if test="keyword!=null and keyword!=''">
+      and CONCAT(g.goods_name) like concat('%',#{keyword},'%')
+    </if>
+    order by a.CREATED_TIME desc
+  </select>
+  <!-- 查询上架商品列表-->
+  <!-- 返回值类型:  List<HashMap<String, Object>> selectOnList -->
+  <!-- 参数: -->
+  <!--  @param keyword 关键词   -->
+  <select id="selectOnList" resultType="java.util.HashMap">
+    SELECT g.goods_id as goodsId,
+    g.goods_name as goodsName,
+    g.goods_price as goodsPrice,
+    g.price_now as priceNow,
+    g.goods_info as goodsInfo,
+    g.state_on as stateOn,
+    g.category_id as categoryId,
+    c.category_name as categoryName,
+    g.user_id as userId,
+    u.user_name as userName,
+    g.goods_img_id as goodsImgId,
+    i.image_url as imageUrl,
+    DATE_FORMAT(g.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime,
+    FROM goods g left join category c on g.category_id=c.category_id
+    left join user u on g.user_id=u.user_id
+    left join image i on g.goods_img_id=i.image_id
+    where
+    g.is_delete=0 and g.state_on=1
+    <if test="keyword!=null and keyword!=''">
+      and CONCAT(g.goods_name) like concat('%',#{keyword},'%')
+    </if>
+    order by a.CREATED_TIME desc
+  </select>
 </mapper>

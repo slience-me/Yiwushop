@@ -255,7 +255,7 @@
             and m.openid=#{openid}
         </if>
         <if test="keyword!=null and keyword!=''">
-            and CONCAT(m.realname) like concat('%',#{keyword},'%')
+            and CONCAT(m.user_name) like concat('%',#{keyword},'%')
         </if>
     </select>
 </mapper>

@@ -1,7 +1,18 @@
 package xyz.slienceme.project_shop.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xyz.slienceme.project_shop.common.Result;
+import xyz.slienceme.project_shop.dto.Goods;
+import xyz.slienceme.project_shop.mapper.GoodsMapper;
 import xyz.slienceme.project_shop.service.IGoodsService;
+import xyz.slienceme.project_shop.vo.GoodsVO;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -14,4 +25,111 @@ import xyz.slienceme.project_shop.service.IGoodsService;
 @Service
 public class GoodsServiceImpl implements IGoodsService {
 
+    @Autowired
+    private GoodsMapper goodsMapper;
+
+    /**
+     * 查询商品列表
+     *
+     * @param accessToken 请求token
+     * @param page        页码
+     * @param limit       每页个数
+     * @param keyword     关键词
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Result goodsList(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
+        PageHelper.startPage(page, limit);
+        List<HashMap<String, Object>> list = goodsMapper.selectList(keyword);
+        return Result.createBySuccess(new PageInfo<>(list));
+    }
+
+    /**
+     * 查询上架商品列表
+     *
+     * @param accessToken 请求token
+     * @param page        页码
+     * @param limit       每页个数
+     * @param keyword     关键词
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Result goodsOnList(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
+        PageHelper.startPage(page, limit);
+        List<HashMap<String, Object>> list = goodsMapper.selectOnList(keyword);
+        return Result.createBySuccess(new PageInfo<>(list));
+    }
+
+    /**
+     * 根据商品信息添加商品
+     *
+     * @param accessToken
+     * @param goodsVO
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Result goodsAdd(String accessToken, GoodsVO goodsVO) throws Exception {
+        Goods goods = new Goods();
+        goods.setGoodsName(goodsVO.getGoodsName());
+        goods.setGoodsPrice(goodsVO.getGoodsPrice());
+        goods.setPriceNow(goodsVO.getGoodsPrice());
+        goods.setGoodsInfo(goodsVO.getGoodsInfo());
+        goods.setStateOn(0);//默认不上架
+        goods.setCategoryId(goodsVO.getCategoryId());
+        goods.setUserId(goodsVO.getUserId());
+        goods.setGoodsImgId(0);//TODO 先留空
+        goodsMapper.insertSelective(goods);
+        return Result.createBySuccessMessage("成功");
+    }
+
+    /**
+     * 根据id删除商品
+     *
+     * @param accessToken
+     * @param goodsId
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Result goodsDel(String accessToken, Integer goodsId) throws Exception {
+        Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
+        goods.setIsDelete(1);
+        goodsMapper.updateByPrimaryKeySelective(goods);
+        return Result.createBySuccessMessage("成功");
+    }
+
+    /**
+     * 根据商品信息修改商品
+     *
+     * @param accessToken
+     * @param goods
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Result goodsPut(String accessToken, Goods goods) throws Exception {
+        Goods goods1 = goodsMapper.selectByPrimaryKey(goods.getGoodsId());
+        System.out.println("goods1 = " + goods1);
+        if (Objects.isNull(goods1)) {
+            return Result.createByErrorMessage("商品不存在");
+        }
+        goodsMapper.updateByPrimaryKeySelective(goods);
+        return Result.createBySuccessMessage("成功");
+    }
+
+    @Override
+    public Result stateOn(String accessToken, Integer goodsId) throws Exception {
+        Goods goods1 = goodsMapper.selectByPrimaryKey(goodsId);
+        System.out.println("goods1 = " + goods1);
+        if (Objects.isNull(goods1)) {
+            return Result.createByErrorMessage("商品不存在");
+        } else {
+            goods1.setStateOn(1);//上架
+        }
+        goodsMapper.updateByPrimaryKeySelective(goods1);
+        return Result.createBySuccessMessage("成功");
+    }
 }

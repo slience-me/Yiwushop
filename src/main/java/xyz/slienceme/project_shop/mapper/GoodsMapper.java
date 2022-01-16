@@ -1,7 +1,11 @@
 package xyz.slienceme.project_shop.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import xyz.slienceme.project_shop.dto.Goods;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -24,4 +28,20 @@ public interface GoodsMapper {
     int updateByPrimaryKeySelective(Goods record);
 
     int updateByPrimaryKey(Goods record);
+
+    /**
+     * 查询商品列表
+     *
+     * @param keyword 关键词
+     */
+    List<HashMap<String, Object>> selectList(@Param("keyword") String keyword);
+
+    /**
+     * 查询上架商品列表
+     *
+     * @param keyword 关键词
+     */
+    List<HashMap<String, Object>> selectOnList(@Param("keyword") String keyword);
+
+
 }

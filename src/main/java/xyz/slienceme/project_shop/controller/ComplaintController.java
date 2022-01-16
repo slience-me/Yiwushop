@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Api(tags = "投诉表")
 @RestController
-@RequestMapping("/database_shopping/complaint")
+@RequestMapping("/complaint")
 public class ComplaintController {
 
 }
