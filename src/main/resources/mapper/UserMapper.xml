@@ -230,7 +230,7 @@
                DATE_FORMAT(m.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime,
                m.CREATED_BY   as                                createdBy
         FROM user m
-        where m.user_status = 0
+        where m.is_delete = 0
           and m.user_id = #{userId}
     </select>
 

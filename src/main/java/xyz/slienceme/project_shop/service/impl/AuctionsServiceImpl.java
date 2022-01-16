@@ -51,9 +51,10 @@ public class AuctionsServiceImpl implements IAuctionsService {
      * 根据竞拍场次信息添加
      */
     @Override
-    public Result auctionsAdd(String accessToken, String auctionsName, String startTime, String endTime) throws Exception {
+    public Result auctionsAdd(String accessToken, Integer goodsId, String auctionsName, String startTime, String endTime) throws Exception {
         TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         Auctions auctions = new Auctions();
+        auctions.setGoodsId(goodsId);
         auctions.setAuctionsName(auctionsName);
         auctions.setStart(DateUtil.StringToLocalDateTime(startTime));
         auctions.setEnd(DateUtil.StringToLocalDateTime(endTime));

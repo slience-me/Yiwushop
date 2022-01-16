@@ -84,7 +84,7 @@ public class AuctionScheduleServiceImpl implements IAuctionScheduleService {
             auctionSchedule.setUserId(auctionScheduleVO.getUserId());
             auctionSchedule.setAuctionSchedulePrice(auctionScheduleVO.getAuctionSchedulePrice());
             auctionScheduleMapper.insertSelective(auctionSchedule);
-            goods1.setGoodsPrice(auctionScheduleVO.getAuctionSchedulePrice());
+            goods1.setPriceNow(auctionScheduleVO.getAuctionSchedulePrice());
             goods1.setPriceUserId(auctionScheduleVO.getUserId());
             goodsMapper.updateByPrimaryKeySelective(goods1);
         } else {

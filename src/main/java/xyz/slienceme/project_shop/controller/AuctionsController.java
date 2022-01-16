@@ -43,11 +43,12 @@ public class AuctionsController {
     @ApiOperation("添加竞拍场次")
     @PostMapping("/auctionsList")
     public Result auctionsAdd(@RequestHeader("x-access-token") String accessToken,
+                              @ApiParam(value = "分类名称") @RequestParam Integer goodsId,
                               @ApiParam(value = "分类名称") @RequestParam String auctionsName,
                               @ApiParam("格式 yyyy-MM-dd") @RequestParam(value = "startTime") String startTime,
                               @ApiParam("格式 yyyy-MM-dd") @RequestParam(value = "endTime") String endTime) throws Exception {
         log.info("添加竞拍场次接口调用---post--</auctionsList>:  auctionsName=" + auctionsName);
-        return auctionsService.auctionsAdd(accessToken, auctionsName, startTime, endTime);
+        return auctionsService.auctionsAdd(accessToken, goodsId, auctionsName, startTime, endTime);
     }
 
     @ApiOperation("通过id删除竞拍场次")

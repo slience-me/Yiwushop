@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.slienceme.project_shop.mapper.RoleMapper">
+    <resultMap id="BaseResultMap" type="xyz.slienceme.project_shop.dto.Role">
+        <id column="role_id" jdbcType="INTEGER" property="roleId"/>
+        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+        <result column="role_status" jdbcType="INTEGER" property="roleStatus"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_by" jdbcType="INTEGER" property="createBy"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        role_id, role_name, role_status, create_time, create_by
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from role
+        where role_status=0 and role_id = #{roleId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from role
+        where role_id = #{roleId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="xyz.slienceme.project_shop.dto.Role">
+        insert into role (role_id, role_name, role_status,
+                          create_time, create_by)
+        values (#{roleId,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{roleStatus,jdbcType=INTEGER},
+                #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="xyz.slienceme.project_shop.dto.Role">
+        insert into role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roleId != null">
+                role_id,
+            </if>
+            <if test="roleName != null">
+                role_name,
+            </if>
+            <if test="roleStatus != null">
+                role_status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roleId != null">
+                #{roleId,jdbcType=INTEGER},
+            </if>
+            <if test="roleName != null">
+                #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="roleStatus != null">
+                #{roleStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="xyz.slienceme.project_shop.dto.Role">
+        update role
+        <set>
+            <if test="roleName != null">
+                role_name = #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="roleStatus != null">
+                role_status = #{roleStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=INTEGER},
+            </if>
+        </set>
+        where role_id = #{roleId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="xyz.slienceme.project_shop.dto.Role">
+        update role
+        set role_name   = #{roleName,jdbcType=VARCHAR},
+            role_status = #{roleStatus,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            create_by   = #{createBy,jdbcType=INTEGER}
+        where role_id = #{roleId,jdbcType=INTEGER}
+    </update>
+
+    <!--  查询角色列表-->
+    <!--  List<Role> selectList()-->
+    <select id="selectList" resultType="xyz.slienceme.project_shop.vo.RoleVO">
+        SELECT r.role_id   as                                  roleId,
+               r.role_name as                                  roleName,
+               DATE_FORMAT(r.create_time, '%Y-%m-%d %H:%i:%s') createTime,
+               r.create_by
+        FROM role r
+        where r.role_status = 0
+    </select>
+
+    <!--  查询名称时候存在-->
+    <!--  Role selectByName(@Param("roleName") String roleName);-->
+    <select id="selectByName" resultType="xyz.slienceme.project_shop.dto.Role">
+        SELECT r.role_id   as                                  roleId,
+               r.role_name as                                  roleName,
+               DATE_FORMAT(r.create_time, '%Y-%m-%d %H:%i:%s') createTime,
+               r.create_by
+        FROM role r
+        where r.role_status = 0
+          and r.role_name = #{roleName}
+    </select>
+
+    <select id="selectAll" resultType="java.util.HashMap">
+        select  r.role_id as roleId,
+                r.role_name as roleName,
+                DATE_FORMAT(r.create_time, '%Y-%m-%d %H:%i:%s') createTime
+        from role r
+        where r.role_status=0
+        <if test="keyword != null and keyword != ''">
+            and r.role_name like concat('%',#{keyword},'%')
+        </if>
+        order by r.create_time desc
+    </select>
+
+</mapper>

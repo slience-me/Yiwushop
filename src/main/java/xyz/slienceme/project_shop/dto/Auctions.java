@@ -24,6 +24,12 @@ public class Auctions {
     private Integer auctionsId;
 
     /**
+     * 商品id
+     */
+    @ApiParam(value = "商品id")
+    private Integer goodsId;
+
+    /**
      * 场次名称
      */
     @ApiParam(value = "场次名称")

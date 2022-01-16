@@ -30,7 +30,7 @@ public interface IAuctionsService {
     /**
      * 根据竞拍场次信息添加
      */
-    Result auctionsAdd(String accessToken, String auctionsName, String startTime, String endTime) throws Exception;
+    Result auctionsAdd(String accessToken, Integer goodsId, String auctionsName, String startTime, String endTime) throws Exception;
 
     /**
      * 根据id删除竞拍场次

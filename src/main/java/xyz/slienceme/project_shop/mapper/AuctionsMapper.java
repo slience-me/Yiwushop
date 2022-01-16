@@ -36,4 +36,11 @@ public interface AuctionsMapper {
      */
     List<HashMap<String, Object>> selectList(@Param("keyword") String keyword);
 
+    /**
+     * 查询未结束场次列表
+     *
+     * @param nowTime 当前时间
+     */
+    List<HashMap<String, Object>> selectUndoneList(@Param("nowTime") String nowTime);
+
 }

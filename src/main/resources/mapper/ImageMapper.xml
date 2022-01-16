@@ -68,4 +68,9 @@
       CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP}
     where image_id = #{imageId,jdbcType=INTEGER}
   </update>
+  <select id="selectByPath" resultType="java.lang.Integer">
+    SELECT i.image_id as imageId
+    FROM image i
+    where i.image_url=#{path}
+  </select>
 </mapper>

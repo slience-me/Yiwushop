@@ -42,6 +42,19 @@ public interface IGoodsService {
                        String keyword) throws Exception;
 
     /**
+     * 查询已售商品列表
+     *
+     * @param accessToken 请求token
+     * @param page        页码
+     * @param limit       每页个数
+     * @param keyword     关键词
+     */
+    Result goodsDoneList(String accessToken,
+                       Integer page,
+                       Integer limit,
+                       String keyword) throws Exception;
+
+    /**
      * 根据商品信息添加商品
      */
     Result goodsAdd(String accessToken, GoodsVO goodsVO) throws Exception;

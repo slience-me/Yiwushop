@@ -70,6 +70,21 @@ public class GoodsServiceImpl implements IGoodsService {
     }
 
     /**
+     * 查询已售商品列表
+     *
+     * @param accessToken 请求token
+     * @param page        页码
+     * @param limit       每页个数
+     * @param keyword     关键词
+     */
+    @Override
+    public Result goodsDoneList(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
+        PageHelper.startPage(page, limit);
+        List<HashMap<String, Object>> list = goodsMapper.selectDoneList(keyword);
+        return Result.createBySuccess(new PageInfo<>(list));
+    }
+
+    /**
      * 根据商品信息添加商品
      *
      * @param accessToken
@@ -141,6 +156,7 @@ public class GoodsServiceImpl implements IGoodsService {
         TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         Auctions auctions = new Auctions();
         auctions.setAuctionsName(auctionsName);
+        auctions.setGoodsId(goodsId);
         auctions.setStart(DateUtil.StringToLocalDateTime(startTime));
         auctions.setEnd(DateUtil.StringToLocalDateTime(endTime));
         auctions.setCreatedBy(unsign.getUserId());

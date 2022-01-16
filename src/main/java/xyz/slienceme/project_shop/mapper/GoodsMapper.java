@@ -43,5 +43,10 @@ public interface GoodsMapper {
      */
     List<HashMap<String, Object>> selectOnList(@Param("keyword") String keyword);
 
-
+    /**
+     * 查询已售商品列表
+     *
+     * @param keyword 关键词
+     */
+    List<HashMap<String, Object>> selectDoneList(@Param("keyword") String keyword);
 }

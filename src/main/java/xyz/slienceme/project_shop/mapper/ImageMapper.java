@@ -1,6 +1,7 @@
 package xyz.slienceme.project_shop.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import xyz.slienceme.project_shop.dto.Image;
 
 /**
@@ -24,4 +25,6 @@ public interface ImageMapper {
     int updateByPrimaryKeySelective(Image record);
 
     int updateByPrimaryKey(Image record);
+
+    int selectByPath(@Param("path") String path);
 }

@@ -12,6 +12,7 @@ import xyz.slienceme.project_shop.utils.UploadUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -59,6 +60,10 @@ public class ImageServiceImpl implements IImageService {
         Image image = new Image();
         image.setImageUrl(path);
         imageMapper.insertSelective(image);
-        return Result.createBySuccess(path);
+        int i = imageMapper.selectByPath(path);
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("path",path);
+        data.put("imageId",i);
+        return Result.createBySuccess(data);
     }
 }

@@ -1,7 +1,11 @@
 package xyz.slienceme.project_shop.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import xyz.slienceme.project_shop.dto.Complaint;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -24,4 +28,22 @@ public interface ComplaintMapper {
     int updateByPrimaryKeySelective(Complaint record);
 
     int updateByPrimaryKey(Complaint record);
+
+    /**
+     * 查询投诉表
+     *
+     */
+    List<HashMap<String, Object>> selectList();
+
+    /**
+     * 查询投诉表根据用户（卖家）
+     *
+     */
+//    List<HashMap<String, Object>> selectListBySeller(@Param("userId") Integer userId);
+
+    /**
+     * 查询投诉表根据用户（买家）
+     *
+     */
+//    List<HashMap<String, Object>> selectListByBuyer(@Param("ordersId") Integer ordersId);
 }
