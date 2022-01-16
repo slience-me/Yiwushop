@@ -9,8 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.slienceme.project_shop.common.Result;
+import xyz.slienceme.project_shop.dto.Auctions;
 import xyz.slienceme.project_shop.service.IAuctionScheduleService;
 import xyz.slienceme.project_shop.vo.AuctionScheduleVO;
+
+import java.math.BigDecimal;
 
 /**
  * <p>
@@ -42,9 +45,16 @@ public class AuctionScheduleController {
     @ApiOperation("添加拍卖过程表")
     @PostMapping("/auctionScheduleList")
     public Result auctionScheduleAdd(@RequestHeader("x-access-token") String accessToken,
-                                     @ApiParam(value = "分类名称") @RequestParam AuctionScheduleVO auctionScheduleVO) throws Exception {
+                                     @ApiParam(value = "拍卖过程对象") @RequestBody AuctionScheduleVO auctionScheduleVO) throws Exception {
         log.info("添加拍卖过程表接口调用---post--</auctionScheduleList>:  auctionScheduleVO=" + auctionScheduleVO);
         return auctionScheduleService.auctionScheduleAdd(accessToken, auctionScheduleVO);
     }
 
+    @ApiOperation("开始竞拍")
+    @PutMapping("/do")
+    public Result doAuctions(@RequestHeader("x-access-token") String accessToken,
+                             @ApiParam(value = "拍卖过程对象") @RequestBody AuctionScheduleVO auctionScheduleVO) throws Exception {
+        log.info("开始竞拍接口调用---put--</auction/do>:  ");
+        return auctionScheduleService.doAuctions(accessToken, auctionScheduleVO);
+    }
 }

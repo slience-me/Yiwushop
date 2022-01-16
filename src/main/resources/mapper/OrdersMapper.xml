@@ -1,142 +1,164 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xyz.slienceme.project_shop.mapper.OrdersMapper">
-  <resultMap id="BaseResultMap" type="xyz.slienceme.project_shop.dto.Orders">
-    <id column="orders_id" jdbcType="INTEGER" property="ordersId" />
-    <result column="serial_num" jdbcType="VARCHAR" property="serialNum" />
-    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
-    <result column="sell_users_id" jdbcType="INTEGER" property="sellUsersId" />
-    <result column="buy_users_id" jdbcType="INTEGER" property="buyUsersId" />
-    <result column="buy_price" jdbcType="DECIMAL" property="buyPrice" />
-    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
-    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
-    <result column="CREATED_BY" jdbcType="INTEGER" property="createdBy" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    orders_id, serial_num, goods_id, sell_users_id, buy_users_id, buy_price, is_delete, 
+    <resultMap id="BaseResultMap" type="xyz.slienceme.project_shop.dto.Orders">
+        <id column="orders_id" jdbcType="INTEGER" property="ordersId"/>
+        <result column="serial_num" jdbcType="VARCHAR" property="serialNum"/>
+        <result column="goods_id" jdbcType="INTEGER" property="goodsId"/>
+        <result column="sell_users_id" jdbcType="INTEGER" property="sellUsersId"/>
+        <result column="buy_users_id" jdbcType="INTEGER" property="buyUsersId"/>
+        <result column="buy_price" jdbcType="DECIMAL" property="buyPrice"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+        <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime"/>
+        <result column="CREATED_BY" jdbcType="INTEGER" property="createdBy"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        orders_id
+        , serial_num, goods_id, sell_users_id, buy_users_id, buy_price, is_delete,
     CREATED_TIME, CREATED_BY
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from orders
-    where orders_id = #{ordersId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from orders
-    where orders_id = #{ordersId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="xyz.slienceme.project_shop.dto.Orders">
-    insert into orders (orders_id, serial_num, goods_id, 
-      sell_users_id, buy_users_id, buy_price, 
-      is_delete, CREATED_TIME, CREATED_BY
-      )
-    values (#{ordersId,jdbcType=INTEGER}, #{serialNum,jdbcType=VARCHAR}, #{goodsId,jdbcType=INTEGER}, 
-      #{sellUsersId,jdbcType=INTEGER}, #{buyUsersId,jdbcType=INTEGER}, #{buyPrice,jdbcType=DECIMAL}, 
-      #{isDelete,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=INTEGER}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="xyz.slienceme.project_shop.dto.Orders">
-    insert into orders
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="ordersId != null">
-        orders_id,
-      </if>
-      <if test="serialNum != null">
-        serial_num,
-      </if>
-      <if test="goodsId != null">
-        goods_id,
-      </if>
-      <if test="sellUsersId != null">
-        sell_users_id,
-      </if>
-      <if test="buyUsersId != null">
-        buy_users_id,
-      </if>
-      <if test="buyPrice != null">
-        buy_price,
-      </if>
-      <if test="isDelete != null">
-        is_delete,
-      </if>
-      <if test="createdTime != null">
-        CREATED_TIME,
-      </if>
-      <if test="createdBy != null">
-        CREATED_BY,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="ordersId != null">
-        #{ordersId,jdbcType=INTEGER},
-      </if>
-      <if test="serialNum != null">
-        #{serialNum,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsId != null">
-        #{goodsId,jdbcType=INTEGER},
-      </if>
-      <if test="sellUsersId != null">
-        #{sellUsersId,jdbcType=INTEGER},
-      </if>
-      <if test="buyUsersId != null">
-        #{buyUsersId,jdbcType=INTEGER},
-      </if>
-      <if test="buyPrice != null">
-        #{buyPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="isDelete != null">
-        #{isDelete,jdbcType=INTEGER},
-      </if>
-      <if test="createdTime != null">
-        #{createdTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createdBy != null">
-        #{createdBy,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="xyz.slienceme.project_shop.dto.Orders">
-    update orders
-    <set>
-      <if test="serialNum != null">
-        serial_num = #{serialNum,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsId != null">
-        goods_id = #{goodsId,jdbcType=INTEGER},
-      </if>
-      <if test="sellUsersId != null">
-        sell_users_id = #{sellUsersId,jdbcType=INTEGER},
-      </if>
-      <if test="buyUsersId != null">
-        buy_users_id = #{buyUsersId,jdbcType=INTEGER},
-      </if>
-      <if test="buyPrice != null">
-        buy_price = #{buyPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="isDelete != null">
-        is_delete = #{isDelete,jdbcType=INTEGER},
-      </if>
-      <if test="createdTime != null">
-        CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createdBy != null">
-        CREATED_BY = #{createdBy,jdbcType=INTEGER},
-      </if>
-    </set>
-    where orders_id = #{ordersId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="xyz.slienceme.project_shop.dto.Orders">
-    update orders
-    set serial_num = #{serialNum,jdbcType=VARCHAR},
-      goods_id = #{goodsId,jdbcType=INTEGER},
-      sell_users_id = #{sellUsersId,jdbcType=INTEGER},
-      buy_users_id = #{buyUsersId,jdbcType=INTEGER},
-      buy_price = #{buyPrice,jdbcType=DECIMAL},
-      is_delete = #{isDelete,jdbcType=INTEGER},
-      CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP},
-      CREATED_BY = #{createdBy,jdbcType=INTEGER}
-    where orders_id = #{ordersId,jdbcType=INTEGER}
-  </update>
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from orders
+        where orders_id = #{ordersId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from orders
+        where orders_id = #{ordersId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="xyz.slienceme.project_shop.dto.Orders">
+        insert into orders (orders_id, serial_num, goods_id,
+                            sell_users_id, buy_users_id, buy_price,
+                            is_delete, CREATED_TIME, CREATED_BY)
+        values (#{ordersId,jdbcType=INTEGER}, #{serialNum,jdbcType=VARCHAR}, #{goodsId,jdbcType=INTEGER},
+                #{sellUsersId,jdbcType=INTEGER}, #{buyUsersId,jdbcType=INTEGER}, #{buyPrice,jdbcType=DECIMAL},
+                #{isDelete,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="xyz.slienceme.project_shop.dto.Orders">
+        insert into orders
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ordersId != null">
+                orders_id,
+            </if>
+            <if test="serialNum != null">
+                serial_num,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="sellUsersId != null">
+                sell_users_id,
+            </if>
+            <if test="buyUsersId != null">
+                buy_users_id,
+            </if>
+            <if test="buyPrice != null">
+                buy_price,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createdTime != null">
+                CREATED_TIME,
+            </if>
+            <if test="createdBy != null">
+                CREATED_BY,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ordersId != null">
+                #{ordersId,jdbcType=INTEGER},
+            </if>
+            <if test="serialNum != null">
+                #{serialNum,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="sellUsersId != null">
+                #{sellUsersId,jdbcType=INTEGER},
+            </if>
+            <if test="buyUsersId != null">
+                #{buyUsersId,jdbcType=INTEGER},
+            </if>
+            <if test="buyPrice != null">
+                #{buyPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="xyz.slienceme.project_shop.dto.Orders">
+        update orders
+        <set>
+            <if test="serialNum != null">
+                serial_num = #{serialNum,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsId != null">
+                goods_id = #{goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="sellUsersId != null">
+                sell_users_id = #{sellUsersId,jdbcType=INTEGER},
+            </if>
+            <if test="buyUsersId != null">
+                buy_users_id = #{buyUsersId,jdbcType=INTEGER},
+            </if>
+            <if test="buyPrice != null">
+                buy_price = #{buyPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createdTime != null">
+                CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                CREATED_BY = #{createdBy,jdbcType=INTEGER},
+            </if>
+        </set>
+        where orders_id = #{ordersId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="xyz.slienceme.project_shop.dto.Orders">
+        update orders
+        set serial_num    = #{serialNum,jdbcType=VARCHAR},
+            goods_id      = #{goodsId,jdbcType=INTEGER},
+            sell_users_id = #{sellUsersId,jdbcType=INTEGER},
+            buy_users_id  = #{buyUsersId,jdbcType=INTEGER},
+            buy_price     = #{buyPrice,jdbcType=DECIMAL},
+            is_delete     = #{isDelete,jdbcType=INTEGER},
+            CREATED_TIME  = #{createdTime,jdbcType=TIMESTAMP},
+            CREATED_BY    = #{createdBy,jdbcType=INTEGER}
+        where orders_id = #{ordersId,jdbcType=INTEGER}
+    </update>
+    <!-- 查询订单列表-->
+    <!-- 返回值类型:  List<HashMap<String, Object>> selectList -->
+    <!-- 参数: -->
+    <!--  @param keyword 关键词   -->
+    <select id="selectList" resultType="java.util.HashMap">
+        SELECT a.orders_id     as                               ordersId,
+               a.serial_num    as                               serialNum,
+               a.goods_id      as                               goodsId,
+               g.goods_name    as                               goodsName,
+               a.sell_users_id as                               sellUsersId,
+               u.user_name     as                               sellUserName,
+               a.buy_users_id  as                               buyUsersId,
+               v.user_name     as                               buyUsersName,
+               a.buy_price     as                               buyPrice,
+               DATE_FORMAT(a.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime
+        FROM orders a
+                 left join goods g on a.goods_id = g.goods_id
+                 left join user u on a.sell_users_id = u.user_id
+                 left join user v on a.buy_users_id = v.user_id
+        WHERE a.is_delete = 0
+        order by a.CREATED_TIME desc
+    </select>
 </mapper>

@@ -157,4 +157,18 @@ public class StringUtil {
         String szResult = decFrt.format(id);
         return szResult;
     }
+
+    /**
+     * 流水号生成
+     */
+    private final static String FORMAT_CODE = "000000";
+    private final static String PRE_CODE = "SP";
+    public static String serialNumber(Integer num) {
+        DecimalFormat dft = new DecimalFormat(FORMAT_CODE);
+        String code = dft.format(num);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        String date = sdf.format(new Date()); // 格式化日期 date: 20200724
+        /*System.out.println(codeEnd);*/
+        return PRE_CODE + date + code;
+    }
 }

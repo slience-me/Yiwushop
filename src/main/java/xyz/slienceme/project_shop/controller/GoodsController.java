@@ -9,14 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.slienceme.project_shop.common.Result;
-import xyz.slienceme.project_shop.dto.Admin;
 import xyz.slienceme.project_shop.dto.Goods;
-import xyz.slienceme.project_shop.service.IAdminService;
+import xyz.slienceme.project_shop.service.IAuctionsService;
 import xyz.slienceme.project_shop.service.IGoodsService;
-import xyz.slienceme.project_shop.vo.AdminVO;
 import xyz.slienceme.project_shop.vo.GoodsVO;
-import xyz.slienceme.project_shop.vo.LoginVO;
-import xyz.slienceme.project_shop.vo.PwdVO;
 
 /**
  * <p>
@@ -35,6 +31,8 @@ public class GoodsController {
 
     @Autowired
     private IGoodsService goodsService;
+    @Autowired
+    private IAuctionsService auctionsService;
 
     @ApiOperation("查询商品列表")
     @GetMapping("/goodsList")
@@ -49,9 +47,9 @@ public class GoodsController {
     @ApiOperation("查询上架商品列表")
     @GetMapping("/goodsOnList")
     public Result goodsOnList(@RequestHeader("x-access-token") String accessToken,
-                            @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
-                            @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
-                            @ApiParam(value = "商品名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
+                              @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
+                              @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
+                              @ApiParam(value = "商品名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
         log.info("查询商品列表接口调用--get---</goodsList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return goodsService.goodsOnList(accessToken, pageNo, pageSize, keyword);
     }
@@ -83,11 +81,15 @@ public class GoodsController {
     }
 
     @ApiOperation("上架商品")
-    @PutMapping("/stateOn")
+    @PostMapping("/stateOn")
     public Result stateon(@RequestHeader("x-access-token") String accessToken,
-                          @ApiParam(value = "商品id") @RequestParam(value = "goodsId") Integer goodsId) throws Exception {
+                          @ApiParam(value = "分类名称") @RequestParam String auctionsName,
+                          @ApiParam(value = "商品id") @RequestParam(value = "goodsId") Integer goodsId,
+                          @ApiParam("格式 yyyy-MM-dd") @RequestParam(value = "startTime") String startTime,
+                          @ApiParam("格式 yyyy-MM-dd") @RequestParam(value = "endTime") String endTime) throws Exception {
         log.info("上架商品接口调用---put-----</goodsList>           ");
-        return goodsService.stateOn(accessToken, goodsId);
+        log.info("添加管理员接口调用---post--</auctionsList>:  auctionsName=" + auctionsName);
+        return goodsService.stateOn(accessToken, auctionsName, goodsId, startTime, endTime);
     }
 
 }

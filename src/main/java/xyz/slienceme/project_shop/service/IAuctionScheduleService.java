@@ -3,6 +3,8 @@ package xyz.slienceme.project_shop.service;
 import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.vo.AuctionScheduleVO;
 
+import java.math.BigDecimal;
+
 /**
  * <p>
  * 服务类
@@ -28,4 +30,13 @@ public interface IAuctionScheduleService {
      * 根据拍卖过程信息添加
      */
     Result auctionScheduleAdd(String accessToken, AuctionScheduleVO auctionScheduleVO) throws Exception;
+
+
+    /**
+     * 开始竞拍
+     * @param accessToken
+     * @return
+     * @throws Exception
+     */
+    Result doAuctions(String accessToken, AuctionScheduleVO auctionScheduleVO) throws Exception;
 }

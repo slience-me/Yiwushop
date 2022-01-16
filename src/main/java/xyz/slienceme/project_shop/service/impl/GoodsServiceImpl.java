@@ -5,10 +5,15 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.slienceme.project_shop.common.Result;
+import xyz.slienceme.project_shop.dto.Auctions;
 import xyz.slienceme.project_shop.dto.Goods;
+import xyz.slienceme.project_shop.mapper.AuctionsMapper;
 import xyz.slienceme.project_shop.mapper.GoodsMapper;
 import xyz.slienceme.project_shop.service.IGoodsService;
+import xyz.slienceme.project_shop.utils.DateUtil;
+import xyz.slienceme.project_shop.utils.JWT;
 import xyz.slienceme.project_shop.vo.GoodsVO;
+import xyz.slienceme.project_shop.vo.TokenVO;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +32,8 @@ public class GoodsServiceImpl implements IGoodsService {
 
     @Autowired
     private GoodsMapper goodsMapper;
+    @Autowired
+    private AuctionsMapper auctionsMapper;
 
     /**
      * 查询商品列表
@@ -122,7 +129,7 @@ public class GoodsServiceImpl implements IGoodsService {
     }
 
     @Override
-    public Result stateOn(String accessToken, Integer goodsId) throws Exception {
+    public Result stateOn(String accessToken, String auctionsName, Integer goodsId, String startTime, String endTime) throws Exception {
         Goods goods1 = goodsMapper.selectByPrimaryKey(goodsId);
         System.out.println("goods1 = " + goods1);
         if (Objects.isNull(goods1)) {
@@ -131,6 +138,13 @@ public class GoodsServiceImpl implements IGoodsService {
             goods1.setStateOn(1);//上架
         }
         goodsMapper.updateByPrimaryKeySelective(goods1);
+        TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
+        Auctions auctions = new Auctions();
+        auctions.setAuctionsName(auctionsName);
+        auctions.setStart(DateUtil.StringToLocalDateTime(startTime));
+        auctions.setEnd(DateUtil.StringToLocalDateTime(endTime));
+        auctions.setCreatedBy(unsign.getUserId());
+        auctionsMapper.insertSelective(auctions);
         return Result.createBySuccessMessage("成功");
     }
 }

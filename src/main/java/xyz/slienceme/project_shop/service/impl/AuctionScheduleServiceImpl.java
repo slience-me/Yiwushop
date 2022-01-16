@@ -7,16 +7,20 @@ import org.springframework.stereotype.Service;
 import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.dto.AuctionSchedule;
 import xyz.slienceme.project_shop.dto.Auctions;
+import xyz.slienceme.project_shop.dto.Goods;
 import xyz.slienceme.project_shop.mapper.AuctionScheduleMapper;
 import xyz.slienceme.project_shop.mapper.AuctionsMapper;
+import xyz.slienceme.project_shop.mapper.GoodsMapper;
 import xyz.slienceme.project_shop.service.IAuctionScheduleService;
 import xyz.slienceme.project_shop.utils.DateUtil;
 import xyz.slienceme.project_shop.utils.JWT;
 import xyz.slienceme.project_shop.vo.AuctionScheduleVO;
 import xyz.slienceme.project_shop.vo.TokenVO;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -31,6 +35,8 @@ public class AuctionScheduleServiceImpl implements IAuctionScheduleService {
 
     @Autowired
     private AuctionScheduleMapper auctionScheduleMapper;
+    @Autowired
+    private GoodsMapper goodsMapper;
 
     /**
      * 拍卖过程表列表
@@ -56,6 +62,34 @@ public class AuctionScheduleServiceImpl implements IAuctionScheduleService {
         auctionSchedule.setUserId(auctionScheduleVO.getUserId());
         auctionSchedule.setAuctionSchedulePrice(auctionScheduleVO.getAuctionSchedulePrice());
         auctionScheduleMapper.insertSelective(auctionSchedule);
+        return Result.createBySuccessMessage("成功");
+    }
+
+    /**
+     * 开始竞拍
+     * @param accessToken
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Result doAuctions(String accessToken, AuctionScheduleVO auctionScheduleVO) throws Exception {
+        Goods goods1 = goodsMapper.selectByPrimaryKey(auctionScheduleVO.getGoodsId());
+        System.out.println("goods1 = " + goods1);
+        if (Objects.isNull(goods1)) {
+            return Result.createByErrorMessage("商品不存在");
+        }
+        if (auctionScheduleVO.getAuctionSchedulePrice().compareTo(goods1.getPriceNow())>-1){
+            AuctionSchedule auctionSchedule = new AuctionSchedule();
+            auctionSchedule.setGoodsId(auctionScheduleVO.getGoodsId());
+            auctionSchedule.setUserId(auctionScheduleVO.getUserId());
+            auctionSchedule.setAuctionSchedulePrice(auctionScheduleVO.getAuctionSchedulePrice());
+            auctionScheduleMapper.insertSelective(auctionSchedule);
+            goods1.setGoodsPrice(auctionScheduleVO.getAuctionSchedulePrice());
+            goods1.setPriceUserId(auctionScheduleVO.getUserId());
+            goodsMapper.updateByPrimaryKeySelective(goods1);
+        } else {
+            return Result.createByErrorMessage("出价异常");
+        }
         return Result.createBySuccessMessage("成功");
     }
 }

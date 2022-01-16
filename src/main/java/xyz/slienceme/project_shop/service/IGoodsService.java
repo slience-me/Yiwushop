@@ -62,6 +62,6 @@ public interface IGoodsService {
      * @param accessToken
      * @return
      */
-    Result stateOn(String accessToken, Integer goodsId) throws Exception;
+    Result stateOn(String accessToken, String auctionsName, Integer goodsId, String startTime, String endTime) throws Exception;
 
 }

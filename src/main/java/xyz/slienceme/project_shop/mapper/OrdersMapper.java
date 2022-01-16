@@ -3,6 +3,9 @@ package xyz.slienceme.project_shop.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import xyz.slienceme.project_shop.dto.Orders;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * <p>
  * 订单表 Mapper 接口
@@ -24,4 +27,10 @@ public interface OrdersMapper {
     int updateByPrimaryKeySelective(Orders record);
 
     int updateByPrimaryKey(Orders record);
+
+    /**
+     * 查询订单列表
+     *
+     */
+    List<HashMap<String, Object>> selectList();
 }

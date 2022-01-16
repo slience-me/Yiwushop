@@ -46,7 +46,7 @@ public class AuctionsController {
                               @ApiParam(value = "分类名称") @RequestParam String auctionsName,
                               @ApiParam("格式 yyyy-MM-dd") @RequestParam(value = "startTime") String startTime,
                               @ApiParam("格式 yyyy-MM-dd") @RequestParam(value = "endTime") String endTime) throws Exception {
-        log.info("添加管理员接口调用---post--</auctionsList>:  auctionsName=" + auctionsName);
+        log.info("添加竞拍场次接口调用---post--</auctionsList>:  auctionsName=" + auctionsName);
         return auctionsService.auctionsAdd(accessToken, auctionsName, startTime, endTime);
     }
 
@@ -66,4 +66,5 @@ public class AuctionsController {
         log.info("修改竞拍场次接口调用---put--</auctionsList>:  auctions=" + auctions);
         return auctionsService.auctionsPut(accessToken, auctions);
     }
+
 }

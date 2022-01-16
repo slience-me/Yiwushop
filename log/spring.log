@@ -169,3 +169,23 @@ Consider defining a bean of type 'org.springframework.web.client.RestTemplate' i
 2022-01-16 10:11:48.303  INFO 6660 --- [http-nio-8081-exec-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
 2022-01-16 10:12:09.956  INFO 6660 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2022-01-16 10:12:09.975  INFO 6660 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-01-16 13:45:05.556  INFO 4268 --- [main] x.s.project_shop.ProjectShopApplication  : Starting ProjectShopApplication using Java 1.8.0_291 on DESKTOP-U1IE4I3 with PID 4268 (D:\Java_study\project_shop\target\classes started by slien in D:\Java_study\project_shop)
+2022-01-16 13:45:05.560  INFO 4268 --- [main] x.s.project_shop.ProjectShopApplication  : No active profile set, falling back to default profiles: default
+2022-01-16 13:45:07.150  INFO 4268 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-01-16 13:45:07.153  INFO 4268 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-01-16 13:45:07.193  INFO 4268 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 21 ms. Found 0 Redis repository interfaces.
+2022-01-16 13:45:07.557  INFO 4268 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'redisConfig' of type [xyz.slienceme.project_shop.config.RedisConfig$$EnhancerBySpringCGLIB$$f0bd8b9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-01-16 13:45:07.857  INFO 4268 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2022-01-16 13:45:07.868  INFO 4268 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-01-16 13:45:07.868  INFO 4268 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-01-16 13:45:07.997  INFO 4268 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-01-16 13:45:07.997  INFO 4268 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2349 ms
+2022-01-16 13:45:09.159  INFO 4268 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-01-16 13:45:09.431  INFO 4268 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2022-01-16 13:45:09.432  INFO 4268 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-01-16 13:45:09.447  INFO 4268 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-01-16 13:45:09.556  INFO 4268 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-01-16 13:45:09.909  INFO 4268 --- [main] x.s.project_shop.ProjectShopApplication  : Started ProjectShopApplication in 5.675 seconds (JVM running for 7.14)
+2022-01-16 13:45:11.159  INFO 4268 --- [http-nio-8081-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-01-16 13:45:11.159  INFO 4268 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-01-16 13:45:11.163  INFO 4268 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
