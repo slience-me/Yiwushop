@@ -57,4 +57,11 @@
     set complaint_status_name = #{complaintStatusName,jdbcType=VARCHAR}
     where complaint_status_id = #{complaintStatusId,jdbcType=INTEGER}
   </update>
+  <!-- 查询投诉状态类型列表-->
+  <!-- 返回值类型:  List<HashMap<String, Object>> selectList -->
+  <select id="selectList" resultType="java.util.HashMap">
+    SELECT cs.complaint_status_id as complaintStatusId,
+    cs.complaint_status_name as complaintStatusName
+    FROM complaint_status cs
+  </select>
 </mapper>

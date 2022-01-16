@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.service.IImageService;
-import xyz.slienceme.project_shop.utils.UploadUtil;
 
 /**
  * <p>
@@ -25,9 +24,9 @@ import xyz.slienceme.project_shop.utils.UploadUtil;
 @Api(tags = "上传文件")
 @RestController
 @RequestMapping("/upload")
-public class UpdateFileController {
+public class ImageController {
 
-    private static final Logger log = LoggerFactory.getLogger(UpdateFileController.class);
+    private static final Logger log = LoggerFactory.getLogger(ImageController.class);
 
     @Autowired
     private IImageService imageService;
@@ -36,7 +35,7 @@ public class UpdateFileController {
     @PostMapping("/img")
     public Result uploadImg(@RequestParam("multipartFile") MultipartFile multipartFile
     ) throws Exception {
-        log.info("上传接口调用------------------post-----------------</img>:");
+        log.info("上传接口调用-----------------------post----------------------</upload/img>:");
         return imageService.uploadImg(multipartFile);
     }
 

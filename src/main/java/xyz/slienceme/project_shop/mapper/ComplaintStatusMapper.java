@@ -1,7 +1,11 @@
 package xyz.slienceme.project_shop.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import xyz.slienceme.project_shop.dto.ComplaintStatus;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -24,4 +28,9 @@ public interface ComplaintStatusMapper {
     int updateByPrimaryKeySelective(ComplaintStatus record);
 
     int updateByPrimaryKey(ComplaintStatus record);
+
+    /**
+     * 查询投诉状态类型列表
+     */
+    List<HashMap<String, Object>> selectList();
 }
