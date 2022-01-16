@@ -215,6 +215,6 @@
     <if test="keyword!=null and keyword!=''">
       and CONCAT(g.goods_name) like concat('%',#{keyword},'%')
     </if>
-    order by a.CREATED_TIME desc
+    order by g.CREATED_TIME desc
   </select>
 </mapper>

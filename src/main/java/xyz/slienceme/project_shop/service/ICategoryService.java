@@ -41,4 +41,5 @@ public interface ICategoryService {
      * 根据物品类型信息修改物品类型
      */
     Result categoryPut(String accessToken, Category category) throws Exception;
+
 }

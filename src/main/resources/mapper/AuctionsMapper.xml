@@ -114,4 +114,22 @@
       CREATED_BY = #{createdBy,jdbcType=INTEGER}
     where auctions_id = #{auctionsId,jdbcType=INTEGER}
   </update>
+  <!-- 查询竞拍场次列表-->
+  <!-- 返回值类型:  List<HashMap<String, Object>> selectList -->
+  <!-- 参数: -->
+  <!--  @param keyword 关键词   -->
+  <select id="selectList" resultType="java.util.HashMap">
+    SELECT a.auctions_id as auctionsId,
+    a.auctions_name as auctionsName,
+    DATE_FORMAT(a.start, '%Y-%m-%d %H:%i:%s') startTime,
+    DATE_FORMAT(a.end, '%Y-%m-%d %H:%i:%s') endTime,
+    DATE_FORMAT(a.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime,
+    FROM auctions a
+    where
+    a.is_delete=0
+    <if test="keyword!=null and keyword!=''">
+      and CONCAT(a.auctions_name) like concat('%',#{keyword},'%')
+    </if>
+    order by a.CREATED_TIME desc
+  </select>
 </mapper>

@@ -31,8 +31,6 @@ import java.util.Objects;
 public class CategoryServiceImpl implements ICategoryService {
 
     @Autowired
-    private RedisTemplate<String, String> redisTemplate;
-    @Autowired
     private CategoryMapper categoryMapper;
 
     /**
