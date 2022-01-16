@@ -76,6 +76,7 @@ public class GoodsServiceImpl implements IGoodsService {
         goods.setGoodsName(goodsVO.getGoodsName());
         goods.setGoodsPrice(goodsVO.getGoodsPrice());
         goods.setPriceNow(goodsVO.getGoodsPrice());
+        goods.setPriceUserId(goodsVO.getUserId());//默认自己
         goods.setGoodsInfo(goodsVO.getGoodsInfo());
         goods.setStateOn(0);//默认不上架
         goods.setCategoryId(goodsVO.getCategoryId());

@@ -6,6 +6,7 @@
     <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
     <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice" />
     <result column="price_now" jdbcType="DECIMAL" property="priceNow" />
+    <result column="price_user_id" jdbcType="INTEGER" property="priceUserId" />
     <result column="goods_info" jdbcType="VARCHAR" property="goodsInfo" />
     <result column="state_on" jdbcType="INTEGER" property="stateOn" />
     <result column="category_id" jdbcType="INTEGER" property="categoryId" />
@@ -15,7 +16,7 @@
     <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    goods_id, goods_name, goods_price, price_now, goods_info, state_on, category_id, 
+    goods_id, goods_name, goods_price, price_now, price_user_id, goods_info, state_on, category_id,
     user_id, goods_img_id, is_delete, CREATED_TIME
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -30,11 +31,11 @@
   </delete>
   <insert id="insert" parameterType="xyz.slienceme.project_shop.dto.Goods">
     insert into goods (goods_id, goods_name, goods_price, 
-      price_now, goods_info, state_on, 
+      price_now, price_user_id, goods_info, state_on,
       category_id, user_id, goods_img_id, 
       is_delete, CREATED_TIME)
     values (#{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, 
-      #{priceNow,jdbcType=DECIMAL}, #{goodsInfo,jdbcType=VARCHAR}, #{stateOn,jdbcType=INTEGER}, 
+      #{priceNow,jdbcType=DECIMAL}, #{priceUserId,jdbcType=INTEGER}, #{goodsInfo,jdbcType=VARCHAR}, #{stateOn,jdbcType=INTEGER},
       #{categoryId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{goodsImgId,jdbcType=INTEGER}, 
       #{isDelete,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP})
   </insert>
@@ -52,6 +53,9 @@
       </if>
       <if test="priceNow != null">
         price_now,
+      </if>
+      <if test="priceUserId != null">
+        price_user_id,
       </if>
       <if test="goodsInfo != null">
         goods_info,
@@ -88,6 +92,9 @@
       <if test="priceNow != null">
         #{priceNow,jdbcType=DECIMAL},
       </if>
+      <if test="priceUserId != null">
+        #{priceUserId,jdbcType=INTEGER},
+      </if>
       <if test="goodsInfo != null">
         #{goodsInfo,jdbcType=VARCHAR},
       </if>
@@ -123,6 +130,9 @@
       <if test="priceNow != null">
         price_now = #{priceNow,jdbcType=DECIMAL},
       </if>
+      <if test="priceUserId != null">
+        price_user_id = #{priceUserId,jdbcType=INTEGER},
+      </if>
       <if test="goodsInfo != null">
         goods_info = #{goodsInfo,jdbcType=VARCHAR},
       </if>
@@ -152,6 +162,7 @@
     set goods_name = #{goodsName,jdbcType=VARCHAR},
       goods_price = #{goodsPrice,jdbcType=DECIMAL},
       price_now = #{priceNow,jdbcType=DECIMAL},
+      price_user_id = #{priceUserId,jdbcType=INTEGER},
       goods_info = #{goodsInfo,jdbcType=VARCHAR},
       state_on = #{stateOn,jdbcType=INTEGER},
       category_id = #{categoryId,jdbcType=INTEGER},
@@ -170,6 +181,8 @@
     g.goods_name as goodsName,
     g.goods_price as goodsPrice,
     g.price_now as priceNow,
+    g.price_user_id as priceUserId,
+    v.user_name as priceUserName,
     g.goods_info as goodsInfo,
     g.state_on as stateOn,
     g.category_id as categoryId,
@@ -178,16 +191,17 @@
     u.user_name as userName,
     g.goods_img_id as goodsImgId,
     i.image_url as imageUrl,
-    DATE_FORMAT(g.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime,
+    DATE_FORMAT(g.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime
     FROM goods g left join category c on g.category_id=c.category_id
     left join user u on g.user_id=u.user_id
+    left join user v on g.price_user_id=v.user_id
     left join image i on g.goods_img_id=i.image_id
     where
     g.is_delete=0
     <if test="keyword!=null and keyword!=''">
       and CONCAT(g.goods_name) like concat('%',#{keyword},'%')
     </if>
-    order by a.CREATED_TIME desc
+    order by g.CREATED_TIME desc
   </select>
   <!-- 查询上架商品列表-->
   <!-- 返回值类型:  List<HashMap<String, Object>> selectOnList -->
@@ -198,6 +212,8 @@
     g.goods_name as goodsName,
     g.goods_price as goodsPrice,
     g.price_now as priceNow,
+    g.price_user_id as priceUserId,
+    v.user_name as priceUserName,
     g.goods_info as goodsInfo,
     g.state_on as stateOn,
     g.category_id as categoryId,
@@ -206,9 +222,10 @@
     u.user_name as userName,
     g.goods_img_id as goodsImgId,
     i.image_url as imageUrl,
-    DATE_FORMAT(g.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime,
+    DATE_FORMAT(g.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime
     FROM goods g left join category c on g.category_id=c.category_id
     left join user u on g.user_id=u.user_id
+    left join user v on g.price_user_id=v.user_id
     left join image i on g.goods_img_id=i.image_id
     where
     g.is_delete=0 and g.state_on=1

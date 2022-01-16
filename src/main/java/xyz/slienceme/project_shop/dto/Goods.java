@@ -44,6 +44,12 @@ public class Goods {
     private BigDecimal priceNow;
 
     /**
+     * 当前最高价用户id
+     */
+    @ApiParam(value = "当前最高价用户id")
+    private Integer priceUserId ;
+
+    /**
      * 商品描述
      */
     @ApiParam(value = "商品描述")

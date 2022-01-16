@@ -99,7 +99,7 @@
     <select id="selectList" resultType="java.util.HashMap">
         SELECT c.category_id as categoryId,
         c.category_name as categoryName,
-        DATE_FORMAT(c.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime,
+        DATE_FORMAT(c.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime
         FROM category c
         where
         c.is_delete=0
@@ -116,7 +116,7 @@
     <select id="selectByName" resultType="xyz.slienceme.project_shop.dto.Category">
         SELECT c.category_id   as                               categoryId,
                c.category_name as                               categoryName,
-               DATE_FORMAT(c.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime,
+               DATE_FORMAT(c.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime
         FROM category c
         where c.is_delete = 0
           and c.category_name = #{categoryName}
