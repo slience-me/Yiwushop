@@ -38,7 +38,7 @@ public class ScheduleTask {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         long nowMilliSecond = new Date().getTime();
         String nowTime = sdf.format(nowMilliSecond);
-        log.info("-------------------定时任务开始执行----------------------当前时间: " + nowTime);
+        log.info("定时任务开始执行--当前时间: " + nowTime);
         List<HashMap<String, Object>> auctionsList = auctionsMapper.selectUndoneList(nowTime);
         for (HashMap<String, Object> auctionsi : auctionsList) {
             Goods goods = goodsMapper.selectByPrimaryKey((Integer) auctionsi.get("goodsId"));

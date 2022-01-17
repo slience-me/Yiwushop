@@ -19,7 +19,7 @@ import org.apache.http.util.CharsetUtils;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.net.www.protocol.https.DefaultHostnameVerifier;
+//import sun.net.www.protocol.https.DefaultHostnameVerifier;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -570,10 +570,10 @@ public class HttpClientHelper {
      *
      * @param httpUrl
      */
-    public String sendHttpsGet(String httpUrl) {
+   /* public String sendHttpsGet(String httpUrl) {
         HttpGet httpGet = new HttpGet(httpUrl);// 创建get请求
         return sendHttpsGet(httpGet);
-    }
+    }*/
 
     /**
      * 发送Get请求Https
@@ -581,7 +581,7 @@ public class HttpClientHelper {
      * @param httpGet
      * @return
      */
-    private String sendHttpsGet(HttpGet httpGet) {
+    /*private String sendHttpsGet(HttpGet httpGet) {
         CloseableHttpClient httpClient = null;
         CloseableHttpResponse response = null;
         HttpEntity entity = null;
@@ -613,5 +613,5 @@ public class HttpClientHelper {
             }
         }
         return responseContent;
-    }
+    }*/
 }

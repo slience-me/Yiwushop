@@ -13,7 +13,7 @@ public class DateUtil {
      *
      * @return String
      */
-    public static String getData(String format) {
+    public static String getDate(String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         String time = sdf.format(new Date());
         return time;
@@ -57,7 +57,7 @@ public class DateUtil {
      *
      * @return String
      */
-    public static Date getDataByString(String datetime) throws Exception {
+    public static Date getDateByString(String datetime) throws Exception {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = formatter.parse(datetime);
@@ -69,7 +69,7 @@ public class DateUtil {
      *
      * @return String
      */
-    public static Date getDataByString(String dayformt, String datetime) throws Exception {
+    public static Date getDateByString(String dayformt, String datetime) throws Exception {
 
         SimpleDateFormat formatter = new SimpleDateFormat(dayformt);
         Date date = formatter.parse(datetime);
@@ -109,7 +109,7 @@ public class DateUtil {
      *
      * @return String
      */
-    public static String getData() {
+    public static String getDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = sdf.format(new Date());
         return time;
@@ -276,16 +276,16 @@ public class DateUtil {
         Date endDate = new Date();
         long msCount = 0;
         if (type == 1) {//设置小时间隔
-            beginDate = getDataByString("yyyy-MM-dd hh:mm", startTime + " 00:00");
-            endDate = getDataByString("yyyy-MM-dd hh:mm", endTime + " 23:59");
+            beginDate = getDateByString("yyyy-MM-dd hh:mm", startTime + " 00:00");
+            endDate = getDateByString("yyyy-MM-dd hh:mm", endTime + " 23:59");
             msCount = interval * 60 * 60 * 1000;  //1小时 2小时 3小时
         } else if (type == 2) {//设置分钟间隔
-            beginDate = getDataByString("yyyy-MM-dd hh:mm", startTime + ":00:00");
-            endDate = getDataByString("yyyy-MM-dd hh:mm", endTime + ":23:59");
+            beginDate = getDateByString("yyyy-MM-dd hh:mm", startTime + ":00:00");
+            endDate = getDateByString("yyyy-MM-dd hh:mm", endTime + ":23:59");
             msCount = interval * 60 * 1000;  //30分钟 10分钟 5分钟 15分钟
         } else if (type == 3) {//设置天间隔
-            beginDate = getDataByString("yyyy-MM-dd hh:mm", startTime + " 00:00");
-            endDate = getDataByString("yyyy-MM-dd hh:mm", endTime + " 00:00");
+            beginDate = getDateByString("yyyy-MM-dd hh:mm", startTime + " 00:00");
+            endDate = getDateByString("yyyy-MM-dd hh:mm", endTime + " 00:00");
             msCount = interval * 24 * 60 * 60 * 1000;  //1天 2天 3天
         } else if (type == 4) {//获取月间隔
             String[] startDate = startTime.split("-");
@@ -529,8 +529,8 @@ public class DateUtil {
      * @param dateTime
      */
     public static String day15(String dateTime) throws Exception {
-        String dd = DateUtil.dateFormat(DateUtil.getDataByString("yyyy-MM-dd HH:mm:ss", dateTime), "dd");
-        String mouth = DateUtil.dateFormat(DateUtil.getDataByString("yyyy-MM-dd HH:mm:ss", dateTime), "yyyy-MM");
+        String dd = DateUtil.dateFormat(DateUtil.getDateByString("yyyy-MM-dd HH:mm:ss", dateTime), "dd");
+        String mouth = DateUtil.dateFormat(DateUtil.getDateByString("yyyy-MM-dd HH:mm:ss", dateTime), "yyyy-MM");
         if (Integer.valueOf(dd) <= 15) {//获取本月15号
             return mouth + "-15 00:00:00";
         } else {//获取下个月15号
@@ -552,8 +552,8 @@ public class DateUtil {
      * @return
      */
     public static int getDutyDays(String startDateString, String endDateString) throws Exception {
-        Date startDate = getDataByString(startDateString);
-        Date endDate = getDataByString(endDateString);
+        Date startDate = getDateByString(startDateString);
+        Date endDate = getDateByString(endDateString);
         int result = 0;
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd ");
         while (startDate.compareTo(endDate) <= 0) {
@@ -574,7 +574,7 @@ public class DateUtil {
 
     //指定日期的上个月的天数
     public static int getDaysOfZDMonth(String day) throws Exception {
-        int daysOfMonth = getDaysOfMonth(getDataByString("yyyy-MM-dd", getDateByTian(2, 1, getDataByString("yyyy-MM-dd", day))));
+        int daysOfMonth = getDaysOfMonth(getDateByString("yyyy-MM-dd", getDateByTian(2, 1, getDateByString("yyyy-MM-dd", day))));
         return daysOfMonth;
     }
 
@@ -632,14 +632,16 @@ public class DateUtil {
 
     public static void main(String[] args) throws Exception {
 
-        /*Date date1 = DateUtil.getDataByString("2020-02-01 00:00:00");
-        Date date2 = DateUtil.getDataByString("2020-02-29 00:00:00");
-        Date date3 = DateUtil.getDataByString("2020-01-04 00:00:00");
-        Date date4 = DateUtil.getDataByString("2020-02-19 00:00:00");
+        /*Date date1 = DateUtil.getDateByString("2020-02-01 00:00:00");
+        Date date2 = DateUtil.getDateByString("2020-02-29 00:00:00");
+        Date date3 = DateUtil.getDateByString("2020-01-04 00:00:00");
+        Date date4 = DateUtil.getDateByString("2020-02-19 00:00:00");
 
         System.out.println(computeIntersectionDays(date1, date2, date3, date4));*/
-        LocalDateTime localDateTime = StringToLocalDateTime("2022-01-16 09:44:25");
-        System.out.println(localDateTime);
+        /*LocalDateTime localDateTime = StringToLocalDateTime("2022-01-16 09:44:25");
+        System.out.println(localDateTime);*/
+        String date = getDate("yyyyMMdd");
+        System.out.println(date);
 
     }
 
