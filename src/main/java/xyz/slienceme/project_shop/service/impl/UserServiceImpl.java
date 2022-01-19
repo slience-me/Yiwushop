@@ -88,6 +88,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Result addMember(String accessToken, UserVO userVO) throws Exception {
+        TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         User user = new User();
         user.setOpenid(userVO.getOpenid());
         user.setUserName(userVO.getUserName());
@@ -97,8 +98,8 @@ public class UserServiceImpl implements IUserService {
         user.setUserGender(userVO.getUserGender());
         user.setUserPhone(userVO.getUserPhone());
         user.setUserAddress(userVO.getUserAddress());
-        user.setCreatedBy(1);
-        userMapper.insert(user);
+        user.setCreatedBy(unsign.getUserId());
+        userMapper.insertSelective(user);
         return Result.createBySuccessMessage("成功");
     }
 

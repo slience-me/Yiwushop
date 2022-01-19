@@ -33,7 +33,7 @@ public class ScheduleTask {
     @Autowired
     private GoodsMapper goodsMapper;
 
-    @Scheduled(cron = "0/20 * * * * ?")
+    /*@Scheduled(cron = "0/20 * * * * ?")*/
     public void generateOrder() throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         long nowMilliSecond = new Date().getTime();

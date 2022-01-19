@@ -3,6 +3,7 @@ package xyz.slienceme.project_shop.service;
 
 import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.dto.Auctions;
+import xyz.slienceme.project_shop.vo.AuctionsVO;
 
 /**
  * <p>
@@ -30,7 +31,7 @@ public interface IAuctionsService {
     /**
      * 根据竞拍场次信息添加
      */
-    Result auctionsAdd(String accessToken, Integer goodsId, String auctionsName, String startTime, String endTime) throws Exception;
+    Result auctionsAdd(String accessToken, AuctionsVO auctionsVO) throws Exception;
 
     /**
      * 根据id删除竞拍场次
@@ -41,5 +42,5 @@ public interface IAuctionsService {
      * 根据竞拍场次信息修改竞拍场次
      */
     Result auctionsPut(String accessToken, Auctions auctions) throws Exception;
-    
+
 }

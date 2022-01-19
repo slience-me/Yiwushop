@@ -21,13 +21,13 @@ public class AdminRoleMenuController {
     @Autowired
     private IAdminRoleMenuService adminRoleMenuService;
 
-    /*@ApiOperation(value = "菜单列表", notes = "菜单管理", httpMethod = "GET")
+    @ApiOperation(value = "菜单列表", notes = "菜单管理", httpMethod = "GET")
     @GetMapping("/menu")
     public Result findAll(@RequestHeader("x-access-token") String accessToken,
                           @ApiParam(value = "角色id，当前角色的菜单返回 isCheck=1") @RequestParam(value = "roleId", required = false) Integer roleId) {
         log.info("查询菜单列表接口调用-------get---------</menu>:  roleId=" + roleId);
         return adminRoleMenuService.selectAll(accessToken, roleId);
-    }*/
+    }
 
     @ApiOperation(value = "角色列表", notes = "角色管理", httpMethod = "GET")
     @GetMapping("/rolelist")

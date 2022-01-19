@@ -6,12 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.dto.Auctions;
-import xyz.slienceme.project_shop.dto.Category;
 import xyz.slienceme.project_shop.mapper.AuctionsMapper;
-import xyz.slienceme.project_shop.mapper.CategoryMapper;
 import xyz.slienceme.project_shop.service.IAuctionsService;
 import xyz.slienceme.project_shop.utils.DateUtil;
 import xyz.slienceme.project_shop.utils.JWT;
+import xyz.slienceme.project_shop.vo.AuctionsVO;
 import xyz.slienceme.project_shop.vo.TokenVO;
 
 import java.util.HashMap;
@@ -42,7 +41,7 @@ public class AuctionsServiceImpl implements IAuctionsService {
      */
     @Override
     public Result auctionsList(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
-        PageHelper.startPage(page,limit);
+        PageHelper.startPage(page, limit);
         List<HashMap<String, Object>> list = auctionsMapper.selectList(keyword);
         return Result.createBySuccess(new PageInfo<>(list));
     }
@@ -51,13 +50,13 @@ public class AuctionsServiceImpl implements IAuctionsService {
      * 根据竞拍场次信息添加
      */
     @Override
-    public Result auctionsAdd(String accessToken, Integer goodsId, String auctionsName, String startTime, String endTime) throws Exception {
+    public Result auctionsAdd(String accessToken, AuctionsVO auctionsVO) throws Exception {
         TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         Auctions auctions = new Auctions();
-        auctions.setGoodsId(goodsId);
-        auctions.setAuctionsName(auctionsName);
-        auctions.setStart(DateUtil.StringToLocalDateTime(startTime));
-        auctions.setEnd(DateUtil.StringToLocalDateTime(endTime));
+        auctions.setGoodsId(auctionsVO.getGoodsId());
+        auctions.setAuctionsName(auctionsVO.getAuctionsName());
+        auctions.setStart(DateUtil.StringToLocalDateTime(auctionsVO.getStartTime()));
+        auctions.setEnd(DateUtil.StringToLocalDateTime(auctionsVO.getEndTime()));
         auctions.setCreatedBy(unsign.getUserId());
         auctionsMapper.insertSelective(auctions);
         return Result.createBySuccessMessage("成功");

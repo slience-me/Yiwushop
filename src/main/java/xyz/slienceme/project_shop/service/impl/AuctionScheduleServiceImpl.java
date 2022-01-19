@@ -6,18 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.dto.AuctionSchedule;
-import xyz.slienceme.project_shop.dto.Auctions;
 import xyz.slienceme.project_shop.dto.Goods;
 import xyz.slienceme.project_shop.mapper.AuctionScheduleMapper;
-import xyz.slienceme.project_shop.mapper.AuctionsMapper;
 import xyz.slienceme.project_shop.mapper.GoodsMapper;
 import xyz.slienceme.project_shop.service.IAuctionScheduleService;
-import xyz.slienceme.project_shop.utils.DateUtil;
-import xyz.slienceme.project_shop.utils.JWT;
 import xyz.slienceme.project_shop.vo.AuctionScheduleVO;
-import xyz.slienceme.project_shop.vo.TokenVO;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -46,9 +40,9 @@ public class AuctionScheduleServiceImpl implements IAuctionScheduleService {
      * @param limit       每页个数
      */
     @Override
-    public Result auctionScheduleList(String accessToken, Integer page, Integer limit) throws Exception {
-        PageHelper.startPage(page,limit);
-        List<HashMap<String, Object>> list = auctionScheduleMapper.selectList();
+    public Result auctionScheduleList(String accessToken, Integer page, Integer limit, Integer goodsId) throws Exception {
+        PageHelper.startPage(page, limit);
+        List<HashMap<String, Object>> list = auctionScheduleMapper.selectList(goodsId);
         return Result.createBySuccess(new PageInfo<>(list));
     }
 
@@ -67,6 +61,7 @@ public class AuctionScheduleServiceImpl implements IAuctionScheduleService {
 
     /**
      * 开始竞拍
+     *
      * @param accessToken
      * @return
      * @throws Exception
@@ -78,7 +73,7 @@ public class AuctionScheduleServiceImpl implements IAuctionScheduleService {
         if (Objects.isNull(goods1)) {
             return Result.createByErrorMessage("商品不存在");
         }
-        if (auctionScheduleVO.getAuctionSchedulePrice().compareTo(goods1.getPriceNow())>-1){
+        if (auctionScheduleVO.getAuctionSchedulePrice().compareTo(goods1.getPriceNow()) > -1) {
             AuctionSchedule auctionSchedule = new AuctionSchedule();
             auctionSchedule.setGoodsId(auctionScheduleVO.getGoodsId());
             auctionSchedule.setUserId(auctionScheduleVO.getUserId());

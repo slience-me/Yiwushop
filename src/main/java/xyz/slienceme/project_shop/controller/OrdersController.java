@@ -40,4 +40,12 @@ public class OrdersController {
         return ordersService.ordersList(accessToken, pageNo, pageSize, keyword);
     }
 
+    @ApiOperation("通过id删除订单")
+    @DeleteMapping("/ordersList")
+    public Result ordersDel(@RequestHeader("x-access-token") String accessToken,
+                              @ApiParam(value = "订单id") @RequestParam(value = "ordersId") Integer ordersId) throws Exception {
+        log.info("通过id删除订单接口调用---delete--</ordersList>:  ordersId=" + ordersId);
+        return ordersService.ordersDel(accessToken, ordersId);
+    }
+
 }

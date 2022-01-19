@@ -69,10 +69,6 @@ public class AdminRoleMenuServiceImpl implements IAdminRoleMenuService {
             }
             menus1.setChildren(menus2s);
         }
-        /*AdminLogs adminLogs = new AdminLogs();
-        adminLogs.setAdminId(unsign.getUserId());
-        adminLogs.setAdminLogsOperate("查询菜单列表, roleId=" + roleId);
-        adminLogsMapper.insertSelective(adminLogs);*/
         return Result.createBySuccess(menus1s);
     }
 
@@ -105,10 +101,6 @@ public class AdminRoleMenuServiceImpl implements IAdminRoleMenuService {
             }
             role.put("menus", menus);
         }
-        /*AdminLogs adminLogs = new AdminLogs();
-        adminLogs.setAdminId(unsign.getUserId());
-        adminLogs.setAdminLogsOperate("查询角色列表");
-        adminLogsMapper.insertSelective(adminLogs);*/
         return Result.createBySuccess(new PageInfo<>(list));
     }
 
@@ -121,10 +113,6 @@ public class AdminRoleMenuServiceImpl implements IAdminRoleMenuService {
     @Override
     public Result selectByPrimaryKey(String accessToken, Integer roleId) {
         TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
-        /*AdminLogs adminLogs = new AdminLogs();
-        adminLogs.setAdminId(unsign.getUserId());
-        adminLogs.setAdminLogsOperate("查询角色详细信息, roleId=" + roleId);
-        adminLogsMapper.insertSelective(adminLogs);*/
         return Result.createBySuccess(roleMapper.selectByPrimaryKey(roleId));
     }
 

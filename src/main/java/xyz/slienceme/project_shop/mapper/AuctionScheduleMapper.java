@@ -33,5 +33,5 @@ public interface AuctionScheduleMapper {
      * 查询拍卖过程列表
      *
      */
-    List<HashMap<String, Object>> selectList();
+    List<HashMap<String, Object>> selectList(@Param("goodsId") Integer goodsId);
 }

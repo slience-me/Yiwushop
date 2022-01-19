@@ -12,6 +12,7 @@ import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.dto.Goods;
 import xyz.slienceme.project_shop.service.IAuctionsService;
 import xyz.slienceme.project_shop.service.IGoodsService;
+import xyz.slienceme.project_shop.vo.AuctionsVO;
 import xyz.slienceme.project_shop.vo.GoodsVO;
 
 /**
@@ -54,6 +55,16 @@ public class GoodsController {
         return goodsService.goodsOnList(accessToken, pageNo, pageSize, keyword);
     }
 
+    @ApiOperation("查询未上架商品列表")
+    @GetMapping("/goodsNoList")
+    public Result goodsNoList(@RequestHeader("x-access-token") String accessToken,
+                              @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
+                              @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
+                              @ApiParam(value = "商品名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
+        log.info("查询商品列表接口调用--get---</goodsList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
+        return goodsService.goodsNoList(accessToken, pageNo, pageSize, keyword);
+    }
+
     @ApiOperation("查询已售商品列表")
     @GetMapping("/goodsDoneList")
     public Result goodsDoneList(@RequestHeader("x-access-token") String accessToken,
@@ -90,7 +101,7 @@ public class GoodsController {
         return goodsService.goodsPut(accessToken, goods);
     }
 
-    @ApiOperation("上架商品")
+    /*@ApiOperation("上架商品")
     @PostMapping("/stateOn")
     public Result stateon(@RequestHeader("x-access-token") String accessToken,
                           @ApiParam(value = "分类名称") @RequestParam String auctionsName,
@@ -100,6 +111,14 @@ public class GoodsController {
         log.info("上架商品接口调用---put-----</goodsList>           ");
         log.info("添加管理员接口调用---post--</auctionsList>:  auctionsName=" + auctionsName);
         return goodsService.stateOn(accessToken, auctionsName, goodsId, startTime, endTime);
+    }*/
+
+    @ApiOperation("上架商品")
+    @PostMapping("/stateOn")
+    public Result stateon(@RequestHeader("x-access-token") String accessToken,
+                          @RequestBody AuctionsVO auctionsVO) throws Exception {
+        log.info("上架商品接口调用---put-----</goodsList>           ");
+        return goodsService.stateOn(accessToken, auctionsVO);
     }
 
 }

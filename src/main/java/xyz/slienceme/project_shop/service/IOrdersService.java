@@ -27,4 +27,8 @@ public interface IOrdersService {
                                Integer limit,
                                String keyword) throws Exception;
 
+    /**
+     * 根据id删除订单
+     */
+    Result ordersDel(String accessToken, Integer ordersId) throws Exception;
 }

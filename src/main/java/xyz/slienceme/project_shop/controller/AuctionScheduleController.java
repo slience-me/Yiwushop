@@ -37,15 +37,16 @@ public class AuctionScheduleController {
     @GetMapping("/auctionScheduleList")
     public Result auctionScheduleList(@RequestHeader("x-access-token") String accessToken,
                                       @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
-                                      @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize) throws Exception {
+                                      @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
+                                      @ApiParam(value = "商品id", required = true) @RequestParam(value = "goodsId") Integer goodsId) throws Exception {
         log.info("查询拍卖过程表接口调用--get---</auctionScheduleList>:  pageNo=" + pageNo + ",pageSize=" + pageSize);
-        return auctionScheduleService.auctionScheduleList(accessToken, pageNo, pageSize);
+        return auctionScheduleService.auctionScheduleList(accessToken, pageNo, pageSize, goodsId);
     }
 
     @ApiOperation("添加拍卖过程表")
     @PostMapping("/auctionScheduleList")
     public Result auctionScheduleAdd(@RequestHeader("x-access-token") String accessToken,
-                                     @ApiParam(value = "拍卖过程对象") @RequestBody AuctionScheduleVO auctionScheduleVO) throws Exception {
+                                     @RequestBody AuctionScheduleVO auctionScheduleVO) throws Exception {
         log.info("添加拍卖过程表接口调用---post--</auctionScheduleList>:  auctionScheduleVO=" + auctionScheduleVO);
         return auctionScheduleService.auctionScheduleAdd(accessToken, auctionScheduleVO);
     }

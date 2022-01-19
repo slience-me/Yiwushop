@@ -104,7 +104,11 @@
     DATE_FORMAT(a.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime
     FROM auction_schedule a
     left join goods g on a.goods_id = g.goods_id
-    left join user u on a.user_id = g.user_id
+    left join user u on a.user_id = u.user_id
+    WHERE 1=1
+    <if test="goodsId != null">
+      and a.goods_id=#{goodsId}
+    </if>
     order by a.CREATED_TIME desc
   </select>
 

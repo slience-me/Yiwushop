@@ -3,6 +3,7 @@ package xyz.slienceme.project_shop.service;
 
 import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.dto.Goods;
+import xyz.slienceme.project_shop.vo.AuctionsVO;
 import xyz.slienceme.project_shop.vo.GoodsVO;
 
 /**
@@ -42,6 +43,19 @@ public interface IGoodsService {
                        String keyword) throws Exception;
 
     /**
+     * 查询未上架商品列表
+     *
+     * @param accessToken 请求token
+     * @param page        页码
+     * @param limit       每页个数
+     * @param keyword     关键词
+     */
+    Result goodsNoList(String accessToken,
+                       Integer page,
+                       Integer limit,
+                       String keyword) throws Exception;
+
+    /**
      * 查询已售商品列表
      *
      * @param accessToken 请求token
@@ -50,9 +64,9 @@ public interface IGoodsService {
      * @param keyword     关键词
      */
     Result goodsDoneList(String accessToken,
-                       Integer page,
-                       Integer limit,
-                       String keyword) throws Exception;
+                         Integer page,
+                         Integer limit,
+                         String keyword) throws Exception;
 
     /**
      * 根据商品信息添加商品
@@ -75,6 +89,6 @@ public interface IGoodsService {
      * @param accessToken
      * @return
      */
-    Result stateOn(String accessToken, String auctionsName, Integer goodsId, String startTime, String endTime) throws Exception;
+    Result stateOn(String accessToken, AuctionsVO auctionsVO) throws Exception;
 
 }

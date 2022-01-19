@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.dto.Auctions;
 import xyz.slienceme.project_shop.service.IAuctionsService;
+import xyz.slienceme.project_shop.vo.AuctionsVO;
 
 /**
  * <p>
@@ -40,7 +41,7 @@ public class AuctionsController {
         return auctionsService.auctionsList(accessToken, pageNo, pageSize, keyword);
     }
 
-    @ApiOperation("添加竞拍场次")
+    /*@ApiOperation("添加竞拍场次")
     @PostMapping("/auctionsList")
     public Result auctionsAdd(@RequestHeader("x-access-token") String accessToken,
                               @ApiParam(value = "分类名称") @RequestParam Integer goodsId,
@@ -49,6 +50,14 @@ public class AuctionsController {
                               @ApiParam("格式 yyyy-MM-dd") @RequestParam(value = "endTime") String endTime) throws Exception {
         log.info("添加竞拍场次接口调用---post--</auctionsList>:  auctionsName=" + auctionsName);
         return auctionsService.auctionsAdd(accessToken, goodsId, auctionsName, startTime, endTime);
+    }*/
+
+    @ApiOperation("添加竞拍场次")
+    @PostMapping("/auctionsList")
+    public Result auctionsAdd(@RequestHeader("x-access-token") String accessToken,
+                              @RequestBody AuctionsVO auctionsVO) throws Exception {
+        log.info("添加竞拍场次接口调用---post--</auctionsList>:  AuctionsVO=" + auctionsVO);
+        return auctionsService.auctionsAdd(accessToken, auctionsVO);
     }
 
     @ApiOperation("通过id删除竞拍场次")

@@ -44,7 +44,7 @@ public class CategoryController {
     @PostMapping("/categoryList")
     public Result categoryAdd(@RequestHeader("x-access-token") String accessToken,
                               @ApiParam(value = "分类名称") @RequestParam String categoryName) throws Exception {
-        log.info("添加管理员接口调用---post--</categoryList>:  categoryName=" + categoryName);
+        log.info("添加物品类型接口调用---post--</categoryList>:  categoryName=" + categoryName);
         return categoryService.categoryAdd(accessToken, categoryName);
     }
 

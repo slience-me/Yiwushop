@@ -12,6 +12,7 @@ import xyz.slienceme.project_shop.mapper.GoodsMapper;
 import xyz.slienceme.project_shop.service.IGoodsService;
 import xyz.slienceme.project_shop.utils.DateUtil;
 import xyz.slienceme.project_shop.utils.JWT;
+import xyz.slienceme.project_shop.vo.AuctionsVO;
 import xyz.slienceme.project_shop.vo.GoodsVO;
 import xyz.slienceme.project_shop.vo.TokenVO;
 
@@ -66,6 +67,23 @@ public class GoodsServiceImpl implements IGoodsService {
     public Result goodsOnList(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
         PageHelper.startPage(page, limit);
         List<HashMap<String, Object>> list = goodsMapper.selectOnList(keyword);
+        return Result.createBySuccess(new PageInfo<>(list));
+    }
+
+    /**
+     * 查询未上架商品列表
+     *
+     * @param accessToken 请求token
+     * @param page        页码
+     * @param limit       每页个数
+     * @param keyword     关键词
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Result goodsNoList(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
+        PageHelper.startPage(page, limit);
+        List<HashMap<String, Object>> list = goodsMapper.selectNoList(keyword);
         return Result.createBySuccess(new PageInfo<>(list));
     }
 
@@ -144,8 +162,8 @@ public class GoodsServiceImpl implements IGoodsService {
     }
 
     @Override
-    public Result stateOn(String accessToken, String auctionsName, Integer goodsId, String startTime, String endTime) throws Exception {
-        Goods goods1 = goodsMapper.selectByPrimaryKey(goodsId);
+    public Result stateOn(String accessToken, AuctionsVO auctionsVO) throws Exception {
+        Goods goods1 = goodsMapper.selectByPrimaryKey(auctionsVO.getGoodsId());
         System.out.println("goods1 = " + goods1);
         if (Objects.isNull(goods1)) {
             return Result.createByErrorMessage("商品不存在");
@@ -155,10 +173,10 @@ public class GoodsServiceImpl implements IGoodsService {
         goodsMapper.updateByPrimaryKeySelective(goods1);
         TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         Auctions auctions = new Auctions();
-        auctions.setAuctionsName(auctionsName);
-        auctions.setGoodsId(goodsId);
-        auctions.setStart(DateUtil.StringToLocalDateTime(startTime));
-        auctions.setEnd(DateUtil.StringToLocalDateTime(endTime));
+        auctions.setAuctionsName(auctionsVO.getAuctionsName());
+        auctions.setGoodsId(auctionsVO.getGoodsId());
+        auctions.setStart(DateUtil.StringToLocalDateTime(auctionsVO.getStartTime()));
+        auctions.setEnd(DateUtil.StringToLocalDateTime(auctionsVO.getEndTime()));
         auctions.setCreatedBy(unsign.getUserId());
         auctionsMapper.insertSelective(auctions);
         return Result.createBySuccessMessage("成功");
