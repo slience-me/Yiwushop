@@ -109,6 +109,21 @@ public class GoodsServiceImpl implements IGoodsService {
     }
 
     /**
+     * 查询典当商品列表
+     *
+     * @param accessToken 请求token
+     * @param page        页码
+     * @param limit       每页个数
+     * @param keyword     关键词
+     */
+    @Override
+    public Result goodsPawnList(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
+        PageHelper.startPage(page, limit);
+        List<HashMap<String, Object>> list = goodsMapper.selectPawnList(keyword);
+        return Result.createBySuccess(new PageInfo<>(list));
+    }
+
+    /**
      * 根据商品信息添加商品
      *
      * @param accessToken

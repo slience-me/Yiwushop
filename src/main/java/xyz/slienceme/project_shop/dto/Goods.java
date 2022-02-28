@@ -56,7 +56,7 @@ public class Goods {
     private String goodsInfo;
 
     /**
-     * 是否上架  1. 未上架  2. 已上架， 3.添加典当
+     * 是否上架  0. 未上架  1. 已上架，2. 已售  3.添加典当
      */
     @ApiParam(value = "是否上架")
     private Integer stateOn;

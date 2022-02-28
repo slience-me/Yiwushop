@@ -1,5 +1,5 @@
 //package xyz.slienceme.project_shop.config.interceptor;
-//
+// TODO 先不设置限制
 //
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;

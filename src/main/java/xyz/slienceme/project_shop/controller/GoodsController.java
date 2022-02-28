@@ -53,7 +53,7 @@ public class GoodsController {
                               @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                               @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
                               @ApiParam(value = "商品名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
-        log.info("查询商品列表接口调用--get---</goodsList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
+        log.info("查询商品列表接口调用--get---</goodsOnList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return goodsService.goodsOnList(accessToken, pageNo, pageSize, keyword);
     }
 
@@ -63,7 +63,7 @@ public class GoodsController {
                               @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                               @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
                               @ApiParam(value = "商品名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
-        log.info("查询商品列表接口调用--get---</goodsList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
+        log.info("查询商品列表接口调用--get---</goodsNoList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return goodsService.goodsNoList(accessToken, pageNo, pageSize, keyword);
     }
 
@@ -73,8 +73,18 @@ public class GoodsController {
                               @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                               @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
                               @ApiParam(value = "商品名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
-        log.info("查询商品列表接口调用--get---</goodsList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
+        log.info("查询商品列表接口调用--get---</goodsDoneList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return goodsService.goodsDoneList(accessToken, pageNo, pageSize, keyword);
+    }
+
+    @ApiOperation("查询典当商品列表")
+    @GetMapping("/goodsPawnList")
+    public Result goodsPawnList(@RequestHeader("x-access-token") String accessToken,
+                                @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
+                                @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
+                                @ApiParam(value = "商品名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
+        log.info("查询典当商品列表接口调用--get---</goodsPawnList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
+        return goodsService.goodsPawnList(accessToken, pageNo, pageSize, keyword);
     }
 
     @ApiOperation("添加商品")

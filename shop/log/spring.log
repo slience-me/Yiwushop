@@ -1,21 +1,43 @@
-2022-02-27 22:53:18.154  INFO 10056 --- [main] x.s.project_shop.ProjectShopApplication  : Starting ProjectShopApplication using Java 1.8.0_291 on DESKTOP-U1IE4I3 with PID 10056 (D:\Java_study\project_shop\target\classes started by slien in D:\Java_study\project_shop)
-2022-02-27 22:53:18.161  INFO 10056 --- [main] x.s.project_shop.ProjectShopApplication  : No active profile set, falling back to default profiles: default
-2022-02-27 22:53:19.393  INFO 10056 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
-2022-02-27 22:53:19.396  INFO 10056 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2022-02-27 22:53:19.428  INFO 10056 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
-2022-02-27 22:53:19.741  INFO 10056 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'redisConfig' of type [xyz.slienceme.project_shop.config.RedisConfig$$EnhancerBySpringCGLIB$$2b856b28] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2022-02-27 22:53:20.081  INFO 10056 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
-2022-02-27 22:53:20.092  INFO 10056 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-02-27 22:53:20.092  INFO 10056 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
-2022-02-27 22:53:20.202  INFO 10056 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-02-27 22:53:20.202  INFO 10056 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1930 ms
-2022-02-27 22:53:21.426  INFO 10056 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
-2022-02-27 22:53:21.725  INFO 10056 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
-2022-02-27 22:53:21.726  INFO 10056 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
-2022-02-27 22:53:21.741  INFO 10056 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
-2022-02-27 22:53:21.864  INFO 10056 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
-2022-02-27 22:53:22.215  INFO 10056 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: auctionsListUsingGET_1
-2022-02-27 22:53:22.267  INFO 10056 --- [main] x.s.project_shop.ProjectShopApplication  : Started ProjectShopApplication in 5.109 seconds (JVM running for 6.52)
-2022-02-27 22:53:28.897  INFO 10056 --- [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-02-27 22:53:28.898  INFO 10056 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-02-27 22:53:28.901  INFO 10056 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2022-02-28 12:27:40.764  INFO 6768 --- [main] x.s.project_shop.ProjectShopApplication  : Starting ProjectShopApplication using Java 1.8.0_291 on DESKTOP-U1IE4I3 with PID 6768 (D:\Java_study\project_shop\target\classes started by slien in D:\Java_study\project_shop)
+2022-02-28 12:27:40.774  INFO 6768 --- [main] x.s.project_shop.ProjectShopApplication  : No active profile set, falling back to default profiles: default
+2022-02-28 12:27:42.213  INFO 6768 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-02-28 12:27:42.218  INFO 6768 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-02-28 12:27:42.276  INFO 6768 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 27 ms. Found 0 Redis repository interfaces.
+2022-02-28 12:27:42.721  INFO 6768 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'redisConfig' of type [xyz.slienceme.project_shop.config.RedisConfig$$EnhancerBySpringCGLIB$$7323d7eb] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-28 12:27:43.037  INFO 6768 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2022-02-28 12:27:43.047  INFO 6768 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-02-28 12:27:43.047  INFO 6768 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-02-28 12:27:43.161  INFO 6768 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-02-28 12:27:43.161  INFO 6768 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2304 ms
+2022-02-28 12:27:44.389  INFO 6768 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-02-28 12:27:44.697  INFO 6768 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2022-02-28 12:27:44.698  INFO 6768 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-02-28 12:27:44.713  INFO 6768 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-02-28 12:27:44.820  INFO 6768 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-02-28 12:27:45.239  INFO 6768 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: auctionsListUsingGET_1
+2022-02-28 12:27:45.358  INFO 6768 --- [main] x.s.project_shop.ProjectShopApplication  : Started ProjectShopApplication in 5.437 seconds (JVM running for 7.05)
+2022-02-28 12:27:50.518  INFO 6768 --- [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-02-28 12:27:50.518  INFO 6768 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-02-28 12:27:50.520  INFO 6768 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2022-02-28 12:32:19.685  INFO 9772 --- [main] x.s.project_shop.ProjectShopApplication  : Starting ProjectShopApplication using Java 1.8.0_291 on DESKTOP-U1IE4I3 with PID 9772 (D:\Java_study\project_shop\target\classes started by slien in D:\Java_study\project_shop)
+2022-02-28 12:32:19.688  INFO 9772 --- [main] x.s.project_shop.ProjectShopApplication  : No active profile set, falling back to default profiles: default
+2022-02-28 12:32:20.736  INFO 9772 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-02-28 12:32:20.739  INFO 9772 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-02-28 12:32:20.780  INFO 9772 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 19 ms. Found 0 Redis repository interfaces.
+2022-02-28 12:32:21.100  INFO 9772 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'redisConfig' of type [xyz.slienceme.project_shop.config.RedisConfig$$EnhancerBySpringCGLIB$$6cfcf905] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-28 12:32:21.421  INFO 9772 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2022-02-28 12:32:21.433  INFO 9772 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-02-28 12:32:21.433  INFO 9772 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2022-02-28 12:32:21.570  INFO 9772 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-02-28 12:32:21.570  INFO 9772 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1836 ms
+2022-02-28 12:32:23.744  INFO 9772 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-02-28 12:32:24.369  INFO 9772 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2022-02-28 12:32:24.370  INFO 9772 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-02-28 12:32:24.388  INFO 9772 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-02-28 12:32:24.458  INFO 9772 --- [http-nio-8081-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-02-28 12:32:24.459  INFO 9772 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-02-28 12:32:24.463  INFO 9772 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2022-02-28 12:32:24.640  INFO 9772 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-02-28 12:32:25.119  WARN 9772 --- [http-nio-8081-exec-5] o.s.web.servlet.PageNotFound             : No mapping for GET /null
+2022-02-28 12:32:25.161  INFO 9772 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: auctionsListUsingGET_1
+2022-02-28 12:32:25.215  INFO 9772 --- [main] x.s.project_shop.ProjectShopApplication  : Started ProjectShopApplication in 6.309 seconds (JVM running for 8.168)

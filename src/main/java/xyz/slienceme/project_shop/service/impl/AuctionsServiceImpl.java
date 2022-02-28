@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.dto.AuctionSchedule;
 import xyz.slienceme.project_shop.dto.Auctions;
+import xyz.slienceme.project_shop.dto.Goods;
 import xyz.slienceme.project_shop.dto.Pawn;
 import xyz.slienceme.project_shop.mapper.AuctionsMapper;
+import xyz.slienceme.project_shop.mapper.GoodsMapper;
 import xyz.slienceme.project_shop.mapper.PawnMapper;
 import xyz.slienceme.project_shop.service.IAuctionsService;
 import xyz.slienceme.project_shop.utils.DateUtil;
@@ -37,6 +39,8 @@ public class AuctionsServiceImpl implements IAuctionsService {
     private AuctionsMapper auctionsMapper;
     @Autowired
     private PawnMapper pawnMapper;
+    @Autowired
+    private GoodsMapper goodsMapper;
 
     /**
      * 竞拍场次表列表
@@ -143,14 +147,16 @@ public class AuctionsServiceImpl implements IAuctionsService {
 
     @Override
     public Result doPawn(String accessToken, PawnScheduleVO pawnScheduleVO) throws Exception {
-        //Goods goods1 = goodsMapper.selectByPrimaryKey(auctionScheduleVO.getGoodsId());
         Pawn pawn = pawnMapper.selectByPrimaryKey(pawnScheduleVO.getPawnId());
+        Goods goods1 = goodsMapper.selectByPrimaryKey(pawn.getGoodsId());
         System.out.println("pawn = " + pawn);
         if (Objects.isNull(pawn)) {
             return Result.createByErrorMessage("订单不存在");
         }
         pawn.setPresentPerson(pawnScheduleVO.getUserId());
         pawnMapper.updateByPrimaryKeySelective(pawn);
+        goods1.setStateOn(2);//设置已售
+        goodsMapper.updateByPrimaryKeySelective(goods1);
         return Result.createBySuccessMessage("成功");
     }
 }
