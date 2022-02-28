@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.dto.AuctionSchedule;
-import xyz.slienceme.project_shop.dto.Goods;
+import xyz.slienceme.project_shop.dto.Auctions;
 import xyz.slienceme.project_shop.mapper.AuctionScheduleMapper;
-import xyz.slienceme.project_shop.mapper.GoodsMapper;
+import xyz.slienceme.project_shop.mapper.AuctionsMapper;
 import xyz.slienceme.project_shop.service.IAuctionScheduleService;
 import xyz.slienceme.project_shop.vo.AuctionScheduleVO;
 
@@ -30,7 +30,7 @@ public class AuctionScheduleServiceImpl implements IAuctionScheduleService {
     @Autowired
     private AuctionScheduleMapper auctionScheduleMapper;
     @Autowired
-    private GoodsMapper goodsMapper;
+    private AuctionsMapper auctionsMapper;
 
     /**
      * 拍卖过程表列表
@@ -51,8 +51,9 @@ public class AuctionScheduleServiceImpl implements IAuctionScheduleService {
      */
     @Override
     public Result auctionScheduleAdd(String accessToken, AuctionScheduleVO auctionScheduleVO) throws Exception {
+        Auctions auctions = auctionsMapper.selectByPrimaryKey(auctionScheduleVO.getAuctionsId());
         AuctionSchedule auctionSchedule = new AuctionSchedule();
-        auctionSchedule.setGoodsId(auctionScheduleVO.getGoodsId());
+        auctionSchedule.setGoodsId(auctions.getGoodsId());
         auctionSchedule.setUserId(auctionScheduleVO.getUserId());
         auctionSchedule.setAuctionSchedulePrice(auctionScheduleVO.getAuctionSchedulePrice());
         auctionScheduleMapper.insertSelective(auctionSchedule);
@@ -68,20 +69,21 @@ public class AuctionScheduleServiceImpl implements IAuctionScheduleService {
      */
     @Override
     public Result doAuctions(String accessToken, AuctionScheduleVO auctionScheduleVO) throws Exception {
-        Goods goods1 = goodsMapper.selectByPrimaryKey(auctionScheduleVO.getGoodsId());
-        System.out.println("goods1 = " + goods1);
-        if (Objects.isNull(goods1)) {
-            return Result.createByErrorMessage("商品不存在");
+        //Goods goods1 = goodsMapper.selectByPrimaryKey(auctionScheduleVO.getGoodsId());
+        Auctions auctions = auctionsMapper.selectByPrimaryKey(auctionScheduleVO.getAuctionsId());
+        System.out.println("auctions = " + auctions);
+        if (Objects.isNull(auctions)) {
+            return Result.createByErrorMessage("订单不存在");
         }
-        if (auctionScheduleVO.getAuctionSchedulePrice().compareTo(goods1.getPriceNow()) > -1) {
+        if (auctionScheduleVO.getAuctionSchedulePrice().compareTo(auctions.getPresentPrice()) > -1) {
             AuctionSchedule auctionSchedule = new AuctionSchedule();
-            auctionSchedule.setGoodsId(auctionScheduleVO.getGoodsId());
+            auctionSchedule.setGoodsId(auctions.getGoodsId());
             auctionSchedule.setUserId(auctionScheduleVO.getUserId());
             auctionSchedule.setAuctionSchedulePrice(auctionScheduleVO.getAuctionSchedulePrice());
             auctionScheduleMapper.insertSelective(auctionSchedule);
-            goods1.setPriceNow(auctionScheduleVO.getAuctionSchedulePrice());
-            goods1.setPriceUserId(auctionScheduleVO.getUserId());
-            goodsMapper.updateByPrimaryKeySelective(goods1);
+            auctions.setPresentPrice(auctionScheduleVO.getAuctionSchedulePrice());
+            auctions.setPresentPerson(auctionScheduleVO.getUserId());
+            auctionsMapper.updateByPrimaryKeySelective(auctions);
         } else {
             return Result.createByErrorMessage("出价异常");
         }

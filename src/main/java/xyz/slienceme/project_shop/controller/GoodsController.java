@@ -4,16 +4,19 @@ package xyz.slienceme.project_shop.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.dto.Goods;
+import xyz.slienceme.project_shop.dto.Pawn;
 import xyz.slienceme.project_shop.service.IAuctionsService;
 import xyz.slienceme.project_shop.service.IGoodsService;
 import xyz.slienceme.project_shop.vo.AuctionsVO;
 import xyz.slienceme.project_shop.vo.GoodsVO;
+import xyz.slienceme.project_shop.vo.PawnVO;
 
 /**
  * <p>
@@ -23,12 +26,11 @@ import xyz.slienceme.project_shop.vo.GoodsVO;
  * @author slience_me
  * @since 2022-01-15
  */
+@Slf4j
 @Api(tags = "商品表")
 @RestController
 @RequestMapping("/goods")
 public class GoodsController {
-
-    private static final Logger log = LoggerFactory.getLogger(GoodsController.class);
 
     @Autowired
     private IGoodsService goodsService;
@@ -119,6 +121,14 @@ public class GoodsController {
                           @RequestBody AuctionsVO auctionsVO) throws Exception {
         log.info("上架商品接口调用---put-----</goodsList>           ");
         return goodsService.stateOn(accessToken, auctionsVO);
+    }
+
+    @ApiOperation("上架典当")
+    @PostMapping("/stateOnToPawn")
+    public Result stateOnToPawn(@RequestHeader("x-access-token") String accessToken,
+                          @RequestBody PawnVO pawnVO) throws Exception {
+        log.info("上架商品接口调用---put-----</stateOnToPawn>           ");
+        return goodsService.stateOnToPawn(accessToken, pawnVO);
     }
 
 }

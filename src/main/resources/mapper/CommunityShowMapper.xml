@@ -103,4 +103,18 @@
       CREATED_BY = #{createdBy,jdbcType=INTEGER}
     where show_id = #{showId,jdbcType=INTEGER}
   </update>
+
+  <select id="selectList" resultType="java.util.HashMap">
+    SELECT m.show_id as showId,
+    m.show_name as showName,
+    m.show_img_id as showImgId,
+    DATE_FORMAT(m.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime,
+    m.CREATED_BY as createdBy
+    FROM community_show m
+    where
+    m.is_delete=0
+    <if test="keyword!=null and keyword!=''">
+      and CONCAT(m.show_name) like concat('%',#{keyword},'%')
+    </if>
+  </select>
 </mapper>

@@ -5,12 +5,17 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.slienceme.project_shop.common.Result;
+import xyz.slienceme.project_shop.dto.AuctionSchedule;
 import xyz.slienceme.project_shop.dto.Auctions;
+import xyz.slienceme.project_shop.dto.Pawn;
 import xyz.slienceme.project_shop.mapper.AuctionsMapper;
+import xyz.slienceme.project_shop.mapper.PawnMapper;
 import xyz.slienceme.project_shop.service.IAuctionsService;
 import xyz.slienceme.project_shop.utils.DateUtil;
 import xyz.slienceme.project_shop.utils.JWT;
 import xyz.slienceme.project_shop.vo.AuctionsVO;
+import xyz.slienceme.project_shop.vo.PawnScheduleVO;
+import xyz.slienceme.project_shop.vo.PawnVO;
 import xyz.slienceme.project_shop.vo.TokenVO;
 
 import java.util.HashMap;
@@ -30,6 +35,8 @@ public class AuctionsServiceImpl implements IAuctionsService {
 
     @Autowired
     private AuctionsMapper auctionsMapper;
+    @Autowired
+    private PawnMapper pawnMapper;
 
     /**
      * 竞拍场次表列表
@@ -57,6 +64,10 @@ public class AuctionsServiceImpl implements IAuctionsService {
         auctions.setAuctionsName(auctionsVO.getAuctionsName());
         auctions.setStart(DateUtil.StringToLocalDateTime(auctionsVO.getStartTime()));
         auctions.setEnd(DateUtil.StringToLocalDateTime(auctionsVO.getEndTime()));
+        auctions.setFixedPrice(auctionsVO.getFixedPrice());
+        auctions.setPresentPerson(auctionsVO.getPresentPerson());
+        auctions.setPresentPrice(auctionsVO.getPresentPrice());
+        auctions.setStartingPrice(auctionsVO.getStartingPrice());
         auctions.setCreatedBy(unsign.getUserId());
         auctionsMapper.insertSelective(auctions);
         return Result.createBySuccessMessage("成功");
@@ -84,6 +95,62 @@ public class AuctionsServiceImpl implements IAuctionsService {
             return Result.createByErrorMessage("该拍卖场次不存在");
         }
         auctionsMapper.updateByPrimaryKeySelective(auctions);
+        return Result.createBySuccessMessage("成功");
+    }
+
+    @Override
+    public Result pawnList(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
+        PageHelper.startPage(page, limit);
+        List<HashMap<String, Object>> list = pawnMapper.selectList(keyword);
+        return Result.createBySuccess(new PageInfo<>(list));
+    }
+
+    @Override
+    public Result pawnAdd(String accessToken, PawnVO pawnVO) throws Exception {
+        TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
+        Pawn pawn = new Pawn();
+        pawn.setGoodsId(pawnVO.getGoodsId());
+        pawn.setPawnName(pawnVO.getPawnName());
+        pawn.setStart(DateUtil.StringToLocalDateTime(pawnVO.getStartTime()));
+        pawn.setEnd(DateUtil.StringToLocalDateTime(pawnVO.getEndTime()));
+        pawn.setFixedPrice(pawnVO.getFixedPrice());
+        pawn.setPresentPerson(pawnVO.getPresentPerson());
+        pawn.setPresentPrice(pawnVO.getPresentPrice());
+        pawn.setStartingPrice(pawnVO.getStartingPrice());
+        pawn.setCreatedBy(unsign.getUserId());
+        pawnMapper.insertSelective(pawn);
+        return Result.createBySuccessMessage("成功");
+    }
+
+    @Override
+    public Result pawnDel(String accessToken, Integer pawnId) throws Exception {
+        Pawn pawn = pawnMapper.selectByPrimaryKey(pawnId);
+        pawn.setIsDelete(1);
+        pawnMapper.updateByPrimaryKeySelective(pawn);
+        return Result.createBySuccessMessage("成功");
+    }
+
+    @Override
+    public Result pawnPut(String accessToken, Pawn pawn) throws Exception {
+        Pawn pawn1 = pawnMapper.selectByPrimaryKey(pawn.getAuctionsId());
+        System.out.println("auctions1 = " + pawn1);
+        if (Objects.isNull(pawn1)) {
+            return Result.createByErrorMessage("该场次不存在");
+        }
+        pawnMapper.updateByPrimaryKeySelective(pawn);
+        return Result.createBySuccessMessage("成功");
+    }
+
+    @Override
+    public Result doPawn(String accessToken, PawnScheduleVO pawnScheduleVO) throws Exception {
+        //Goods goods1 = goodsMapper.selectByPrimaryKey(auctionScheduleVO.getGoodsId());
+        Pawn pawn = pawnMapper.selectByPrimaryKey(pawnScheduleVO.getPawnId());
+        System.out.println("pawn = " + pawn);
+        if (Objects.isNull(pawn)) {
+            return Result.createByErrorMessage("订单不存在");
+        }
+        pawn.setPresentPerson(pawnScheduleVO.getUserId());
+        pawnMapper.updateByPrimaryKeySelective(pawn);
         return Result.createBySuccessMessage("成功");
     }
 }

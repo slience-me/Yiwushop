@@ -3,6 +3,7 @@ package xyz.slienceme.project_shop.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.service.IAdminRoleMenuService;
 import xyz.slienceme.project_shop.vo.RoleUpdateVO;
-
+@Slf4j
 @Api(tags = "管理员角色菜单相关")
 @RestController
 @RequestMapping("/admin")
 public class AdminRoleMenuController {
-
-    private static final Logger log = LoggerFactory.getLogger(AdminRoleMenuController.class);
 
     @Autowired
     private IAdminRoleMenuService adminRoleMenuService;

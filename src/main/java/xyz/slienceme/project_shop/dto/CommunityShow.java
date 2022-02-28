@@ -26,7 +26,7 @@ public class CommunityShow {
     /**
      * 展示名称
      */
-    @ApiParam(value = "展示名称")
+    @ApiParam(value = "展示名称, 描述")
     private String showName;
 
     /**

@@ -7,15 +7,19 @@ import org.springframework.stereotype.Service;
 import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.dto.Auctions;
 import xyz.slienceme.project_shop.dto.Goods;
+import xyz.slienceme.project_shop.dto.Pawn;
 import xyz.slienceme.project_shop.mapper.AuctionsMapper;
 import xyz.slienceme.project_shop.mapper.GoodsMapper;
+import xyz.slienceme.project_shop.mapper.PawnMapper;
 import xyz.slienceme.project_shop.service.IGoodsService;
 import xyz.slienceme.project_shop.utils.DateUtil;
 import xyz.slienceme.project_shop.utils.JWT;
 import xyz.slienceme.project_shop.vo.AuctionsVO;
 import xyz.slienceme.project_shop.vo.GoodsVO;
+import xyz.slienceme.project_shop.vo.PawnVO;
 import xyz.slienceme.project_shop.vo.TokenVO;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -35,6 +39,8 @@ public class GoodsServiceImpl implements IGoodsService {
     private GoodsMapper goodsMapper;
     @Autowired
     private AuctionsMapper auctionsMapper;
+    @Autowired
+    private PawnMapper pawnMapper;
 
     /**
      * 查询商品列表
@@ -114,9 +120,9 @@ public class GoodsServiceImpl implements IGoodsService {
     public Result goodsAdd(String accessToken, GoodsVO goodsVO) throws Exception {
         Goods goods = new Goods();
         goods.setGoodsName(goodsVO.getGoodsName());
-        goods.setGoodsPrice(goodsVO.getGoodsPrice());
-        goods.setPriceNow(goodsVO.getGoodsPrice());
-        goods.setPriceUserId(goodsVO.getUserId());//默认自己
+        //goods.setGoodsPrice(goodsVO.getGoodsPrice());
+//        goods.setPriceNow(goodsVO.getGoodsPrice());
+        //goods.setPriceUserId(goodsVO.getUserId());//默认自己
         goods.setGoodsInfo(goodsVO.getGoodsInfo());
         goods.setStateOn(0);//默认不上架
         goods.setCategoryId(goodsVO.getCategoryId());
@@ -168,7 +174,7 @@ public class GoodsServiceImpl implements IGoodsService {
         if (Objects.isNull(goods1)) {
             return Result.createByErrorMessage("商品不存在");
         } else {
-            goods1.setStateOn(1);//上架
+            goods1.setStateOn(1);//上架拍卖
         }
         goodsMapper.updateByPrimaryKeySelective(goods1);
         TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
@@ -178,7 +184,37 @@ public class GoodsServiceImpl implements IGoodsService {
         auctions.setStart(DateUtil.StringToLocalDateTime(auctionsVO.getStartTime()));
         auctions.setEnd(DateUtil.StringToLocalDateTime(auctionsVO.getEndTime()));
         auctions.setCreatedBy(unsign.getUserId());
+        auctions.setStartingPrice(auctionsVO.getStartingPrice());
+        auctions.setPresentPerson(0);//默认0
+        auctions.setPresentPrice(BigDecimal.valueOf(0));//默认0
+        auctions.setFixedPrice(BigDecimal.valueOf(0));//默认0
         auctionsMapper.insertSelective(auctions);
+        return Result.createBySuccessMessage("成功");
+    }
+
+    @Override
+    public Result stateOnToPawn(String accessToken, PawnVO pawnVO) throws Exception {
+        Goods goods1 = goodsMapper.selectByPrimaryKey(pawnVO.getGoodsId());
+        System.out.println("goods1 = " + goods1);
+        if (Objects.isNull(goods1)) {
+            return Result.createByErrorMessage("商品不存在");
+        } else {
+            goods1.setStateOn(3);//上架典当
+        }
+        goodsMapper.updateByPrimaryKeySelective(goods1);
+        TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
+        Pawn pawn = new Pawn();
+        pawn.setPawnName(pawnVO.getPawnName());
+        pawn.setGoodsId(pawnVO.getGoodsId());
+        pawn.setStart(DateUtil.StringToLocalDateTime(pawnVO.getStartTime()));
+        pawn.setEnd(DateUtil.StringToLocalDateTime(pawnVO.getEndTime()));
+        pawn.setStartingPrice(pawnVO.getFixedPrice());
+        pawn.setCreatedBy(unsign.getUserId());
+
+        pawn.setStartingPrice(BigDecimal.valueOf(0));//默认0
+        pawn.setPresentPerson(0);//默认0
+        pawn.setPresentPrice(BigDecimal.valueOf(0));//默认0
+        pawnMapper.insertSelective(pawn);
         return Result.createBySuccessMessage("成功");
     }
 }

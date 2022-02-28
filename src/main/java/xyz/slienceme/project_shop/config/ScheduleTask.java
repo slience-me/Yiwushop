@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import xyz.slienceme.project_shop.dto.Auctions;
 import xyz.slienceme.project_shop.dto.Goods;
 import xyz.slienceme.project_shop.dto.Orders;
@@ -14,11 +13,11 @@ import xyz.slienceme.project_shop.mapper.GoodsMapper;
 import xyz.slienceme.project_shop.mapper.OrdersMapper;
 import xyz.slienceme.project_shop.utils.StringUtil;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 @Configuration
 @EnableScheduling
@@ -41,15 +40,15 @@ public class ScheduleTask {
         log.info("定时任务开始执行--当前时间: " + nowTime);
         List<HashMap<String, Object>> auctionsList = auctionsMapper.selectUndoneList(nowTime);
         for (HashMap<String, Object> auctionsi : auctionsList) {
-            Goods goods = goodsMapper.selectByPrimaryKey((Integer) auctionsi.get("goodsId"));
             Orders orders = new Orders();
-            orders.setSerialNum(StringUtil.serialNumber(goods.getGoodsId()));
-            orders.setGoodsId(goods.getGoodsId());
-            orders.setSellUsersId(goods.getUserId());
-            orders.setBuyUsersId(goods.getPriceUserId());
-            orders.setBuyPrice(goods.getPriceNow());
+            orders.setSerialNum(StringUtil.serialNumber((Integer) auctionsi.get("goodsId")));
+            orders.setGoodsId((Integer) auctionsi.get("goodsId"));
+            orders.setSellUsersId((Integer) auctionsi.get("createdBy"));
+            orders.setBuyUsersId((Integer) auctionsi.get("presentPerson"));
+            orders.setBuyPrice((BigDecimal) auctionsi.get("presentPrice"));
             orders.setCreatedBy(1);
             ordersMapper.insertSelective(orders);
+            Goods goods = goodsMapper.selectByPrimaryKey((Integer) auctionsi.get("goodsId"));
             goods.setStateOn(2);//已售
             goodsMapper.updateByPrimaryKeySelective(goods);
             Auctions auctions = auctionsMapper.selectByPrimaryKey((Integer) auctionsi.get("goodsId"));

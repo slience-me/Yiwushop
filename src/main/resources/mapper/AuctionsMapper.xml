@@ -7,14 +7,19 @@
         <result column="auctions_name" jdbcType="VARCHAR" property="auctionsName"/>
         <result column="start" jdbcType="TIMESTAMP" property="start"/>
         <result column="end" jdbcType="TIMESTAMP" property="end"/>
+        <result column="present_price" jdbcType="DECIMAL" property="presentPrice"/>
+        <result column="present_person" jdbcType="INTEGER" property="presentPerson"/>
+        <result column="fixed_price" jdbcType="DECIMAL" property="fixedPrice"/>
+        <result column="starting_price" jdbcType="DECIMAL" property="startingPrice"/>
         <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
         <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime"/>
         <result column="CREATED_BY" jdbcType="INTEGER" property="createdBy"/>
     </resultMap>
     <sql id="Base_Column_List">
-        auctions_id, goods_id
-        , auctions_name, start,
-        end, is_delete, CREATED_TIME, CREATED_BY
+        auctions_id
+        , goods_id, auctions_name, start,
+        end, present_price, present_person,
+    fixed_price, starting_price, is_delete, CREATED_TIME, CREATED_BY
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -28,12 +33,14 @@
         where auctions_id = #{auctionsId,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="xyz.slienceme.project_shop.dto.Auctions">
-        insert into auctions (auctions_id, goods_id, auctions_name, start,
-                              end, is_delete, CREATED_TIME,
-                              CREATED_BY)
-        values (#{auctionsId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{auctionsName,jdbcType=VARCHAR}, #{start,jdbcType=TIMESTAMP},
-                #{end,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP},
-                #{createdBy,jdbcType=INTEGER})
+        insert into auctions (auctions_id, goods_id, auctions_name,
+                              start, end, present_price,
+                              present_person, fixed_price, starting_price,
+                              is_delete, CREATED_TIME, CREATED_BY)
+        values (#{auctionsId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{auctionsName,jdbcType=VARCHAR},
+                #{start,jdbcType=TIMESTAMP}, #{end,jdbcType=TIMESTAMP}, #{presentPrice,jdbcType=DECIMAL},
+                #{presentPerson,jdbcType=INTEGER}, #{fixedPrice,jdbcType=DECIMAL}, #{startingPrice,jdbcType=DECIMAL},
+                #{isDelete,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" parameterType="xyz.slienceme.project_shop.dto.Auctions">
         insert into auctions
@@ -52,6 +59,18 @@
             </if>
             <if test="end != null">
                 end,
+            </if>
+            <if test="presentPrice != null">
+                present_price,
+            </if>
+            <if test="presentPerson != null">
+                present_person,
+            </if>
+            <if test="fixedPrice != null">
+                fixed_price,
+            </if>
+            <if test="startingPrice != null">
+                starting_price,
             </if>
             <if test="isDelete != null">
                 is_delete,
@@ -79,6 +98,18 @@
             <if test="end != null">
                 #{end,jdbcType=TIMESTAMP},
             </if>
+            <if test="presentPrice != null">
+                #{presentPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="presentPerson != null">
+                #{presentPerson,jdbcType=INTEGER},
+            </if>
+            <if test="fixedPrice != null">
+                #{fixedPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="startingPrice != null">
+                #{startingPrice,jdbcType=DECIMAL},
+            </if>
             <if test="isDelete != null">
                 #{isDelete,jdbcType=INTEGER},
             </if>
@@ -105,6 +136,18 @@
             <if test="end != null">
                 end = #{end,jdbcType=TIMESTAMP},
             </if>
+            <if test="presentPrice != null">
+                present_price = #{presentPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="presentPerson != null">
+                present_person = #{presentPerson,jdbcType=INTEGER},
+            </if>
+            <if test="fixedPrice != null">
+                fixed_price = #{fixedPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="startingPrice != null">
+                starting_price = #{startingPrice,jdbcType=DECIMAL},
+            </if>
             <if test="isDelete != null">
                 is_delete = #{isDelete,jdbcType=INTEGER},
             </if>
@@ -119,13 +162,17 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="xyz.slienceme.project_shop.dto.Auctions">
         update auctions
-        set auctions_name = #{auctionsName,jdbcType=VARCHAR},
-            goods_id = #{goodsId,jdbcType=INTEGER},
-            start         = #{start,jdbcType=TIMESTAMP},
-            end           = #{end,jdbcType=TIMESTAMP},
-            is_delete     = #{isDelete,jdbcType=INTEGER},
-            CREATED_TIME  = #{createdTime,jdbcType=TIMESTAMP},
-            CREATED_BY    = #{createdBy,jdbcType=INTEGER}
+        set goods_id       = #{goodsId,jdbcType=INTEGER},
+            auctions_name  = #{auctionsName,jdbcType=VARCHAR},
+            start          = #{start,jdbcType=TIMESTAMP},
+            end            = #{end,jdbcType=TIMESTAMP},
+            present_price  = #{presentPrice,jdbcType=DECIMAL},
+            present_person = #{presentPerson,jdbcType=INTEGER},
+            fixed_price    = #{fixedPrice,jdbcType=DECIMAL},
+            starting_price = #{startingPrice,jdbcType=DECIMAL},
+            is_delete      = #{isDelete,jdbcType=INTEGER},
+            CREATED_TIME   = #{createdTime,jdbcType=TIMESTAMP},
+            CREATED_BY     = #{createdBy,jdbcType=INTEGER}
         where auctions_id = #{auctionsId,jdbcType=INTEGER}
     </update>
     <!-- 查询竞拍场次列表-->
@@ -137,6 +184,9 @@
         a.goods_id as goodsId,
         g.goods_name as goodName,
         a.auctions_name as auctionsName,
+        a.present_person as presentPerson,
+        a.present_price as presentPrice,
+        a.starting_price as startingPrice,
         DATE_FORMAT(a.start, '%Y-%m-%d %H:%i:%s') startTime,
         DATE_FORMAT(a.end, '%Y-%m-%d %H:%i:%s') endTime,
         DATE_FORMAT(a.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime
@@ -154,17 +204,20 @@
     <!-- 参数: -->
     <!--  @param nowTime 当前时间   -->
     <select id="selectUndoneList" resultType="java.util.HashMap">
-        SELECT a.auctions_id as auctionsId,
-        a.goods_id as goodsId,
-        g.goods_name as goodName,
-        a.auctions_name as auctionsName,
-        DATE_FORMAT(a.start, '%Y-%m-%d %H:%i:%s') startTime,
-        DATE_FORMAT(a.end, '%Y-%m-%d %H:%i:%s') endTime,
-        DATE_FORMAT(a.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime
+        SELECT a.auctions_id   as                               auctionsId,
+               a.goods_id      as                               goodsId,
+               g.goods_name    as                               goodName,
+               a.auctions_name as                               auctionsName,
+               a.present_person as presentPerson,
+               a.present_price as presentPrice,
+               a.starting_price as startingPrice,
+               DATE_FORMAT(a.start, '%Y-%m-%d %H:%i:%s')        startTime,
+               DATE_FORMAT(a.end, '%Y-%m-%d %H:%i:%s')          endTime,
+               DATE_FORMAT(a.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime
         FROM auctions a
-        left join goods g on a.goods_id = g.goods_id
-        where
-        a.is_delete=0 and a.end &lt;= #{nowTime}
+                 left join goods g on a.goods_id = g.goods_id
+        where a.is_delete = 0
+          and a.end &lt;= #{nowTime}
         order by a.CREATED_TIME desc
     </select>
 </mapper>

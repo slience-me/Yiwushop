@@ -5,6 +5,7 @@ import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.dto.Goods;
 import xyz.slienceme.project_shop.vo.AuctionsVO;
 import xyz.slienceme.project_shop.vo.GoodsVO;
+import xyz.slienceme.project_shop.vo.PawnVO;
 
 /**
  * <p>
@@ -84,11 +85,19 @@ public interface IGoodsService {
     Result goodsPut(String accessToken, Goods goods) throws Exception;
 
     /**
-     * 上架商品
+     * 上架商品拍卖
      *
      * @param accessToken
      * @return
      */
     Result stateOn(String accessToken, AuctionsVO auctionsVO) throws Exception;
+
+    /**
+     * 上架商品典当
+     *
+     * @param accessToken
+     * @return
+     */
+    Result stateOnToPawn(String accessToken, PawnVO pawnVO) throws Exception;
 
 }

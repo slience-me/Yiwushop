@@ -3,7 +3,10 @@ package xyz.slienceme.project_shop.service;
 
 import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.dto.Auctions;
+import xyz.slienceme.project_shop.dto.Pawn;
 import xyz.slienceme.project_shop.vo.AuctionsVO;
+import xyz.slienceme.project_shop.vo.PawnScheduleVO;
+import xyz.slienceme.project_shop.vo.PawnVO;
 
 /**
  * <p>
@@ -42,5 +45,35 @@ public interface IAuctionsService {
      * 根据竞拍场次信息修改竞拍场次
      */
     Result auctionsPut(String accessToken, Auctions auctions) throws Exception;
+
+    /**
+     * 竞拍场次表列表
+     *
+     * @param accessToken 请求token
+     * @param page        页码
+     * @param limit       每页个数
+     * @param keyword     关键词
+     */
+    Result pawnList(String accessToken,
+                        Integer page,
+                        Integer limit,
+                        String keyword) throws Exception;
+
+    /**
+     * 根据竞拍场次信息添加
+     */
+    Result pawnAdd(String accessToken, PawnVO pawnVO) throws Exception;
+
+    /**
+     * 根据id删除竞拍场次
+     */
+    Result pawnDel(String accessToken, Integer auctionsId) throws Exception;
+
+    /**
+     * 根据竞拍场次信息修改竞拍场次
+     */
+    Result pawnPut(String accessToken, Pawn pawn) throws Exception;
+
+    Result doPawn(String accessToken, PawnScheduleVO pawnScheduleVO) throws Exception;
 
 }

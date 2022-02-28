@@ -11,7 +11,12 @@ public class AuctionScheduleVO {
     /**
      * 商品id
      */
-    private Integer goodsId;
+//    private Integer goodsId;
+
+    /**
+     * 场次id
+     */
+    private Integer auctionsId;
 
     /**
      * 用户id

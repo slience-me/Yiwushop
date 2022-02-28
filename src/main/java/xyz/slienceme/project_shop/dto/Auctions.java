@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiParam;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -46,6 +47,26 @@ public class Auctions {
      */
     @ApiParam(value = "结束时间")
     private LocalDateTime end;
+
+    /**
+     * 目前价格
+     */
+    private BigDecimal presentPrice;
+
+    /**
+     * 目前标价人id
+     */
+    private Integer presentPerson;
+
+    /**
+     * 一口价
+     */
+    private BigDecimal fixedPrice;
+
+    /**
+     * 起拍价
+     */
+    private BigDecimal startingPrice;
 
     /**
      * 状态

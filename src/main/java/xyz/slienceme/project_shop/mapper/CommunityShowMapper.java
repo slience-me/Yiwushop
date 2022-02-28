@@ -1,7 +1,11 @@
 package xyz.slienceme.project_shop.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import xyz.slienceme.project_shop.dto.CommunityShow;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -24,4 +28,6 @@ public interface CommunityShowMapper {
     int updateByPrimaryKeySelective(CommunityShow record);
 
     int updateByPrimaryKey(CommunityShow record);
+
+    List<HashMap<String, Object>> selectList(@Param("keyword") String keyword);
 }

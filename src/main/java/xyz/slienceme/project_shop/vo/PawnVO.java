@@ -1,15 +1,12 @@
 package xyz.slienceme.project_shop.vo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiParam;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-
 @Data
-public class AuctionsVO {
+public class PawnVO {
 
     /**
      * 商品id
@@ -17,9 +14,9 @@ public class AuctionsVO {
     private Integer goodsId;
 
     /**
-     * 场次名称
+     * 典当名称
      */
-    private String auctionsName;
+    private String pawnName;
 
     /**
      * 开始时间

@@ -4,6 +4,7 @@ package xyz.slienceme.project_shop.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,11 @@ import xyz.slienceme.project_shop.service.ICategoryService;
  * @author slience_me
  * @since 2022-01-15
  */
+@Slf4j
 @Api(tags = "物品类型表")
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
-
-    public static final Logger log = LoggerFactory.getLogger(CategoryController.class);
 
     @Autowired
     private ICategoryService categoryService;

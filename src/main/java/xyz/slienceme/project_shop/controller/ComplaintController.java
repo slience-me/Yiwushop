@@ -4,6 +4,7 @@ package xyz.slienceme.project_shop.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,11 @@ import xyz.slienceme.project_shop.vo.ComplaintVO;
  * @author slience_me
  * @since 2022-01-15
  */
+@Slf4j
 @Api(tags = "投诉表")
 @RestController
 @RequestMapping("/complaint")
 public class ComplaintController {
-
-    public static final Logger log = LoggerFactory.getLogger(ComplaintController.class);
 
     @Autowired
     private IComplaintService complaintService;

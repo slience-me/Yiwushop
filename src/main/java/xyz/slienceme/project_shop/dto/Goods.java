@@ -34,20 +34,20 @@ public class Goods {
     /**
      * 商品价格
      */
-    @ApiParam(value = "商品价格")
-    private BigDecimal goodsPrice;
+    /*@ApiParam(value = "商品价格")
+    private BigDecimal goodsPrice;*/
 
     /**
      * 当前价格
      */
-    @ApiParam(value = "当前价格")
-    private BigDecimal priceNow;
+    /*@ApiParam(value = "当前价格")
+    private BigDecimal priceNow;*/
 
     /**
      * 当前最高价用户id
      */
-    @ApiParam(value = "当前最高价用户id")
-    private Integer priceUserId ;
+   /* @ApiParam(value = "当前最高价用户id")
+    private Integer priceUserId ;*/
 
     /**
      * 商品描述
@@ -56,7 +56,7 @@ public class Goods {
     private String goodsInfo;
 
     /**
-     * 是否上架
+     * 是否上架  1. 未上架  2. 已上架， 3.添加典当
      */
     @ApiParam(value = "是否上架")
     private Integer stateOn;
