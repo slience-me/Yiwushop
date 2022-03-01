@@ -184,16 +184,21 @@
     a.goods_id as goodsId,
     g.goods_name as goodName,
     a.pawn_name as pawnName,
+    a.present_person as presentPerson,
+    u.user_name as userName,
+    a.present_price as presentPrice,
+    a.starting_price as startingPrice,
     a.fixed_price as fixedPrice,
     DATE_FORMAT(a.start, '%Y-%m-%d %H:%i:%s') startTime,
     DATE_FORMAT(a.end, '%Y-%m-%d %H:%i:%s') endTime,
     DATE_FORMAT(a.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime
     FROM pawn a
     left join goods g on a.goods_id = g.goods_id
+    left join user u on u.user_id = a.present_person
     where
     a.is_delete=0
     <if test="keyword!=null and keyword!=''">
-      and CONCAT(a.pawn_name) like concat('%',#{keyword},'%')
+      and CONCAT(g.goods_name, a.pawn_name, u.user_name) like concat('%',#{keyword},'%')
     </if>
     order by a.CREATED_TIME desc
   </select>

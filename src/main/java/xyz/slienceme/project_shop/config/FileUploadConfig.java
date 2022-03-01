@@ -1,14 +1,16 @@
 package xyz.slienceme.project_shop.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.system.ApplicationHome;
-import org.springframework.boot.web.servlet.MultipartConfigFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import xyz.slienceme.project_shop.config.interceptor.SecurityInterceptor;
+import xyz.slienceme.project_shop.config.interceptor.SecurityInterceptorApp;
 
-import javax.servlet.MultipartConfigElement;
 import java.io.File;
 
 @Configuration
@@ -18,6 +20,10 @@ public class FileUploadConfig extends WebMvcConfigurationSupport {
     String staticAccessPath;
     @Value("${file.fileupload}")
     String fileupload;
+    @Autowired
+    private SecurityInterceptor securityInterceptor;
+    @Autowired
+    private SecurityInterceptorApp securityInterceptorApp;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -35,30 +41,18 @@ public class FileUploadConfig extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/", "classpath:/META-INF/resources/webjars/");
     }
 
-    /*@Bean
-    MultipartConfigElement multipartConfigElement() {
-        ApplicationHome ah = new ApplicationHome(getClass());
-        File parentPathStringLinux = ah.getSource().getParentFile();
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setLocation(String.valueOf(parentPathStringLinux));
-        return factory.createMultipartConfig();
-    }*/
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        InterceptorRegistration adminInterceptor = registry.addInterceptor(securityInterceptor);
+        adminInterceptor.excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**")
+                .excludePathPatterns("/admin/login")
+                .excludePathPatterns("/admin/rolelist/**");
+        adminInterceptor.addPathPatterns("/**");
 
+        InterceptorRegistration appInterceptor = registry.addInterceptor(securityInterceptorApp);
+        appInterceptor.excludePathPatterns("/app/getCode")
+                .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");
+        appInterceptor.addPathPatterns("/app/**");
+    }
 
-    /**
-     * 设置上传文件的类型
-     * 注意MultipartConfigElement中的方法MaxFileSize和MaxRequestSize都是DataSize中的类型，需要转换，可以用ctrl来查看MultipartConfigFactory和DataSize中的方法
-     *
-     * @return
-     */
-    /*@Bean
-    public MultipartConfigElement multpartConfigElement() {
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-        //单个文件大小200mb
-        factory.setMaxFileSize(DataSize.ofMegabytes(200L));
-        //设置总上传数据大小1GB
-        factory.setMaxRequestSize(DataSize.ofGigabytes(1L));
-        return factory.createMultipartConfig();
-
-    }*/
 }

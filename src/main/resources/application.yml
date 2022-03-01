@@ -9,11 +9,11 @@ spring:
       max-file-size: 1024MB #设置单个文件最大长度
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql:///database_shopping?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false&allowMultiQueries=true&autoReconnect=true
-#    url: jdbc:mysql:///shopping?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false&allowMultiQueries=true&autoReconnect=true
+#    url: jdbc:mysql:///database_shopping?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false&allowMultiQueries=true&autoReconnect=true
+    url: jdbc:mysql:///shopping?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false&allowMultiQueries=true&autoReconnect=true
     username: root
-    password: xian123
-#    password: ycDKDa3ZazthBbSF
+    password: ycDKDa3ZazthBbSF
+#    password: xian123
     hikari:
       connection-test-query: SELECT 1
       minimum-idle: 10

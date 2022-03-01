@@ -29,6 +29,11 @@ public class UserVO {
     private String userPwd;
 
     /**
+     * 用户头像
+     */
+    private String userAvatarurl;
+
+    /**
      * 用户名称
      */
     private String userName;

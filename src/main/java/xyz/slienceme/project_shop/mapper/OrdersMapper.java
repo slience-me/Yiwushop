@@ -1,6 +1,7 @@
 package xyz.slienceme.project_shop.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import xyz.slienceme.project_shop.dto.Orders;
 
 import java.util.HashMap;
@@ -32,5 +33,5 @@ public interface OrdersMapper {
      * 查询订单列表
      *
      */
-    List<HashMap<String, Object>> selectList();
+    List<HashMap<String, Object>> selectList(@Param("keyword") String keyword);
 }

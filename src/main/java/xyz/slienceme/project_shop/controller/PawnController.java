@@ -35,10 +35,10 @@ public class PawnController {
 
     @ApiOperation("查询典当场次")
     @GetMapping("/pawnList")
-    public Result auctionsList(@RequestHeader("x-access-token") String accessToken,
+    public Result pawnList(@RequestHeader("x-access-token") String accessToken,
                                @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                                @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
-                               @ApiParam(value = "管理员名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
+                               @ApiParam(value = "商品名称、场次名称、用户名") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
         log.info("查询典当场次列表接口调用--get---</auctionsList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return auctionsService.pawnList(accessToken, pageNo, pageSize, keyword);
     }

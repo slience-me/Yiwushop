@@ -95,6 +95,7 @@ public class UserServiceImpl implements IUserService {
         user.setIdCard(userVO.getIdCard());
         user.setUserNumber(userVO.getUserNumber());
         user.setUserPwd(userVO.getUserPwd());
+        user.setUserAvatarurl(userVO.getUserAvatarurl());
         user.setUserGender(userVO.getUserGender());
         user.setUserPhone(userVO.getUserPhone());
         user.setUserAddress(userVO.getUserAddress());

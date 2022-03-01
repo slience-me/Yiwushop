@@ -33,7 +33,7 @@ public interface ComplaintMapper {
      * 查询投诉表
      *
      */
-    List<HashMap<String, Object>> selectList();
+    List<HashMap<String, Object>> selectList(@Param("keyword") String keyword);
 
     /**
      * 查询投诉表根据用户（卖家）

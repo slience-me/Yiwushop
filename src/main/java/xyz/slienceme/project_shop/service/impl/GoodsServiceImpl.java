@@ -135,7 +135,7 @@ public class GoodsServiceImpl implements IGoodsService {
     public Result goodsAdd(String accessToken, GoodsVO goodsVO) throws Exception {
         Goods goods = new Goods();
         goods.setGoodsName(goodsVO.getGoodsName());
-        //goods.setGoodsPrice(goodsVO.getGoodsPrice());
+        goods.setGoodsPrice(goodsVO.getGoodsPrice());
 //        goods.setPriceNow(goodsVO.getGoodsPrice());
         //goods.setPriceUserId(goodsVO.getUserId());//默认自己
         goods.setGoodsInfo(goodsVO.getGoodsInfo());

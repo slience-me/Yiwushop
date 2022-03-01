@@ -7,6 +7,7 @@
         <result column="id_card" jdbcType="VARCHAR" property="idCard"/>
         <result column="user_number" jdbcType="VARCHAR" property="userNumber"/>
         <result column="user_pwd" jdbcType="VARCHAR" property="userPwd"/>
+        <result column="user_avatarurl" jdbcType="VARCHAR" property="userAvatarurl"/>
         <result column="user_name" jdbcType="VARCHAR" property="userName"/>
         <result column="user_gender" jdbcType="INTEGER" property="userGender"/>
         <result column="user_phone" jdbcType="VARCHAR" property="userPhone"/>
@@ -18,8 +19,8 @@
     </resultMap>
     <sql id="Base_Column_List">
         user_id
-        , openid, id_card, user_number, user_pwd, user_name, user_gender, user_phone,
-    user_address, user_credit, is_delete, CREATED_TIME, CREATED_BY
+        , openid, id_card, user_number, user_pwd, user_avatarurl, user_name, user_gender,
+    user_phone, user_address, user_credit, is_delete, CREATED_TIME, CREATED_BY
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -34,15 +35,15 @@
     </delete>
     <insert id="insert" parameterType="xyz.slienceme.project_shop.dto.User">
         insert into user (user_id, openid, id_card,
-                          user_number, user_pwd, user_name,
-                          user_gender, user_phone, user_address,
-                          user_credit, is_delete, CREATED_TIME,
-                          CREATED_BY)
+                          user_number, user_pwd, user_avatarurl,
+                          user_name, user_gender, user_phone,
+                          user_address, user_credit, is_delete,
+                          CREATED_TIME, CREATED_BY)
         values (#{userId,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR},
-                #{userNumber,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
-                #{userGender,jdbcType=INTEGER}, #{userPhone,jdbcType=VARCHAR}, #{userAddress,jdbcType=VARCHAR},
-                #{userCredit,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP},
-                #{createdBy,jdbcType=INTEGER})
+                #{userNumber,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, #{userAvatarurl,jdbcType=VARCHAR},
+                #{userName,jdbcType=VARCHAR}, #{userGender,jdbcType=INTEGER}, #{userPhone,jdbcType=VARCHAR},
+                #{userAddress,jdbcType=VARCHAR}, #{userCredit,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER},
+                #{createdTime,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" parameterType="xyz.slienceme.project_shop.dto.User">
         insert into user
@@ -61,6 +62,9 @@
             </if>
             <if test="userPwd != null">
                 user_pwd,
+            </if>
+            <if test="userAvatarurl != null">
+                user_avatarurl,
             </if>
             <if test="userName != null">
                 user_name,
@@ -103,6 +107,9 @@
             <if test="userPwd != null">
                 #{userPwd,jdbcType=VARCHAR},
             </if>
+            <if test="userAvatarurl != null">
+                #{userAvatarurl,jdbcType=VARCHAR},
+            </if>
             <if test="userName != null">
                 #{userName,jdbcType=VARCHAR},
             </if>
@@ -144,6 +151,9 @@
             <if test="userPwd != null">
                 user_pwd = #{userPwd,jdbcType=VARCHAR},
             </if>
+            <if test="userAvatarurl != null">
+                user_avatarurl = #{userAvatarurl,jdbcType=VARCHAR},
+            </if>
             <if test="userName != null">
                 user_name = #{userName,jdbcType=VARCHAR},
             </if>
@@ -173,18 +183,19 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="xyz.slienceme.project_shop.dto.User">
         update user
-        set openid       = #{openid,jdbcType=VARCHAR},
-            id_card      = #{idCard,jdbcType=VARCHAR},
-            user_number  = #{userNumber,jdbcType=VARCHAR},
-            user_pwd     = #{userPwd,jdbcType=VARCHAR},
-            user_name    = #{userName,jdbcType=VARCHAR},
-            user_gender  = #{userGender,jdbcType=INTEGER},
-            user_phone   = #{userPhone,jdbcType=VARCHAR},
-            user_address = #{userAddress,jdbcType=VARCHAR},
-            user_credit  = #{userCredit,jdbcType=INTEGER},
-            is_delete    = #{isDelete,jdbcType=INTEGER},
-            CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP},
-            CREATED_BY   = #{createdBy,jdbcType=INTEGER}
+        set openid         = #{openid,jdbcType=VARCHAR},
+            id_card        = #{idCard,jdbcType=VARCHAR},
+            user_number    = #{userNumber,jdbcType=VARCHAR},
+            user_pwd       = #{userPwd,jdbcType=VARCHAR},
+            user_avatarurl = #{userAvatarurl,jdbcType=VARCHAR},
+            user_name      = #{userName,jdbcType=VARCHAR},
+            user_gender    = #{userGender,jdbcType=INTEGER},
+            user_phone     = #{userPhone,jdbcType=VARCHAR},
+            user_address   = #{userAddress,jdbcType=VARCHAR},
+            user_credit    = #{userCredit,jdbcType=INTEGER},
+            is_delete      = #{isDelete,jdbcType=INTEGER},
+            CREATED_TIME   = #{createdTime,jdbcType=TIMESTAMP},
+            CREATED_BY     = #{createdBy,jdbcType=INTEGER}
         where user_id = #{userId,jdbcType=INTEGER}
     </update>
 
@@ -193,19 +204,19 @@
     <!-- 参数: -->
     <!--  @param openid openid  -->
     <select id="selectByOpenId" resultType="xyz.slienceme.project_shop.dto.User">
-        SELECT m.user_id      as                                userId,
-               m.openid       as                                openid,
-               m.id_card      as                                idCard,
-               m.user_number  as                                userNumber,
-               m.user_pwd     as                                userPwd,
-               m.user_name    as                                userName,
-               m.user_gender  as                                userGender,
-               m.user_phone   as                                userPhone,
-               m.user_address as                                userAddress,
-               m.user_credit  as                                userCredit,
-               m.is_delete    as                                isDelete,
+        SELECT m.user_id        as                              userId,
+               m.openid         as                              openid,
+               m.id_card        as                              idCard,
+               m.user_number    as                              userNumber,
+               m.user_pwd       as                              userPwd,
+               m.user_avatarurl as                              userAvatarurl,
+               m.user_name      as                              userName,
+               m.user_gender    as                              userGender,
+               m.user_phone     as                              userPhone,
+               m.user_address   as                              userAddress,
+               m.user_credit    as                              userCredit,
                DATE_FORMAT(m.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime,
-               m.CREATED_BY   as                                createdBy
+               m.CREATED_BY     as                              createdBy
         FROM user m
         where m.is_delete = 0
           and m.openid = #{openid}
@@ -216,19 +227,19 @@
     <!-- 参数: -->
     <!--  @param openid openid  -->
     <select id="selectByUserId" resultType="xyz.slienceme.project_shop.dto.User">
-        SELECT m.user_id      as                                userId,
-               m.openid       as                                openid,
-               m.id_card      as                                idCard,
-               m.user_number  as                                userNumber,
-               m.user_pwd     as                                userPwd,
-               m.user_name    as                                userName,
-               m.user_gender  as                                userGender,
-               m.user_phone   as                                userPhone,
-               m.user_address as                                userAddress,
-               m.user_credit  as                                userCredit,
-               m.is_delete    as                                isDelete,
+        SELECT m.user_id        as                              userId,
+               m.openid         as                              openid,
+               m.id_card        as                              idCard,
+               m.user_number    as                              userNumber,
+               m.user_pwd       as                              userPwd,
+               m.user_avatarurl as                              userAvatarurl,
+               m.user_name      as                              userName,
+               m.user_gender    as                              userGender,
+               m.user_phone     as                              userPhone,
+               m.user_address   as                              userAddress,
+               m.user_credit    as                              userCredit,
                DATE_FORMAT(m.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime,
-               m.CREATED_BY   as                                createdBy
+               m.CREATED_BY     as                              createdBy
         FROM user m
         where m.is_delete = 0
           and m.user_id = #{userId}
@@ -240,12 +251,12 @@
         m.id_card as idCard,
         m.user_number as userNumber,
         m.user_pwd as userPwd,
+        m.user_avatarurl as userAvatarurl,
         m.user_name as userName,
         m.user_gender as userGender,
         m.user_phone as userPhone,
         m.user_address as userAddress,
         m.user_credit as userCredit,
-        m.is_delete as isDelete,
         DATE_FORMAT(m.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime,
         m.CREATED_BY as createdBy
         FROM user m
@@ -255,7 +266,7 @@
             and m.openid=#{openid}
         </if>
         <if test="keyword!=null and keyword!=''">
-            and CONCAT(m.user_name) like concat('%',#{keyword},'%')
+            and CONCAT(m.user_name, m.id_card,m.user_number, m.user_gender,m.user_phone,m.user_address) like concat('%',#{keyword},'%')
         </if>
     </select>
 </mapper>

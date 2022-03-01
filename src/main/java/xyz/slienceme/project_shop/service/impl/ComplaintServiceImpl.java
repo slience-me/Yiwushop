@@ -43,7 +43,7 @@ public class ComplaintServiceImpl implements IComplaintService {
     @Override
     public Result complaintList(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
         PageHelper.startPage(page,limit);
-        List<HashMap<String, Object>> list = complaintMapper.selectList();//TODO 先留着不开发
+        List<HashMap<String, Object>> list = complaintMapper.selectList(keyword);//TODO 先留着不开发
         return Result.createBySuccess(new PageInfo<>(list));
     }
 

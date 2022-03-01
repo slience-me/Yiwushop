@@ -104,7 +104,7 @@ public class UserController {
     public Result getMembers(@RequestHeader("x-access-token") String accessToken,
                              @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                              @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
-                             @ApiParam(value = "名称、描述") @RequestParam(value = "keyword", required = false) String keyword,
+                             @ApiParam(value = "用户名、ID卡、账号、性别、手机、地址") @RequestParam(value = "keyword", required = false) String keyword,
                              @ApiParam(value = "openid") @RequestParam(value = "openid", required = false) String openid) throws Exception {
         log.info("按页查询所有Member接口调用-------get---------</member>:  ");
         return userService.members(accessToken, pageNo, pageSize, keyword, openid);

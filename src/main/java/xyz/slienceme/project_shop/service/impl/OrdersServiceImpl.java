@@ -40,7 +40,7 @@ public class OrdersServiceImpl implements IOrdersService {
     @Override
     public Result ordersList(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
         PageHelper.startPage(page,limit);
-        List<HashMap<String, Object>> list = ordersMapper.selectList();
+        List<HashMap<String, Object>> list = ordersMapper.selectList(keyword);
         return Result.createBySuccess(new PageInfo<>(list));
     }
 

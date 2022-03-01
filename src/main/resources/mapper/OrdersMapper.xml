@@ -159,6 +159,9 @@
                  left join user u on a.sell_users_id = u.user_id
                  left join user v on a.buy_users_id = v.user_id
         WHERE a.is_delete = 0
+        <if test="keyword!=null and keyword!=''">
+            and CONCAT(a.serial_num, g.goods_name, u.user_name, v.user_name) like concat('%',#{keyword},'%')
+        </if>
         order by a.CREATED_TIME desc
     </select>
 </mapper>

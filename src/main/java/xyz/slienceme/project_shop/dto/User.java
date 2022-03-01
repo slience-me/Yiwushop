@@ -49,6 +49,11 @@ public class User {
     private String userPwd;
 
     /**
+     * 用户头像
+     */
+    private String userAvatarurl;
+
+    /**
      * 用户名称
      */
     @ApiParam(value = "用户名称")

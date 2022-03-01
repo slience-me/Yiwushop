@@ -35,7 +35,7 @@ public class OrdersController {
     public Result ordersList(@RequestHeader("x-access-token") String accessToken,
                                       @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                                       @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
-                             @ApiParam(value = "名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
+                             @ApiParam(value = "流水号、商品名称、买家名称、卖家名称") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
         log.info("查询订单表接口调用--get---</ordersList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return ordersService.ordersList(accessToken, pageNo, pageSize, keyword);
     }

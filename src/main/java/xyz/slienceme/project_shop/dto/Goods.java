@@ -34,8 +34,8 @@ public class Goods {
     /**
      * 商品价格
      */
-    /*@ApiParam(value = "商品价格")
-    private BigDecimal goodsPrice;*/
+    @ApiParam(value = "商品价格")
+    private BigDecimal goodsPrice;
 
     /**
      * 当前价格

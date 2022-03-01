@@ -42,7 +42,7 @@ public class GoodsController {
     public Result goodsList(@RequestHeader("x-access-token") String accessToken,
                             @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                             @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
-                            @ApiParam(value = "商品名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
+                            @ApiParam(value = "商品名称、描述、状态类型 0未上架 1已上架 2已售 3待典当，分类名称") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
         log.info("查询商品列表接口调用--get---</goodsList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return goodsService.goodsList(accessToken, pageNo, pageSize, keyword);
     }
@@ -52,7 +52,7 @@ public class GoodsController {
     public Result goodsOnList(@RequestHeader("x-access-token") String accessToken,
                               @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                               @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
-                              @ApiParam(value = "商品名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
+                              @ApiParam(value = "商品名称、描述、状态类型 0未上架 1已上架 2已售 3待典当，分类名称") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
         log.info("查询商品列表接口调用--get---</goodsOnList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return goodsService.goodsOnList(accessToken, pageNo, pageSize, keyword);
     }
@@ -62,7 +62,7 @@ public class GoodsController {
     public Result goodsNoList(@RequestHeader("x-access-token") String accessToken,
                               @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                               @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
-                              @ApiParam(value = "商品名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
+                              @ApiParam(value = "商品名称、描述、状态类型 0未上架 1已上架 2已售 3待典当，分类名称") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
         log.info("查询商品列表接口调用--get---</goodsNoList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return goodsService.goodsNoList(accessToken, pageNo, pageSize, keyword);
     }
@@ -72,7 +72,7 @@ public class GoodsController {
     public Result goodsDoneList(@RequestHeader("x-access-token") String accessToken,
                               @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                               @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
-                              @ApiParam(value = "商品名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
+                              @ApiParam(value = "商品名称、描述、状态类型 0未上架 1已上架 2已售 3待典当，分类名称") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
         log.info("查询商品列表接口调用--get---</goodsDoneList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return goodsService.goodsDoneList(accessToken, pageNo, pageSize, keyword);
     }
@@ -82,7 +82,7 @@ public class GoodsController {
     public Result goodsPawnList(@RequestHeader("x-access-token") String accessToken,
                                 @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                                 @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
-                                @ApiParam(value = "商品名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
+                                @ApiParam(value = "商品名称、描述、状态类型 0未上架 1已上架 2已售 3待典当，分类名称") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
         log.info("查询典当商品列表接口调用--get---</goodsPawnList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return goodsService.goodsPawnList(accessToken, pageNo, pageSize, keyword);
     }

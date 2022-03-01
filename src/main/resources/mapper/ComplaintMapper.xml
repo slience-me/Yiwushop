@@ -144,6 +144,9 @@
     left join user u on c.user_id = u.user_id
     where
     c.is_delete=0
+    <if test="keyword!=null and keyword!=''">
+      and CONCAT(o.serial_num, u.user_name, c.complaint_status ) like concat('%',#{keyword},'%')
+    </if>
     order by c.CREATED_TIME desc
   </select>
 </mapper>
