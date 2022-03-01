@@ -134,4 +134,20 @@ public class UserServiceImpl implements IUserService {
         return Result.createBySuccess(new PageInfo<>(list));
     }
 
+    @Override
+    public Result conMembers(String accessToken, Integer page, Integer limit, String openid, String idCard, String userNumber, String userName, String userPhone, String userAddress) throws Exception {
+        PageHelper.startPage(page, limit);
+        List<HashMap<String, Object>> list = userMapper.selectConditionList(openid, idCard, userNumber, userName, userPhone, userAddress);
+        return Result.createBySuccess(new PageInfo<>(list));
+    }
+
+    @Override
+    public Result getOneMenber(String accessToken, Integer id) throws Exception {
+        User user = userMapper.selectByPrimaryKey(id);
+        if (Objects.isNull(user)) {
+            return Result.createByErrorMessage("id不正确");
+        }
+        return Result.createBySuccess(user);
+    }
+
 }

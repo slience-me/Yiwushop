@@ -43,4 +43,6 @@ public interface AuctionsMapper {
      */
     List<HashMap<String, Object>> selectUndoneList(@Param("nowTime") String nowTime);
 
+    List<HashMap<String, Object>> selectConditionList(@Param("goodsId") Integer goodsId,
+                                                      @Param("auctionsName") String auctionsName);
 }

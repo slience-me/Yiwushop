@@ -63,4 +63,11 @@ public interface GoodsMapper {
      * @param keyword 关键词
      */
     List<HashMap<String, Object>> selectPawnList(@Param("keyword") String keyword);
+
+
+    List<HashMap<String, Object>> selectConditionList(@Param("goodsName") String goodsName,
+                                                      @Param("goodsInfo") String goodsInfo,
+                                                      @Param("stateOn") Integer stateOn,
+                                                      @Param("categoryId") Integer categoryId,
+                                                      @Param("userId") Integer userId);
 }

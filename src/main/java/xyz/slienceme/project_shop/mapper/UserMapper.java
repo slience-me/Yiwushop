@@ -35,4 +35,11 @@ public interface UserMapper {
 
     List<HashMap<String, Object>> selectList(@Param("keyword") String keyword,
                                              @Param("openid") String openid);
+
+    List<HashMap<String, Object>> selectConditionList(@Param("openid") String openid,
+                                                      @Param("idCard") String idCard,
+                                                      @Param("userNumber") String userNumber,
+                                                      @Param("userName") String userName,
+                                                      @Param("userPhone") String userPhone,
+                                                      @Param("userAddress") String userAddress);
 }

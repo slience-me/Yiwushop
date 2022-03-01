@@ -50,6 +50,7 @@ public class AdminController {
         return adminService.adminList(accessToken, pageNo, pageSize, keyword);
     }
 
+
     @ApiOperation("添加管理员")
     @PostMapping("/adminList")
     public Result adminAdd(@RequestHeader("x-access-token") String accessToken,

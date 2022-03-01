@@ -113,4 +113,9 @@ public interface IGoodsService {
      */
     Result stateOnToPawn(String accessToken, PawnVO pawnVO) throws Exception;
 
+
+    Result selectByPrimaryKey(String accessToken, Integer goodsId);
+
+
+    Result getData(String accessToken, Integer pageNo, Integer pageSize, String goodsName, String goodsInfo, Integer stateOn, Integer categoryId, Integer userId);
 }

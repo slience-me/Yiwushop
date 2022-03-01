@@ -54,7 +54,7 @@ public class ScheduleTask {
             orders.setCreatedBy(1);
             ordersMapper.insertSelective(orders);
             Goods goods = goodsMapper.selectByPrimaryKey((Integer) auctionsi.get("goodsId"));
-            goods.setStateOn(2);//已售
+            goods.setStateOn(3);//已售
             goodsMapper.updateByPrimaryKeySelective(goods);
             Auctions auctions = auctionsMapper.selectByPrimaryKey((Integer) auctionsi.get("auctionsId"));
             auctions.setIsDelete(1);//结束
@@ -70,7 +70,7 @@ public class ScheduleTask {
             orders.setCreatedBy(1);
             ordersMapper.insertSelective(orders);
             Goods goods = goodsMapper.selectByPrimaryKey((Integer) pawni.get("goodsId"));
-            goods.setStateOn(2);//已售
+            goods.setStateOn(3);//已售
             goodsMapper.updateByPrimaryKeySelective(goods);
             Pawn pawn = pawnMapper.selectByPrimaryKey((Integer) pawni.get("auctionsId"));
             pawn.setIsDelete(1);//结束

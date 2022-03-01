@@ -203,6 +203,34 @@
         </if>
         order by a.CREATED_TIME desc
     </select>
+
+    <select id="selectConditionList" resultType="java.util.HashMap">
+        SELECT a.auctions_id as auctionsId,
+        a.goods_id as goodsId,
+        g.goods_name as goodName,
+        a.auctions_name as auctionsName,
+        a.present_person as presentPerson,
+        u.user_name as userName,
+        a.present_price as presentPrice,
+        a.starting_price as startingPrice,
+        a.fixed_price as fixedPrice,
+        DATE_FORMAT(a.start, '%Y-%m-%d %H:%i:%s') startTime,
+        DATE_FORMAT(a.end, '%Y-%m-%d %H:%i:%s') endTime,
+        DATE_FORMAT(a.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime
+        FROM auctions a
+        left join goods g on a.goods_id = g.goods_id
+        left join user u on u.user_id = a.present_person
+        where
+        a.is_delete=0
+        <if test="goodsId!=null and goodsId!=''">
+            and a.goods_id=#{goodsId}
+        </if>
+        <if test="auctionsName!=null and auctionsName!=''">
+            and a.auctions_name=#{auctionsName}
+        </if>
+        order by a.CREATED_TIME desc
+    </select>
+
     <!-- 查询未结束场次列表-->
     <!-- 返回值类型:  List<HashMap<String, Object>> selectUndoneList -->
     <!-- 参数: -->

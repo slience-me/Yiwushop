@@ -37,4 +37,15 @@ public interface IUserService {
                    String keyword,
                    String openid) throws Exception;
 
+    Result conMembers(String accessToken,
+                      Integer page,
+                      Integer limit,
+                      String openid,
+                      String idCard,
+                      String userNumber,
+                      String userName,
+                      String userPhone,
+                      String userAddress) throws Exception;
+
+    Result getOneMenber(String accessToken, Integer id) throws Exception;
 }

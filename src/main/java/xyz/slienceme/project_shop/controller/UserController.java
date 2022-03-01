@@ -110,4 +110,27 @@ public class UserController {
         return userService.members(accessToken, pageNo, pageSize, keyword, openid);
     }
 
+    @ApiOperation("条件查询所有Member")
+    @GetMapping("/member/data")
+    public Result getData(@RequestHeader("x-access-token") String accessToken,
+                             @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
+                             @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
+                             @ApiParam(value = "openid") @RequestParam(value = "openid", required = false) String openid,
+                          @ApiParam(value = "身份证") @RequestParam(value = "idCard", required = false) String idCard,
+                          @ApiParam(value = "用户账号学号") @RequestParam(value = "userNumber", required = false) String userNumber,
+                          @ApiParam(value = "用户名称") @RequestParam(value = "userName", required = false) String userName,
+                          @ApiParam(value = "用户手机") @RequestParam(value = "userPhone", required = false) String userPhone,
+                          @ApiParam(value = "用户地址") @RequestParam(value = "userAddress", required = false) String userAddress) throws Exception {
+        log.info("条件查询所有Member接口调用-------get---------</data>:  ");
+        return userService.conMembers(accessToken, pageNo, pageSize, openid, idCard,userNumber,userName,userPhone,userAddress);
+    }
+
+    @ApiOperation("查询单个用户")
+    @GetMapping("/member/{userId}")
+    public Result getOne(@RequestHeader("x-access-token") String accessToken,
+                         @PathVariable("userId") @ApiParam(value = "用户id", required = true) Integer userId) throws Exception {
+        log.info("查询单个用户接口调用-------get---------</member>:  ");
+        return userService.getOneMenber(accessToken, userId);
+    }
+
 }

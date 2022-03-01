@@ -9,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import xyz.slienceme.project_shop.config.interceptor.SecurityInterceptor;
-import xyz.slienceme.project_shop.config.interceptor.SecurityInterceptorApp;
 
 import java.io.File;
 
@@ -22,8 +21,6 @@ public class FileUploadConfig extends WebMvcConfigurationSupport {
     String fileupload;
     @Autowired
     private SecurityInterceptor securityInterceptor;
-    @Autowired
-    private SecurityInterceptorApp securityInterceptorApp;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -46,13 +43,11 @@ public class FileUploadConfig extends WebMvcConfigurationSupport {
         InterceptorRegistration adminInterceptor = registry.addInterceptor(securityInterceptor);
         adminInterceptor.excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**")
                 .excludePathPatterns("/admin/login")
-                .excludePathPatterns("/admin/rolelist/**");
+                .excludePathPatterns("/admin/rolelist/**")
+                .excludePathPatterns("/app/getCode")
+                .excludePathPatterns("/image/file/**");
         adminInterceptor.addPathPatterns("/**");
 
-        InterceptorRegistration appInterceptor = registry.addInterceptor(securityInterceptorApp);
-        appInterceptor.excludePathPatterns("/app/getCode")
-                .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");
-        appInterceptor.addPathPatterns("/app/**");
     }
 
 }

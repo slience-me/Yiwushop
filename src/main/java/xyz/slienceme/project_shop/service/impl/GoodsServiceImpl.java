@@ -139,7 +139,7 @@ public class GoodsServiceImpl implements IGoodsService {
 //        goods.setPriceNow(goodsVO.getGoodsPrice());
         //goods.setPriceUserId(goodsVO.getUserId());//默认自己
         goods.setGoodsInfo(goodsVO.getGoodsInfo());
-        goods.setStateOn(0);//默认不上架
+        goods.setStateOn(1);//默认不上架
         goods.setCategoryId(goodsVO.getCategoryId());
         goods.setUserId(goodsVO.getUserId());
         goods.setGoodsImgId(0);//TODO 先留空
@@ -189,7 +189,7 @@ public class GoodsServiceImpl implements IGoodsService {
         if (Objects.isNull(goods1)) {
             return Result.createByErrorMessage("商品不存在");
         } else {
-            goods1.setStateOn(1);//上架拍卖
+            goods1.setStateOn(2);//上架拍卖
         }
         goodsMapper.updateByPrimaryKeySelective(goods1);
         TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
@@ -214,7 +214,7 @@ public class GoodsServiceImpl implements IGoodsService {
         if (Objects.isNull(goods1)) {
             return Result.createByErrorMessage("商品不存在");
         } else {
-            goods1.setStateOn(3);//上架典当
+            goods1.setStateOn(4);//上架典当
         }
         goodsMapper.updateByPrimaryKeySelective(goods1);
         TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
@@ -231,5 +231,21 @@ public class GoodsServiceImpl implements IGoodsService {
         pawn.setPresentPrice(BigDecimal.valueOf(0));//默认0
         pawnMapper.insertSelective(pawn);
         return Result.createBySuccessMessage("成功");
+    }
+
+    @Override
+    public Result selectByPrimaryKey(String accessToken, Integer goodsId) {
+        Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
+        if (Objects.isNull(goods)){
+            return Result.createByErrorMessage("id不正确");
+        }
+        return Result.createBySuccess(goods);
+    }
+
+    @Override
+    public Result getData(String accessToken, Integer pageNo, Integer pageSize, String goodsName, String goodsInfo, Integer stateOn, Integer categoryId, Integer userId) {
+        PageHelper.startPage(pageNo, pageSize);
+        List<HashMap<String, Object>> list = goodsMapper.selectConditionList(goodsName, goodsInfo, stateOn, categoryId, userId);
+        return Result.createBySuccess(new PageInfo<>(list));
     }
 }

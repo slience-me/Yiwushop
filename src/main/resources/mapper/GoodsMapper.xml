@@ -289,4 +289,45 @@
         </if>
         order by g.CREATED_TIME desc
     </select>
+
+
+    <!-- 查询已售商品列表-->
+    <!-- 返回值类型:  List<HashMap<String, Object>> selectDoneList -->
+    <!-- 参数: -->
+    <!--  @param keyword 关键词   -->
+    <select id="selectConditionList" resultType="java.util.HashMap">
+        SELECT g.goods_id as goodsId,
+        g.goods_name as goodsName,
+        g.goods_info as goodsInfo,
+        g.goods_price as goodsPrice,
+        g.state_on as stateOn,
+        g.category_id as categoryId,
+        c.category_name as categoryName,
+        g.user_id as userId,
+        u.user_name as userName,
+        g.goods_img_id as goodsImgId,
+        i.image_url as imageUrl,
+        DATE_FORMAT(g.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime
+        FROM goods g left join category c on g.category_id=c.category_id
+        left join user u on g.user_id=u.user_id
+        left join image i on g.goods_img_id=i.image_id
+        where
+        g.is_delete=0
+        <if test="goodsName!=null and goodsName!=''">
+            and g.goods_name=#{goodsName}
+        </if>
+        <if test="goodsInfo!=null and goodsInfo!=''">
+            and g.goods_info=#{goodsInfo}
+        </if>
+        <if test="stateOn!=null and stateOn!=''">
+            and g.state_on=#{stateOn}
+        </if>
+        <if test="categoryId!=null and categoryId!=''">
+            and g.category_id=#{categoryId}
+        </if>
+        <if test="userId!=null and userId!=''">
+            and g.user_id=#{userId}
+        </if>
+        order by g.CREATED_TIME desc
+    </select>
 </mapper>

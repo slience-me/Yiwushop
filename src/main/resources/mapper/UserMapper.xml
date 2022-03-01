@@ -269,4 +269,41 @@
             and CONCAT(m.user_name, m.id_card,m.user_number, m.user_gender,m.user_phone,m.user_address) like concat('%',#{keyword},'%')
         </if>
     </select>
+
+    <select id="selectConditionList" resultType="java.util.HashMap">
+        SELECT m.user_id as userId,
+        m.openid as openid,
+        m.id_card as idCard,
+        m.user_number as userNumber,
+        m.user_pwd as userPwd,
+        m.user_avatarurl as userAvatarurl,
+        m.user_name as userName,
+        m.user_gender as userGender,
+        m.user_phone as userPhone,
+        m.user_address as userAddress,
+        m.user_credit as userCredit,
+        DATE_FORMAT(m.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime,
+        m.CREATED_BY as createdBy
+        FROM user m
+        where
+        m.is_delete=0
+        <if test="openid!=null and openid!=''">
+            and m.openid=#{openid}
+        </if>
+        <if test="idCard!=null and idCard!=''">
+            and m.id_card=#{idCard}
+        </if>
+        <if test="userNumber!=null and userNumber!=''">
+            and m.user_number=#{userNumber}
+        </if>
+        <if test="userName!=null and userName!=''">
+            and m.user_name=#{userName}
+        </if>
+        <if test="userPhone!=null and userPhone!=''">
+            and m.user_phone=#{userPhone}
+        </if>
+        <if test="userAddress!=null and userAddress!=''">
+            and m.user_address=#{userAddress}
+        </if>
+    </select>
 </mapper>

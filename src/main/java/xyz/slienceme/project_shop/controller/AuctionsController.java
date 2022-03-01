@@ -41,6 +41,25 @@ public class AuctionsController {
         return auctionsService.auctionsList(accessToken, pageNo, pageSize, keyword);
     }
 
+    @ApiOperation("条件查询竞拍场次列表")
+    @GetMapping("/data")
+    public Result getData(@RequestHeader("x-access-token") String accessToken,
+                          @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
+                          @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
+                          @ApiParam(value = "商品id") @RequestParam(value = "goodsId", required = false) Integer goodsId,
+                          @ApiParam(value = "场次名称") @RequestParam(value = "auctionsName", required = false) String auctionsName) throws Exception {
+        log.info("条件查询竞拍场次列表接口调用--get---</data>: ");
+        return auctionsService.getData(accessToken, pageNo, pageSize, goodsId, auctionsName);
+    }
+
+    @ApiOperation("查询单个竞拍场次")
+    @GetMapping("/auctionsList/{auctionsId}")
+    public Result getOne(@RequestHeader("x-access-token") String accessToken,
+                         @PathVariable("auctionsId") @ApiParam(value = "场次id", required = true) Integer auctionsId) throws Exception {
+        log.info("查询单个商品接口调用--get---</goodsList>:  pageNo=");
+        return auctionsService.selectByPrimaryKey(accessToken, auctionsId);
+    }
+
     /*@ApiOperation("添加竞拍场次")
     @PostMapping("/auctionsList")
     public Result auctionsAdd(@RequestHeader("x-access-token") String accessToken,

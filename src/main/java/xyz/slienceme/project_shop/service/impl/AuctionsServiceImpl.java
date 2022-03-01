@@ -155,8 +155,40 @@ public class AuctionsServiceImpl implements IAuctionsService {
         }
         pawn.setPresentPerson(pawnScheduleVO.getUserId());
         pawnMapper.updateByPrimaryKeySelective(pawn);
-        goods1.setStateOn(2);//设置已售
+        goods1.setStateOn(3);//设置已售
         goodsMapper.updateByPrimaryKeySelective(goods1);
         return Result.createBySuccessMessage("成功");
+    }
+
+    @Override
+    public Result selectByPrimaryKey(String accessToken, Integer auctionsId) {
+        Auctions auctions= auctionsMapper.selectByPrimaryKey(auctionsId);
+        if (Objects.isNull(auctions)){
+            return Result.createByErrorMessage("id不正确");
+        }
+        return Result.createBySuccess(auctions);
+    }
+
+    @Override
+    public Result getData(String accessToken, Integer pageNo, Integer pageSize, Integer goodsId, String auctionsName) {
+        PageHelper.startPage(pageNo, pageSize);
+        List<HashMap<String, Object>> list = auctionsMapper.selectConditionList(goodsId, auctionsName);
+        return Result.createBySuccess(new PageInfo<>(list));
+    }
+
+    @Override
+    public Result getPawnData(String accessToken, Integer pageNo, Integer pageSize, Integer goodsId, String pawnName) {
+        PageHelper.startPage(pageNo, pageSize);
+        List<HashMap<String, Object>> list = pawnMapper.selectConditionList(goodsId, pawnName);
+        return Result.createBySuccess(new PageInfo<>(list));
+    }
+
+    @Override
+    public Result selectByPrimaryKeyPawn(String accessToken, Integer auctionsId) {
+        Pawn pawn= pawnMapper.selectByPrimaryKey(auctionsId);
+        if (Objects.isNull(pawn)){
+            return Result.createByErrorMessage("id不正确");
+        }
+        return Result.createBySuccess(pawn);
     }
 }

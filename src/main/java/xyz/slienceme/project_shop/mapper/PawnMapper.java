@@ -30,4 +30,7 @@ public interface PawnMapper {
      * @param nowTime 当前时间
      */
     List<HashMap<String, Object>> selectUndoneList(@Param("nowTime") String nowTime);
+
+    List<HashMap<String, Object>> selectConditionList(@Param("goodsId") Integer goodsId,
+                                                      @Param("pawnName") String pawnName);
 }

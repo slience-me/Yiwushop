@@ -5,13 +5,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.dto.Goods;
-import xyz.slienceme.project_shop.dto.Pawn;
 import xyz.slienceme.project_shop.service.IAuctionsService;
 import xyz.slienceme.project_shop.service.IGoodsService;
 import xyz.slienceme.project_shop.vo.AuctionsVO;
@@ -47,6 +44,28 @@ public class GoodsController {
         return goodsService.goodsList(accessToken, pageNo, pageSize, keyword);
     }
 
+    @ApiOperation("条件查询商品列表")
+    @GetMapping("/data")
+    public Result getData(@RequestHeader("x-access-token") String accessToken,
+                          @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
+                          @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
+                          @ApiParam(value = "商品名称") @RequestParam(value = "goodsName", required = false) String goodsName,
+                          @ApiParam(value = "商品描述") @RequestParam(value = "goodsInfo", required = false) String goodsInfo,
+                          @ApiParam(value = "状态类型 1未上架 2已上架 3已售 4待典当") @RequestParam(value = "stateOn", required = false) Integer stateOn,
+                          @ApiParam(value = "商品分类id") @RequestParam(value = "categoryId", required = false) Integer categoryId,
+                          @ApiParam(value = "所属用户id") @RequestParam(value = "userId", required = false) Integer userId) throws Exception {
+        log.info("条件查询商品列表接口调用--get---</data>: ");
+        return goodsService.getData(accessToken, pageNo, pageSize, goodsName, goodsInfo, stateOn, categoryId, userId);
+    }
+
+    @ApiOperation("查询单个商品")
+    @GetMapping("/goodsList/{goodsId}")
+    public Result getOne(@RequestHeader("x-access-token") String accessToken,
+                         @PathVariable("goodsId") @ApiParam(value = "商品id", required = true) Integer goodsId) throws Exception {
+        log.info("查询单个商品接口调用--get---</goodsList>:  pageNo=");
+        return goodsService.selectByPrimaryKey(accessToken, goodsId);
+    }
+
     @ApiOperation("查询上架商品列表")
     @GetMapping("/goodsOnList")
     public Result goodsOnList(@RequestHeader("x-access-token") String accessToken,
@@ -70,9 +89,9 @@ public class GoodsController {
     @ApiOperation("查询已售商品列表")
     @GetMapping("/goodsDoneList")
     public Result goodsDoneList(@RequestHeader("x-access-token") String accessToken,
-                              @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
-                              @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
-                              @ApiParam(value = "商品名称、描述、状态类型 0未上架 1已上架 2已售 3待典当，分类名称") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
+                                @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
+                                @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
+                                @ApiParam(value = "商品名称、描述、状态类型 0未上架 1已上架 2已售 3待典当，分类名称") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
         log.info("查询商品列表接口调用--get---</goodsDoneList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return goodsService.goodsDoneList(accessToken, pageNo, pageSize, keyword);
     }
@@ -136,7 +155,7 @@ public class GoodsController {
     @ApiOperation("上架典当")
     @PostMapping("/stateOnToPawn")
     public Result stateOnToPawn(@RequestHeader("x-access-token") String accessToken,
-                          @RequestBody PawnVO pawnVO) throws Exception {
+                                @RequestBody PawnVO pawnVO) throws Exception {
         log.info("上架商品接口调用---put-----</stateOnToPawn>           ");
         return goodsService.stateOnToPawn(accessToken, pawnVO);
     }

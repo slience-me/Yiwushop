@@ -39,7 +39,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        logger.info("请求路径：" + request.getRequestURI());
+//        logger.info("请求路径：" + request.getRequestURI());
 
         String token = request.getHeader("x-access-token");
 

@@ -76,4 +76,12 @@ public interface IAuctionsService {
 
     Result doPawn(String accessToken, PawnScheduleVO pawnScheduleVO) throws Exception;
 
+    Result selectByPrimaryKey(String accessToken, Integer auctionsId);
+
+    Result getData(String accessToken, Integer pageNo, Integer pageSize, Integer goodsId, String auctionsName);
+
+    Result getPawnData(String accessToken, Integer pageNo, Integer pageSize, Integer goodsId, String pawnName);
+
+    Result selectByPrimaryKeyPawn(String accessToken, Integer auctionsId);
+
 }
