@@ -24,6 +24,7 @@ public interface GoodsMapper {
     int insertSelective(Goods record);
 
     Goods selectByPrimaryKey(Integer goodsId);
+    Goods selectByPrimaryKey1(Integer goodsId);
 
     int updateByPrimaryKeySelective(Goods record);
 

@@ -51,7 +51,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
         TokenVO tokenVo = null;
         try {
             tokenVo = JWT.unsign(token, TokenVO.class);
-            if (Objects.isNull(token)) {
+            if (Objects.isNull(tokenVo)) {
                 getMsg("请登录后访问", request, response);
                 return false;
             }
@@ -61,7 +61,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
         }
 
         //判断token是否一致
-        try {
+        /*try {
             HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
             if (!hashOperations.hasKey(redisAdminLoginKey, tokenVo.getUserId().toString())) {
                 getMsg("请登录后访问", request, response);
@@ -77,7 +77,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
             logger.error("登陆报错：", e);
             getMsg("请登录后访问", request, response);
             return false;
-        }
+        }*/
 
         //开始进入请求地址拦截
         HandlerMethod hm = (HandlerMethod) handler;

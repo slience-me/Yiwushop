@@ -201,7 +201,7 @@
         left join user u on g.user_id=u.user_id
         left join image i on g.goods_img_id=i.image_id
         where
-        g.is_delete=0 and g.state_on=1
+        g.is_delete=0 and g.state_on=2
         <if test="keyword!=null and keyword!=''">
             and CONCAT(g.goods_name,g.goods_info,g.state_on,c.category_name) like concat('%',#{keyword},'%')
         </if>
@@ -228,7 +228,7 @@
         left join user u on g.user_id=u.user_id
         left join image i on g.goods_img_id=i.image_id
         where
-        g.is_delete=0 and g.state_on=0
+        g.is_delete=0 and g.state_on=1
         <if test="keyword!=null and keyword!=''">
             and CONCAT(g.goods_name,g.goods_info,g.state_on,c.category_name) like concat('%',#{keyword},'%')
         </if>
@@ -255,7 +255,7 @@
         left join user u on g.user_id=u.user_id
         left join image i on g.goods_img_id=i.image_id
         where
-        g.is_delete=0 and g.state_on=2
+        g.is_delete=0 and g.state_on=3
         <if test="keyword!=null and keyword!=''">
             and CONCAT(g.goods_name,g.goods_info,g.state_on,c.category_name) like concat('%',#{keyword},'%')
         </if>
@@ -283,7 +283,7 @@
         left join user u on g.user_id=u.user_id
         left join image i on g.goods_img_id=i.image_id
         where
-        g.is_delete=0 and g.state_on=3
+        g.is_delete=0 and g.state_on=4
         <if test="keyword!=null and keyword!=''">
             and CONCAT(g.goods_name,g.goods_info,g.state_on,c.category_name) like concat('%',#{keyword},'%')
         </if>
@@ -329,5 +329,24 @@
             and g.user_id=#{userId}
         </if>
         order by g.CREATED_TIME desc
+    </select>
+
+    <select id="selectByPrimaryKey1" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select g.goods_id as goodsId,
+               g.goods_name as goodsName,
+               g.goods_info as goodsInfo,
+               g.goods_price as goodsPrice,
+               g.state_on as stateOn,
+               g.category_id as categoryId,
+               c.category_name as categoryName,
+               g.user_id as userId,
+               u.user_name as userName,
+               g.goods_img_id as goodsImgId,
+               i.image_url as imageUrl,
+               DATE_FORMAT(g.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime
+        FROM goods g left join category c on g.category_id=c.category_id
+                     left join user u on g.user_id=u.user_id
+                     left join image i on g.goods_img_id=i.image_id
+        where g.goods_id = #{goodsId,jdbcType=INTEGER}
     </select>
 </mapper>

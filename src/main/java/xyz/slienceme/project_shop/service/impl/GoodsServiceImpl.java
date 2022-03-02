@@ -139,10 +139,18 @@ public class GoodsServiceImpl implements IGoodsService {
 //        goods.setPriceNow(goodsVO.getGoodsPrice());
         //goods.setPriceUserId(goodsVO.getUserId());//默认自己
         goods.setGoodsInfo(goodsVO.getGoodsInfo());
-        goods.setStateOn(1);//默认不上架
+        if (Objects.isNull(goodsVO.getStateOn())){
+            goods.setStateOn(1);//默认不上架
+        } else {
+            goods.setStateOn(goodsVO.getStateOn());
+        }
         goods.setCategoryId(goodsVO.getCategoryId());
         goods.setUserId(goodsVO.getUserId());
-        goods.setGoodsImgId(0);//TODO 先留空
+        if (Objects.isNull(goodsVO.getGoodsImgId())){
+            goods.setGoodsImgId(0);//TODO 先留空
+        } else {
+            goods.setGoodsImgId(goodsVO.getGoodsImgId());
+        }
         goodsMapper.insertSelective(goods);
         return Result.createBySuccessMessage("成功");
     }
@@ -235,7 +243,7 @@ public class GoodsServiceImpl implements IGoodsService {
 
     @Override
     public Result selectByPrimaryKey(String accessToken, Integer goodsId) {
-        Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
+        Goods goods = goodsMapper.selectByPrimaryKey1(goodsId);
         if (Objects.isNull(goods)){
             return Result.createByErrorMessage("id不正确");
         }
