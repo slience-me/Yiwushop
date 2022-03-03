@@ -36,29 +36,29 @@ public class PawnController {
     @ApiOperation("查询典当场次")
     @GetMapping("/pawnList")
     public Result pawnList(@RequestHeader("x-access-token") String accessToken,
-                               @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
-                               @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
-                               @ApiParam(value = "商品名称、场次名称、用户名") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
+                           @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
+                           @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
+                           @ApiParam(value = "商品名称、场次名称、用户名") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
         log.info("查询典当场次列表接口调用--get---</auctionsList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return auctionsService.pawnList(accessToken, pageNo, pageSize, keyword);
     }
 
     @ApiOperation("条件查询典当场次列表")
     @GetMapping("/data")
-    public Result getData(@RequestHeader("x-access-token") String accessToken,
-                          @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
-                          @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
-                          @ApiParam(value = "商品id") @RequestParam(value = "goodsId", required = false) Integer goodsId,
-                          @ApiParam(value = "场次名称") @RequestParam(value = "pawnName", required = false) String pawnName) throws Exception {
-        log.info("条件查询典当场次列表接口调用--get---</data>: ");
+    public Result getPawnData(@RequestHeader("x-access-token") String accessToken,
+                              @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
+                              @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
+                              @ApiParam(value = "商品id") @RequestParam(value = "goodsId", required = false) Integer goodsId,
+                              @ApiParam(value = "场次名称") @RequestParam(value = "pawnName", required = false) String pawnName) throws Exception {
+        log.info("条件查询典当场次列表接口调用--get---</pawnList/data>: goodsId=" + goodsId + "pawnName=" + pawnName);
         return auctionsService.getPawnData(accessToken, pageNo, pageSize, goodsId, pawnName);
     }
 
     @ApiOperation("查询单个典当场次")
     @GetMapping("/pawnList/{auctionsId}")
-    public Result getOne(@RequestHeader("x-access-token") String accessToken,
-                         @PathVariable("auctionsId") @ApiParam(value = "场次id", required = true) Integer auctionsId) throws Exception {
-        log.info("查询单个商品接口调用--get---</goodsList>:  pageNo=");
+    public Result getPawnOne(@RequestHeader("x-access-token") String accessToken,
+                             @PathVariable("auctionsId") @ApiParam(value = "场次id", required = true) Integer auctionsId) throws Exception {
+        log.info("查询单个典当场次接口调用--get---</pawnList/{auctionsId}>:  auctionsId=" + auctionsId);
         return auctionsService.selectByPrimaryKeyPawn(accessToken, auctionsId);
     }
 
@@ -76,7 +76,7 @@ public class PawnController {
     @ApiOperation("添加典当场次")
     @PostMapping("/pawnList")
     public Result pawnAdd(@RequestHeader("x-access-token") String accessToken,
-                              @RequestBody PawnVO pawnVO) throws Exception {
+                          @RequestBody PawnVO pawnVO) throws Exception {
         log.info("添加典当场次接口调用---post--</pawnList>:  pawnVO=" + pawnVO);
         return auctionsService.pawnAdd(accessToken, pawnVO);
     }
@@ -84,7 +84,7 @@ public class PawnController {
     @ApiOperation("通过id删除典当场次")
     @DeleteMapping("/pawnList")
     public Result pawnDel(@RequestHeader("x-access-token") String accessToken,
-                              @ApiParam(value = "典当场次id") @RequestParam(value = "pawnId") Integer pawnId) throws Exception {
+                          @ApiParam(value = "典当场次id") @RequestParam(value = "pawnId") Integer pawnId) throws Exception {
         log.info("通过id删除典当场次接口调用---delete--</pawnList>:  pawnId=" + pawnId);
         return auctionsService.pawnDel(accessToken, pawnId);
     }
@@ -93,7 +93,7 @@ public class PawnController {
     @ApiOperation("修改典当场次")
     @PutMapping("/pawnList")
     public Result pawnPut(@RequestHeader("x-access-token") String accessToken,
-                              @RequestBody Pawn pawn) throws Exception {
+                          @RequestBody Pawn pawn) throws Exception {
         log.info("修改典当场次接口调用---put--</pawnList>:  pawn=" + pawn);
         return auctionsService.pawnPut(accessToken, pawn);
     }
@@ -101,7 +101,7 @@ public class PawnController {
     @ApiOperation("开始购买")
     @PutMapping("/do")
     public Result doPawn(@RequestHeader("x-access-token") String accessToken,
-                             @ApiParam(value = "拍卖过程对象") @RequestBody PawnScheduleVO pawnScheduleVO) throws Exception {
+                         @ApiParam(value = "拍卖过程对象") @RequestBody PawnScheduleVO pawnScheduleVO) throws Exception {
         log.info("开始购买接口调用---put--</pawn/do>:  ");
         return auctionsService.doPawn(accessToken, pawnScheduleVO);
     }

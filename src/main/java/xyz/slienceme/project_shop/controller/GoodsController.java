@@ -46,23 +46,23 @@ public class GoodsController {
 
     @ApiOperation("条件查询商品列表")
     @GetMapping("/data")
-    public Result getData(@RequestHeader("x-access-token") String accessToken,
-                          @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
-                          @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
-                          @ApiParam(value = "商品名称") @RequestParam(value = "goodsName", required = false) String goodsName,
-                          @ApiParam(value = "商品描述") @RequestParam(value = "goodsInfo", required = false) String goodsInfo,
-                          @ApiParam(value = "状态类型 1未上架 2已上架 3已售 4待典当") @RequestParam(value = "stateOn", required = false) Integer stateOn,
-                          @ApiParam(value = "商品分类id") @RequestParam(value = "categoryId", required = false) Integer categoryId,
-                          @ApiParam(value = "所属用户id") @RequestParam(value = "userId", required = false) Integer userId) throws Exception {
-        log.info("条件查询商品列表接口调用--get---</data>: ");
+    public Result getGoodsData(@RequestHeader("x-access-token") String accessToken,
+                               @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
+                               @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
+                               @ApiParam(value = "商品名称") @RequestParam(value = "goodsName", required = false) String goodsName,
+                               @ApiParam(value = "商品描述") @RequestParam(value = "goodsInfo", required = false) String goodsInfo,
+                               @ApiParam(value = "状态类型 1未上架 2已上架 3已售 4待典当") @RequestParam(value = "stateOn", required = false) Integer stateOn,
+                               @ApiParam(value = "商品分类id") @RequestParam(value = "categoryId", required = false) Integer categoryId,
+                               @ApiParam(value = "所属用户id") @RequestParam(value = "userId", required = false) Integer userId) throws Exception {
+        log.info("条件查询商品列表接口调用--get---</data>: goodsName=" + goodsName + " goodsInfo=" + goodsInfo + " stateOn=" + stateOn + " categoryId=" + categoryId + " userId=" + userId);
         return goodsService.getData(accessToken, pageNo, pageSize, goodsName, goodsInfo, stateOn, categoryId, userId);
     }
 
     @ApiOperation("查询单个商品")
     @GetMapping("/goodsList/{goodsId}")
-    public Result getOne(@RequestHeader("x-access-token") String accessToken,
-                         @PathVariable("goodsId") @ApiParam(value = "商品id", required = true) Integer goodsId) throws Exception {
-        log.info("查询单个商品接口调用--get---</goodsList>:  pageNo=");
+    public Result getGoodsOne(@RequestHeader("x-access-token") String accessToken,
+                              @PathVariable("goodsId") @ApiParam(value = "商品id", required = true) Integer goodsId) throws Exception {
+        log.info("查询单个商品接口调用--get---</goodsList/{goodsId}>: goodsId=" + goodsId);
         return goodsService.selectByPrimaryKey(accessToken, goodsId);
     }
 

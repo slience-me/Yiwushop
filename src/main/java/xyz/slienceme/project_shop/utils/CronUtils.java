@@ -200,8 +200,10 @@ public class CronUtils {
 //        System.err.println(getCron(date,4));
 //        System.err.println(getCron(date,5));
 
+
         //执行时间：每天的12时12分12秒 start
         xyz.slienceme.project_shop.utils.TaskScheduleModel taskScheduleModel = new xyz.slienceme.project_shop.utils.TaskScheduleModel();
+
         taskScheduleModel.setJobType(1);//按每天
         Integer hour = 12; //时
         Integer minute = 12; //分

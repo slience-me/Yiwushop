@@ -240,12 +240,14 @@
                a.goods_id       as                              goodsId,
                g.goods_name     as                              goodName,
                a.auctions_name  as                              auctionsName,
+               a.fixed_price    as                              fixedPrice,
                a.present_person as                              presentPerson,
                a.present_price  as                              presentPrice,
                a.starting_price as                              startingPrice,
                DATE_FORMAT(a.start, '%Y-%m-%d %H:%i:%s')        startTime,
                DATE_FORMAT(a.end, '%Y-%m-%d %H:%i:%s')          endTime,
-               DATE_FORMAT(a.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime
+               DATE_FORMAT(a.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime,
+               a.CREATED_BY as createdBy
         FROM auctions a
                  left join goods g on a.goods_id = g.goods_id
         where a.is_delete = 0

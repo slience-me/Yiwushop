@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import xyz.slienceme.project_shop.dto.Auctions;
 import xyz.slienceme.project_shop.dto.Goods;
 import xyz.slienceme.project_shop.dto.Orders;
@@ -36,7 +37,7 @@ public class ScheduleTask {
     @Autowired
     private GoodsMapper goodsMapper;
 
-    /*@Scheduled(cron = "0/20 * * * * ?")*/
+    @Scheduled(cron = "0 */1 * * * ?")//每分钟执行
     public void generateOrder() throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         long nowMilliSecond = new Date().getTime();
@@ -52,12 +53,15 @@ public class ScheduleTask {
             orders.setBuyUsersId((Integer) auctionsi.get("presentPerson"));
             orders.setBuyPrice((BigDecimal) auctionsi.get("presentPrice"));
             orders.setCreatedBy(1);
+            log.info("生成订单 ："+ orders.getSerialNum());
             ordersMapper.insertSelective(orders);
             Goods goods = goodsMapper.selectByPrimaryKey((Integer) auctionsi.get("goodsId"));
             goods.setStateOn(3);//已售
+            log.info("商品 [" + goods.getGoodsName() + "] 状态设置已售");
             goodsMapper.updateByPrimaryKeySelective(goods);
             Auctions auctions = auctionsMapper.selectByPrimaryKey((Integer) auctionsi.get("auctionsId"));
             auctions.setIsDelete(1);//结束
+            log.info("竞拍场次删除 ：id="+ auctions.getAuctionsId());
             auctionsMapper.updateByPrimaryKeySelective(auctions);
         }
         for (HashMap<String, Object> pawni : pawnList) {
@@ -68,12 +72,15 @@ public class ScheduleTask {
             orders.setBuyUsersId((Integer) pawni.get("presentPerson"));
             orders.setBuyPrice((BigDecimal) pawni.get("presentPrice"));
             orders.setCreatedBy(1);
+            log.info("生成订单 ："+ orders.getSerialNum());
             ordersMapper.insertSelective(orders);
             Goods goods = goodsMapper.selectByPrimaryKey((Integer) pawni.get("goodsId"));
             goods.setStateOn(3);//已售
+            log.info("商品 " + goods.getGoodsName() + "状态设置已售");
             goodsMapper.updateByPrimaryKeySelective(goods);
             Pawn pawn = pawnMapper.selectByPrimaryKey((Integer) pawni.get("auctionsId"));
             pawn.setIsDelete(1);//结束
+            log.info("典当场次删除 ：id="+ pawn.getAuctionsId());
             pawnMapper.updateByPrimaryKeySelective(pawn);
         }
     }
