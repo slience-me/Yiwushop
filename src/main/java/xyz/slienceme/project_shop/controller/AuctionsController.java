@@ -56,7 +56,7 @@ public class AuctionsController {
     @GetMapping("/auctionsList/{auctionsId}")
     public Result getAuctionsOne(@RequestHeader("x-access-token") String accessToken,
                                  @PathVariable("auctionsId") @ApiParam(value = "场次id", required = true) Integer auctionsId) throws Exception {
-        log.info("查询单个竞拍场次接口调用--get---</auctionsList/{auctionsId}>:  auctionsId=" + auctionsId);
+        //log.info("查询单个竞拍场次接口调用--get---</auctionsList/{auctionsId}>:  auctionsId=" + auctionsId);
         return auctionsService.selectByPrimaryKey(accessToken, auctionsId);
     }
 

@@ -10,7 +10,12 @@ import xyz.slienceme.project_shop.dto.Orders;
 import xyz.slienceme.project_shop.mapper.AuctionScheduleMapper;
 import xyz.slienceme.project_shop.mapper.OrdersMapper;
 import xyz.slienceme.project_shop.service.IOrdersService;
+import xyz.slienceme.project_shop.utils.JWT;
+import xyz.slienceme.project_shop.utils.StringUtil;
+import xyz.slienceme.project_shop.vo.OrdersVO;
+import xyz.slienceme.project_shop.vo.TokenVO;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -52,6 +57,20 @@ public class OrdersServiceImpl implements IOrdersService {
         Orders orders = ordersMapper.selectByPrimaryKey(ordersId);
         orders.setIsDelete(1);
         ordersMapper.updateByPrimaryKeySelective(orders);
+        return Result.createBySuccessMessage("成功");
+    }
+
+    @Override
+    public Result ordersAdd(String accessToken, OrdersVO ordersVO) {
+        TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
+        Orders orders = new Orders();
+        orders.setSerialNum(StringUtil.serialNumber(ordersVO.getGoodsId()));
+        orders.setGoodsId(ordersVO.getGoodsId());
+        orders.setSellUsersId(ordersVO.getSellUsersId());
+        orders.setBuyUsersId(ordersVO.getBuyUsersId());
+        orders.setBuyPrice(ordersVO.getBuyPrice());
+        orders.setCreatedBy(1);
+        ordersMapper.insertSelective(orders);
         return Result.createBySuccessMessage("成功");
     }
 

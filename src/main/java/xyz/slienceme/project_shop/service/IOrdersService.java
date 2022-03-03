@@ -2,6 +2,7 @@ package xyz.slienceme.project_shop.service;
 
 
 import xyz.slienceme.project_shop.common.Result;
+import xyz.slienceme.project_shop.vo.OrdersVO;
 
 /**
  * <p>
@@ -31,4 +32,7 @@ public interface IOrdersService {
      * 根据id删除订单
      */
     Result ordersDel(String accessToken, Integer ordersId) throws Exception;
+
+
+    Result ordersAdd(String accessToken, OrdersVO ordersVO);
 }

@@ -73,7 +73,7 @@ public class AuctionScheduleServiceImpl implements IAuctionScheduleService {
         Auctions auctions = auctionsMapper.selectByPrimaryKey(auctionScheduleVO.getAuctionsId());
         System.out.println("auctions = " + auctions);
         if (Objects.isNull(auctions)) {
-            return Result.createByErrorMessage("订单不存在");
+            return Result.createByErrorMessage("场次不存在");
         }
         if (auctionScheduleVO.getAuctionSchedulePrice().compareTo(auctions.getPresentPrice()) > -1) {
             AuctionSchedule auctionSchedule = new AuctionSchedule();

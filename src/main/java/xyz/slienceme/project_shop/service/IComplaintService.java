@@ -2,6 +2,7 @@ package xyz.slienceme.project_shop.service;
 
 
 import xyz.slienceme.project_shop.common.Result;
+import xyz.slienceme.project_shop.dto.Complaint;
 import xyz.slienceme.project_shop.vo.ComplaintVO;
 
 /**
@@ -36,4 +37,10 @@ public interface IComplaintService {
      * 根据id删除投诉
      */
     Result complaintDel(String accessToken, Integer complaintId) throws Exception;
+
+    Result complaintData(String accessToken, Integer pageNo, Integer pageSize, Integer ordersId, Integer userId, Integer complaintStatus);
+
+    Result selectByPrimaryKey(String accessToken, Integer complaintId);
+
+    Result complaintPut(String accessToken, Complaint complaint);
 }

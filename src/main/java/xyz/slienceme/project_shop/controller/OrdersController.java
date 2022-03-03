@@ -13,6 +13,7 @@ import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.service.IAuctionScheduleService;
 import xyz.slienceme.project_shop.service.IOrdersService;
 import xyz.slienceme.project_shop.vo.AdminVO;
+import xyz.slienceme.project_shop.vo.OrdersVO;
 
 /**
  * <p>
@@ -39,6 +40,14 @@ public class OrdersController {
                              @ApiParam(value = "流水号、商品名称、买家名称、卖家名称") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
         log.info("查询订单表接口调用--get---</ordersList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return ordersService.ordersList(accessToken, pageNo, pageSize, keyword);
+    }
+
+    @ApiOperation("新增订单")
+    @PostMapping("/ordersList")
+    public Result ordersDel(@RequestHeader("x-access-token") String accessToken,
+                            @RequestBody OrdersVO ordersVO) throws Exception {
+        log.info("新增订单接口调用---post--</ordersList>:  ordersVO=" + ordersVO);
+        return ordersService.ordersAdd(accessToken, ordersVO);
     }
 
     @ApiOperation("通过id删除订单")

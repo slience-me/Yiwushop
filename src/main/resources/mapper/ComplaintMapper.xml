@@ -149,4 +149,30 @@
     </if>
     order by c.CREATED_TIME desc
   </select>
+
+  <select id="selectConditionList" resultType="java.util.HashMap">
+    SELECT c.complaint_id as complaintId,
+    c.orders_id as ordersId,
+    o.serial_num as serialNum,
+    c.user_id as userId,
+    u.user_name as userName,
+    c.remark as remark,
+    c.complaint_status as complaintStatus,
+    DATE_FORMAT(c.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime
+    FROM complaint c
+    left join orders o on c.orders_id = o.orders_id
+    left join user u on c.user_id = u.user_id
+    where
+    c.is_delete=0
+    <if test="ordersId!=null and ordersId!=''">
+      and c.orders_id=#{ordersId}
+    </if>
+    <if test="userId!=null and userId!=''">
+      and c.user_id=#{userId}
+    </if>
+    <if test="complaintStatus!=null and complaintStatus!=''">
+      and c.complaint_status=#{complaintStatus}
+    </if>
+    order by c.CREATED_TIME desc
+  </select>
 </mapper>

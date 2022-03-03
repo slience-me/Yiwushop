@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.dto.Category;
 import xyz.slienceme.project_shop.dto.Complaint;
+import xyz.slienceme.project_shop.dto.Goods;
 import xyz.slienceme.project_shop.mapper.ComplaintMapper;
 import xyz.slienceme.project_shop.service.IComplaintService;
 import xyz.slienceme.project_shop.utils.JWT;
@@ -69,6 +70,33 @@ public class ComplaintServiceImpl implements IComplaintService {
     public Result complaintDel(String accessToken, Integer complaintId) throws Exception {
         Complaint complaint = complaintMapper.selectByPrimaryKey(complaintId);
         complaint.setIsDelete(1);
+        complaintMapper.updateByPrimaryKeySelective(complaint);
+        return Result.createBySuccessMessage("成功");
+    }
+
+    @Override
+    public Result complaintData(String accessToken, Integer pageNo, Integer pageSize, Integer ordersId, Integer userId, Integer complaintStatus) {
+        PageHelper.startPage(pageNo, pageSize);
+        List<HashMap<String, Object>> list = complaintMapper.selectConditionList(ordersId, userId, complaintStatus);
+        return Result.createBySuccess(new PageInfo<>(list));
+    }
+
+    @Override
+    public Result selectByPrimaryKey(String accessToken, Integer complaintId) {
+        Complaint complaint = complaintMapper.selectByPrimaryKey(complaintId);
+        if (Objects.isNull(complaint)){
+            return Result.createByErrorMessage("id不正确");
+        }
+        return Result.createBySuccess(complaint);
+    }
+
+    @Override
+    public Result complaintPut(String accessToken, Complaint complaint) {
+        Complaint complaint1 = complaintMapper.selectByPrimaryKey(complaint.getComplaintId());
+        System.out.println("complaint1 = " + complaint1);
+        if (Objects.isNull(complaint1)) {
+            return Result.createByErrorMessage("投诉单不存在");
+        }
         complaintMapper.updateByPrimaryKeySelective(complaint);
         return Result.createBySuccessMessage("成功");
     }

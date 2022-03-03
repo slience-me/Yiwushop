@@ -52,7 +52,7 @@ public class AuctionScheduleController {
     }
 
     @ApiOperation("开始竞拍")
-    @PutMapping("/do")
+    @PostMapping("/do")
     public Result doAuctions(@RequestHeader("x-access-token") String accessToken,
                              @ApiParam(value = "拍卖过程对象") @RequestBody AuctionScheduleVO auctionScheduleVO) throws Exception {
         log.info("开始竞拍接口调用---put--</auction/do>:  ");
