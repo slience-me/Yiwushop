@@ -57,8 +57,9 @@ public class ComplaintServiceImpl implements IComplaintService {
         Complaint complaint = new Complaint();
         complaint.setOrdersId(complaintVO.getOrdersId());
         complaint.setUserId(unsign.getUserId());
-        complaint.setRemark(complaint.getRemark());
+        complaint.setRemark(complaintVO.getRemark());
         complaint.setComplaintStatus(1);//待受理
+        complaint.setCreatedBy(unsign.getUserId());
         complaintMapper.insertSelective(complaint);
         return Result.createBySuccessMessage("成功");
     }
