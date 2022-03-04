@@ -118,5 +118,6 @@
         <if test="keyword!=null and keyword!=''">
             and CONCAT(m.show_name) like concat('%',#{keyword},'%')
         </if>
+        order by m.CREATED_TIME desc
     </select>
 </mapper>

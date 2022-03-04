@@ -1139,14 +1139,6 @@
           },
           {
             "shape": "table",
-            "title": "goods",
-            "moduleName": false,
-            "x": 120,
-            "y": 300,
-            "id": "c6338fd7"
-          },
-          {
-            "shape": "table",
             "title": "user",
             "moduleName": false,
             "x": 450,
@@ -1200,11 +1192,81 @@
             "x": 540,
             "y": 530,
             "id": "e3428bbb"
+          },
+          {
+            "shape": "table",
+            "title": "goods",
+            "moduleName": false,
+            "x": 110,
+            "y": 310,
+            "id": "c6338fd7"
           }
         ],
-        "edges": []
+        "edges": [
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "94b6bbfa",
+            "target": "c6338fd7",
+            "id": "0c5a70d3",
+            "controlPoints": [
+              {
+                "x": 645.3466796875,
+                "y": 242.36904761904762
+              },
+              {
+                "x": 271.3251953125,
+                "y": 212.13888888888889
+              }
+            ],
+            "sourceAnchor": 4,
+            "targetAnchor": 1
+          },
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "d768f116",
+            "target": "c6338fd7",
+            "id": "a5e79b20",
+            "controlPoints": [
+              {
+                "x": 641.3447265625,
+                "y": 22.30263157894737
+              },
+              {
+                "x": 271.3251953125,
+                "y": 212.13888888888889
+              }
+            ],
+            "sourceAnchor": 2,
+            "targetAnchor": 1
+          }
+        ]
       },
-      "associations": []
+      "associations": [
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "orders",
+            "field": "goods_id"
+          },
+          "to": {
+            "entity": "goods",
+            "field": "goods_id"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "auctions",
+            "field": "goods_id"
+          },
+          "to": {
+            "entity": "goods",
+            "field": "goods_id"
+          }
+        }
+      ]
     }
   ],
   "dataTypeDomains": {
