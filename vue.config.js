@@ -1,14 +1,13 @@
 const path = require('path')
 const webpack = require('webpack')
-const GitRevisionPlugin = require('git-revision-webpack-plugin')
-const GitRevision = new GitRevisionPlugin()
+// const GitRevisionPlugin = require('git-revision-webpack-plugin')
+// const GitRevision = new GitRevisionPlugin()
 const buildDate = JSON.stringify(new Date().toLocaleString())
 const createThemeColorReplacerPlugin = require('./config/plugin.config')
 
 function resolve (dir) {
   return path.join(__dirname, dir)
 }
-
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -39,7 +38,7 @@ const vueConfig = {
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new webpack.DefinePlugin({
         APP_VERSION: `"${require('./package.json').version}"`,
-        GIT_HASH: JSON.stringify(getGitHash()),
+        // GIT_HASH: JSON.stringify(getGitHash()),
         BUILD_DATE: buildDate
       })
     ],
@@ -98,8 +97,8 @@ const vueConfig = {
     // If you want to turn on the proxy, please remove the mockjs /src/main.jsL11
     proxy: {
       '/api': {
-        target: 'https://ihchina.slienceme.xyz',
-        // target: 'http://localhost:8786',
+        // target: 'https://ihchina.slienceme.xyz',
+        target: 'http://localhost:8081',
         ws: false,
         secure: true,
         changeOrigin: true,

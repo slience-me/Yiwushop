@@ -68,6 +68,12 @@ const columns = [
       scopedSlots: { customRender: 'userName' }
     },
     {
+      title: '用户电话',
+      dataIndex: 'userPhone',
+      align: 'center',
+      scopedSlots: { customRender: 'userPhone' }
+    },
+    {
       title: '投诉状态',
       align: 'center',
       dataIndex: 'complaintStatus',

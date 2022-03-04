@@ -11,10 +11,9 @@
     export default {
       name: 'DashboardIndex',
       created () {
-        const time = (new Date(+new Date() + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')).substr(11, 2)
-        if (parseInt(time) > 20 || parseInt(time) < 6) {
-          Modal.success('亲爱的管理员，我想您可能累了，不过还是得加油哦，努力🤗🤗🤗')
-        }
+          Modal.success({
+            content: '欢迎登录大学生易物平台后台管理系统！🤗🤗🤗'
+          })
       }
     }
 </script>

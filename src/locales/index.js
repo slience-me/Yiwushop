@@ -12,9 +12,6 @@ Vue.use(VueI18n)
 export const defaultLang = 'zhCN'
 
 const messages = {
-  // 'en-US': {
-  //   ...enUS
-  // },
   'zh-CN': {
     ...zhCN
   }

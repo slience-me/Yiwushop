@@ -14,7 +14,7 @@
     -->
     <!--<ads v-if="isProPreviewSite && !collapsed"/>-->
     <!-- Ads end -->
-    <setting-drawer :settings="settings" @change="handleSettingChange" />
+    <!--<setting-drawer :settings="settings" @change="handleSettingChange" />-->
     <template v-slot:menuHeaderRender>
       <div style="width: 240px !important;">
         <img src="../assets/logo.png" style="width: 30px; height: 30px" />

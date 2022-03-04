@@ -71,18 +71,18 @@ const columns = [
       align: 'center',
       scopedSlots: { customRender: 'goodsPrice' }
     },
-    {
-      title: '当前出价',
-      dataIndex: 'priceNow',
-      align: 'center',
-      scopedSlots: { customRender: 'priceNow' }
-    },
-    {
-      title: '当前出价人',
-      dataIndex: 'priceUserName',
-      align: 'center',
-      scopedSlots: { customRender: 'priceUserName' }
-    },
+    // {
+    //   title: '当前出价',
+    //   dataIndex: 'priceNow',
+    //   align: 'center',
+    //   scopedSlots: { customRender: 'priceNow' }
+    // },
+    // {
+    //   title: '当前出价人',
+    //   dataIndex: 'priceUserName',
+    //   align: 'center',
+    //   scopedSlots: { customRender: 'priceUserName' }
+    // },
     {
       title: '物品描述',
       dataIndex: 'goodsInfo',
@@ -116,15 +116,15 @@ const columns = [
     }
   ]
   const goodsStatusMap = {
-    0: {
+    1: {
       color: '#FA541C',
       text: '未上架'
     },
-    1: {
+    2: {
       color: '#FAAD14',
       text: '已上架'
     },
-    2: {
+    3: {
       color: '#52C41A',
       text: '已售'
     }

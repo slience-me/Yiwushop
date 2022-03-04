@@ -9,17 +9,95 @@ const api = {
   userUrl: '/app/member',
   category: '/category/categoryList',
   goods: '/goods/goodsList',
+  goodsdata: '/goods/data',
   goods1: '/goods/goodsDoneList',
   goods2: '/goods/goodsOnList',
   goods3: '/goods/stateOn',
   goods4: '/goods/goodsNoList',
+  goods5: '/goods/goodsPawnList',
+  goods6: '/goods/stateOnToPawn',
   auctions: '/auctions/auctionsList',
   schedule: '/auction/auctionScheduleList',
   orders: '/orders/ordersList',
-  complaint: '/complaint/categoryList'
+  complaint: '/complaint/complaintList',
+  pawn: '/pawn/pawnList',
+  pawndo: '/pawn/do',
+  community: '/community'
 }
 
 export default api
+
+export function getCommunityList (parameter) {
+  return request({
+    url: api.community,
+    method: 'get',
+    params: parameter
+  })
+}
+
+export function getGoodsData (parameter) {
+  return request({
+    url: api.goodsdata,
+    method: 'get',
+    params: parameter
+  })
+}
+
+export function delCommunity (parameter) {
+  return request({
+    url: api.community,
+    method: 'delete',
+    params: parameter
+  })
+}
+
+export function addCommunity (parameter) {
+  return request({
+    url: api.community,
+    method: 'post',
+    data: parameter
+  })
+}
+
+export function editCommunity (parameter) {
+  return request({
+    url: api.community,
+    method: 'put',
+    data: parameter
+  })
+}
+
+export function getPawnList (parameter) {
+  return request({
+    url: api.pawn,
+    method: 'get',
+    params: parameter
+  })
+}
+
+export function delPawn (parameter) {
+  return request({
+    url: api.pawn,
+    method: 'delete',
+    params: parameter
+  })
+}
+
+export function addPawn (parameter) {
+  return request({
+    url: api.pawn,
+    method: 'post',
+    data: parameter
+  })
+}
+
+export function editPawn (parameter) {
+  return request({
+    url: api.pawn,
+    method: 'put',
+    data: parameter
+  })
+}
 
 export function getComplaintList (parameter) {
   return request({
@@ -120,6 +198,14 @@ export function getGoodsDoneList (parameter) {
   })
 }
 
+export function getGoodsPawnList (parameter) {
+  return request({
+    url: api.goods5,
+    method: 'get',
+    params: parameter
+  })
+}
+
 export function getGoodsOnList (parameter) {
   return request({
     url: api.goods2,
@@ -155,6 +241,14 @@ export function delGoods (parameter) {
 export function addStateOn (parameter) {
   return request({
     url: api.goods3,
+    method: 'post',
+    data: parameter
+  })
+}
+
+export function addStateOnToPawn (parameter) {
+  return request({
+    url: api.goods6,
     method: 'post',
     data: parameter
   })

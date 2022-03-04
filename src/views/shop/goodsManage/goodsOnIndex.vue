@@ -49,7 +49,7 @@
 <script>
 import { Modal } from 'ant-design-vue'
 import { Ellipsis, STable } from '@/components'
-import { delGoods, getGoodsOnList } from '@/api/shop'
+import { delGoods, getGoodsData } from '@/api/shop'
 import { checkChinese } from '@/utils/checkStr'
 
 const columns = [
@@ -71,18 +71,18 @@ const columns = [
       align: 'center',
       scopedSlots: { customRender: 'goodsPrice' }
     },
-    {
-      title: '当前出价',
-      dataIndex: 'priceNow',
-      align: 'center',
-      scopedSlots: { customRender: 'priceNow' }
-    },
-    {
-      title: '当前出价人',
-      dataIndex: 'priceUserName',
-      align: 'center',
-      scopedSlots: { customRender: 'priceUserName' }
-    },
+    // {
+    //   title: '当前出价',
+    //   dataIndex: 'priceNow',
+    //   align: 'center',
+    //   scopedSlots: { customRender: 'priceNow' }
+    // },
+    // {
+    //   title: '当前出价人',
+    //   dataIndex: 'priceUserName',
+    //   align: 'center',
+    //   scopedSlots: { customRender: 'priceUserName' }
+    // },
     {
       title: '物品描述',
       dataIndex: 'goodsInfo',
@@ -116,17 +116,21 @@ const columns = [
     }
   ]
   const goodsStatusMap = {
-    0: {
+    1: {
       color: '#FA541C',
       text: '未上架'
     },
-    1: {
+    2: {
       color: '#FAAD14',
       text: '已上架'
     },
-    2: {
+    3: {
       color: '#52C41A',
       text: '已售'
+    },
+    5: {
+      color: '#FAAD14',
+      text: '待出售'
     }
   }
   export default {
@@ -156,12 +160,13 @@ const columns = [
         advanced: false,
         // 查询参数
         queryParam: {
+          stateOn: 5,
           keyword: null
         },
         // 加载数据方法 必须为 Promise 对象
         loadData: parameter => {
           const requestParameters = Object.assign({}, parameter, this.queryParam)
-          return getGoodsOnList(requestParameters)
+          return getGoodsData(requestParameters)
             .then(res => {
               return res.data
             })

@@ -49,7 +49,7 @@
 <script>
 import { Modal } from 'ant-design-vue'
 import { Ellipsis, STable } from '@/components'
-import { delGoods, getGoodsDoneList } from '@/api/shop'
+import { delGoods, getGoodsPawnList } from '@/api/shop'
 import { checkChinese } from '@/utils/checkStr'
 
 const columns = [
@@ -70,12 +70,6 @@ const columns = [
       dataIndex: 'goodsPrice',
       align: 'center',
       scopedSlots: { customRender: 'goodsPrice' }
-    },
-    {
-      title: '成交价',
-      dataIndex: 'buyPrice',
-      align: 'center',
-      scopedSlots: { customRender: 'buyPrice' }
     },
     // {
     //   title: '当前出价',
@@ -133,10 +127,14 @@ const columns = [
     3: {
       color: '#52C41A',
       text: '已售'
+    },
+    4: {
+      color: '#52C41A',
+      text: '待典当'
     }
   }
   export default {
-    name: 'GoodsDoneIndex',
+    name: 'GoodsPawnIndex',
     components: {
       STable,
       Ellipsis
@@ -167,7 +165,7 @@ const columns = [
         // 加载数据方法 必须为 Promise 对象
         loadData: parameter => {
           const requestParameters = Object.assign({}, parameter, this.queryParam)
-          return getGoodsDoneList(requestParameters)
+          return getGoodsPawnList(requestParameters)
             .then(res => {
               return res.data
             })

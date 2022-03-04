@@ -9,24 +9,23 @@
       <s-table
         ref="table"
         size="default"
-        rowKey="auctionsId"
+        rowKey="pawnId"
         :columns="columns"
         :data="loadData"
         :alert="false"
         showPagination="auto">
-        <span slot="auctionsName" slot-scope="text">
+        <span slot="pawnName" slot-scope="text">
           <ellipsis :length="20" tooltip>{{ text }}</ellipsis>
         </span>
         <span slot="action" slot-scope="text, record">
           <template>
-            <a v-action:select style="margin-left: 10px" @click="detailAction(record)">查看</a>
             <a v-action:delete style="margin-left: 10px" @click="del(record)">删除</a>
           </template>
         </span>
       </s-table>
       <!--表单区域-调整-->
       <a-modal
-        v-model="handleAuctions"
+        v-model="handlePawn"
         :maskClosable="false"
         :confirmLoading="handleLoading"
         :title="modalTitle"
@@ -35,16 +34,16 @@
         width="600px"
         @ok="submitForm">
         <a-form-model
-          ref="auctionsForm"
-          :model="auctionsForm"
-          :rules="auctionsRules"
+          ref="pawnForm"
+          :model="pawnForm"
+          :rules="pawnRules"
           :label-col="labelCol"
           :wrapper-col="wrapperCol">
-          <a-form-model-item :labelAlign="'right'" label="竞拍场次名：" prop="auctionsName">
-            <a-input v-model="auctionsForm.auctionsName" placeholder="请输入竞拍场次名" style="width: 100%" allowClear />
+          <a-form-model-item :labelAlign="'right'" label="典当场次名：" prop="pawnName">
+            <a-input v-model="pawnForm.pawnName" placeholder="请输入典当场次名" style="width: 100%" allowClear />
           </a-form-model-item>
           <a-form-model-item :labelAlign="'right'" label="商品id：" prop="goodsId">
-            <a-select v-model="auctionsForm.goodsId" placeholder="商品id" allowClear>
+            <a-select v-model="pawnForm.goodsId" placeholder="商品id" allowClear>
               <a-select-option v-for="(item, index) in queryGoodsList" :key="'queryGoodsList' + index" :value="item.goodsId">{{ item.goodsName }}</a-select-option>
             </a-select>
           </a-form-model-item>
@@ -54,10 +53,10 @@
             prop="startTime"
             allowClear
             style="width: 100%">
-            <a-input v-model="auctionsForm.startTime" placeholder="开始时间" />
+            <a-input v-model="pawnForm.startTime" placeholder="开始时间" />
           </a-form-model-item>
           <a-form-model-item :labelAlign="'right'" label="结束时间：" prop="endTime" style="width: 100%" allowClear>
-            <a-input v-model="auctionsForm.endTime" placeholder="结束时间"/>
+            <a-input v-model="pawnForm.endTime" placeholder="结束时间"/>
           </a-form-model-item>
           <a-form-model-item :labelAlign="'right'" label="获取当前时间：" prop="endTime" style="width: 100%" allowClear>
             <a-input v-model="localTime" placeholder="获取当前时间"/><a-button @click="getTime">点击获取当前时间</a-button>
@@ -78,16 +77,16 @@
           </div>
           <div style="width: 600px; margin: 0 auto; text-indent: 2em; line-height: 1.5em; margin-top: 20px; color: #000" >
             <a-form-model
-              ref="auctionsForm"
-              :model="auctionsForm"
-              :rules="auctionsRules"
+              ref="pawnForm"
+              :model="pawnForm"
+              :rules="pawnRules"
               :label-col="labelCol"
               :wrapper-col="wrapperCol">
               <a-list item-layout="horizontal" :data-source="queryScheduleList">
                 <a-list-item slot="renderItem" slot-scope="item, index">
                   <a-list-item-meta>
                     <a slot="title" href="javascript:void(0);" style="font-size: 20px;">序号:{{ index+1 }}&emsp;&emsp;
-                      商品名称:{{ item.goodsName }}&emsp;&emsp;出价:{{ item.auctionSchedulePrice }}&emsp;&emsp;出价人: {{ item.userName }} </a>
+                      商品名称:{{ item.goodsName }}&emsp;&emsp;出价:{{ item.pawnchedulePrice }}&emsp;&emsp;出价人: {{ item.userName }} </a>
                   </a-list-item-meta>
                 </a-list-item>
               </a-list>
@@ -102,15 +101,15 @@
 <script>
 import { Modal } from 'ant-design-vue'
 import { Ellipsis, STable } from '@/components'
-import { addStateOn, delAuctions, editAuctions, getAuctionsList, getGoodsNoList, getScheduleList } from '@/api/shop'
+import { addStateOnToPawn, delPawn, editPawn, getPawnList } from '@/api/shop'
 import { checkChinese } from '@/utils/checkStr'
 import moment from 'moment'
 
 const columns = [
     {
-      title: '竞拍场次名称',
-      dataIndex: 'auctionsName',
-      scopedSlots: { customRender: 'auctionsName' }
+      title: '典当场次名称',
+      dataIndex: 'pawnName',
+      scopedSlots: { customRender: 'pawnName' }
     },
     {
       title: '商品名称',
@@ -163,7 +162,7 @@ const columns = [
     }
   ]
   export default {
-    name: 'AuctionsIndex',
+    name: 'PawnIndex',
     components: {
       STable,
       Ellipsis
@@ -194,7 +193,7 @@ const columns = [
         // 加载数据方法 必须为 Promise 对象
         loadData: parameter => {
           const requestParameters = Object.assign({}, parameter, this.queryParam)
-          return getAuctionsList(requestParameters)
+          return getPawnList(requestParameters)
             .then(res => {
               return res.data
             })
@@ -202,32 +201,31 @@ const columns = [
         selectedRowKeys: [],
         selectedRows: [],
         modalTitle: '新增',
-        handleAuctions: false,
+        handlePawn: false,
         handleLoading: false,
         goodsList: [],
-        auctionsForm: {
-          auctionsId: undefined,
-          auctionsName: '',
+        pawnForm: {
+          pawnId: undefined,
+          pawnName: '',
           goodsId: undefined,
           goodName: '',
           startTime: '',
           endTime: ''
         },
         localTime: null,
-        auctionsRules: {
-          auctionsName: [
-            { required: true, message: '请输入竞拍场次名称', trigger: 'blur' },
-            { min: 1, max: 20, message: '竞拍场次名称长度为1-20位', trigger: 'blur' },
+        pawnRules: {
+          pawnName: [
+            { required: true, message: '请输入典当场次名称', trigger: 'blur' },
+            { min: 1, max: 20, message: '典当场次名称长度为1-20位', trigger: 'blur' },
             { validator: validateAccount, trigger: 'blur' }
           ]
         },
         labelCol: { span: 6 },
         wrapperCol: { span: 12 },
-        queryAuctionsList: [],
-        queryAuctionsTypeList: [],
+        queryPawnList: [],
+        queryPawnTypeList: [],
         queryGoodsList: [],
         queryScheduleList: [],
-        detailShow: false,
         infoObj: null
       }
     },
@@ -242,25 +240,7 @@ const columns = [
     created () {
     },
     methods: {
-      InitGoodsList () {
-        getGoodsNoList({
-          pageNo: 1,
-          pageSize: 8888
-        }).then(res => {
-          this.queryGoodsList = res.data.list
-        })
-      },
-      InitAuctionSchedule (goodsId) {
-        getScheduleList({
-          pageNo: 1,
-          pageSize: 8888,
-          goodsId: goodsId
-        }).then(res => {
-          this.queryScheduleList = res.data.list
-        })
-      },
       detailAction (obj) {
-        this.InitAuctionSchedule(obj.goodsId)
         this.infoObj = obj
         this.detailShow = true
       },
@@ -288,24 +268,24 @@ const columns = [
         this.localTime = year + '-' + month + '-' + date + ' ' + hour + ':' + minute + ':' + second
       },
       handleAccount (type, obj) {
-        this.handleAuctions = true
+        this.handlePawn = true
         this.$nextTick(() => {
           this.$nextTick(() => {
-            this.$refs.auctionsForm.resetFields()
+            this.$refs.pawnForm.resetFields()
             if (type === 0) { // 新增
               this.InitGoodsList()
               this.modalTitle = '新增'
-              this.auctionsForm = {
-                auctionsName: '',
+              this.pawnForm = {
+                pawnName: '',
                 goodsId: undefined,
                 startTime: '',
                 endTime: ''
               }
             } else if (type === 1) { // 编辑
               this.modalTitle = '编辑'
-              this.auctionsForm = {
-                auctionsId: obj.auctionsId,
-                auctionsName: obj.auctionsName,
+              this.pawnForm = {
+                pawnId: obj.pawnId,
+                pawnName: obj.pawnName,
                 goodsId: obj.goodsId,
                 goodName: obj.goodName,
                 startTime: obj.startTime,
@@ -313,9 +293,9 @@ const columns = [
               }
             } else if (type === 2) { // 编辑
               this.modalTitle = '查看拍卖情况'
-              this.auctionsForm = {
-                auctionsId: obj.auctionsId,
-                auctionsName: obj.auctionsName,
+              this.pawnForm = {
+                pawnId: obj.pawnId,
+                pawnName: obj.pawnName,
                 goodsId: obj.goodsId,
                 goodName: obj.goodName,
                 startTime: obj.startTime,
@@ -338,24 +318,24 @@ const columns = [
       },
       submitForm () {
         this.handleLoading = true
-        this.$refs.auctionsForm.validate(valid => {
+        this.$refs.pawnForm.validate(valid => {
           if (valid) {
             if (this.modalTitle === '新增') {
-              addStateOn(this.auctionsForm).then(() => {
+              addStateOnToPawn(this.pawnForm).then(() => {
                 Modal.success({
-                  content: '新增物品类型成功，类型名：' + this.auctionsForm.auctionsName
+                  content: '新增物品类型成功，类型名：' + this.pawnForm.pawnName
                 })
                 this.$refs.table.refresh(true)
-                this.handleAuctions = false
+                this.handlePawn = false
                 this.handleLoading = false
               }).catch(() => {
                 this.handleLoading = false
               })
               this.handleLoading = false
             } else if (this.modalTitle === '编辑') {
-              editAuctions(this.auctionsForm).then(() => {
+              editPawn(this.pawnForm).then(() => {
                 this.$refs.table.refresh(true)
-                this.handleAuctions = false
+                this.handlePawn = false
                 this.handleLoading = false
               }).catch(() => {
                 this.handleLoading = false
@@ -372,8 +352,8 @@ const columns = [
           title: '删除',
           content: '确定删除？',
           onOk: () => {
-            delAuctions({
-              auctionsId: obj.auctionsId
+            delPawn({
+              pawnId: obj.pawnId
             }).then(() => {
               this.$refs.table.refresh(true)
             })

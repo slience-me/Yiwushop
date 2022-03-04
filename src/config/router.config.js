@@ -39,6 +39,14 @@ export const asyncRouterMap = [
         hideChildrenInMenu: true,
         children: []
       },
+      // {
+      //   path: '/shop/pawn',
+      //   name: 'PawnIndex',
+      //   meta: { title: '典当场次管理', keepAlive: false, icon: 'profile', permission: ['PawnIndex'] },
+      //   component: () => import('@/views/shop/pawnManage/pawnIndex'),
+      //   hideChildrenInMenu: true,
+      //   children: []
+      // },
       {
         path: '/shop/auctions',
         name: 'AuctionsIndex',
@@ -79,23 +87,35 @@ export const asyncRouterMap = [
             path: '/shop/goodsManage/goodsDoneIndex',
             name: 'GoodsDoneIndex',
             component: () => import('@/views/shop/goodsManage/goodsDoneIndex'),
-            meta: { title: '已售商品', keepAlive: false, hidden: true, permission: ['GoodsDoneIndex'] }
+            meta: { title: '已拍卖商品', keepAlive: false, hidden: true, permission: ['GoodsDoneIndex'] }
           },
           {
             path: '/shop/goodsManage/goodsOnIndex',
             name: 'GoodsOnIndex',
             component: () => import('@/views/shop/goodsManage/goodsOnIndex'),
-            meta: { title: '上架商品', keepAlive: false, hidden: true, permission: ['GoodsOnIndex'] }
+            meta: { title: '出售商品', keepAlive: false, hidden: true, permission: ['GoodsOnIndex'] }
+          },
+          {
+            path: '/shop/goodsManage/goodsPawnIndex',
+            name: 'GoodsPawnIndex',
+            component: () => import('@/views/shop/goodsManage/goodsPawnIndex'),
+            meta: { title: '典当商品', keepAlive: false, hidden: true, permission: ['GoodsPawnIndex'] }
           }
         ]
+      },
+      {
+        path: '/shop/community',
+        name: 'CommunityIndex',
+        meta: { title: '公益展示', keepAlive: false, icon: 'tags', permission: ['CommunityIndex'] },
+        component: () => import('@/views/shop/communityManage/communityIndex'),
+        hideChildrenInMenu: true
       },
       {
         path: '/shop/complaint',
         name: 'ComplaintIndex',
         meta: { title: '投诉管理', keepAlive: false, icon: 'tags', permission: ['ComplaintIndex'] },
         component: () => import('@/views/shop/complaintManage/complaintIndex'),
-        hideChildrenInMenu: true,
-        children: []
+        hideChildrenInMenu: true
       },
       {
         path: '/shop/member',
