@@ -89,18 +89,23 @@ public class UserServiceImpl implements IUserService {
     @Override
     public Result addMember(String accessToken, UserVO userVO) throws Exception {
         TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
-        User user = new User();
-        user.setOpenid(userVO.getOpenid());
-        user.setUserName(userVO.getUserName());
-        user.setIdCard(userVO.getIdCard());
-        user.setUserNumber(userVO.getUserNumber());
-        user.setUserPwd(userVO.getUserPwd());
-        user.setUserAvatarurl(userVO.getUserAvatarurl());
-        user.setUserGender(userVO.getUserGender());
-        user.setUserPhone(userVO.getUserPhone());
-        user.setUserAddress(userVO.getUserAddress());
-        user.setCreatedBy(unsign.getUserId());
-        userMapper.insertSelective(user);
+        User user1 = userMapper.selectByOpenId(userVO.getOpenid());
+        if (Objects.nonNull(user1)){
+            return Result.createByErrorMessage("该用户已存在！");
+        } else {
+            User user = new User();
+            user.setOpenid(userVO.getOpenid());
+            user.setUserName(userVO.getUserName());
+            user.setIdCard(userVO.getIdCard());
+            user.setUserNumber(userVO.getUserNumber());
+            user.setUserPwd(userVO.getUserPwd());
+            user.setUserAvatarurl(userVO.getUserAvatarurl());
+            user.setUserGender(userVO.getUserGender());
+            user.setUserPhone(userVO.getUserPhone());
+            user.setUserAddress(userVO.getUserAddress());
+            user.setCreatedBy(unsign.getUserId());
+            userMapper.insertSelective(user);
+        }
         return Result.createBySuccessMessage("成功");
     }
 

@@ -1,9 +1,5 @@
 package xyz.slienceme.project_shop.vo;
-
-import io.swagger.annotations.ApiParam;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 @Data
 public class UserVO {
@@ -53,23 +49,4 @@ public class UserVO {
      */
     private String userAddress;
 
-    /**
-     * 信用值
-     */
-    private Integer userCredit;
-
-    /**
-     * 状态
-     */
-    private Integer isDelete;
-
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createdTime;
-
-    /**
-     * 创建人
-     */
-    private Integer createdBy;
 }
