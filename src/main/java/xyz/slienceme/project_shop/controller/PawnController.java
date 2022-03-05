@@ -39,7 +39,7 @@ public class PawnController {
                            @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                            @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
                            @ApiParam(value = "商品名称、场次名称、用户名") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
-        log.info("查询典当场次列表接口调用--get---</auctionsList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
+        //log.info("查询典当场次列表接口调用--get---</auctionsList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return auctionsService.pawnList(accessToken, pageNo, pageSize, keyword);
     }
 
@@ -50,7 +50,7 @@ public class PawnController {
                               @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
                               @ApiParam(value = "商品id") @RequestParam(value = "goodsId", required = false) Integer goodsId,
                               @ApiParam(value = "场次名称") @RequestParam(value = "pawnName", required = false) String pawnName) throws Exception {
-        log.info("条件查询典当场次列表接口调用--get---</pawnList/data>: goodsId=" + goodsId + "pawnName=" + pawnName);
+        //log.info("条件查询典当场次列表接口调用--get---</pawnList/data>: goodsId=" + goodsId + "pawnName=" + pawnName);
         return auctionsService.getPawnData(accessToken, pageNo, pageSize, goodsId, pawnName);
     }
 
@@ -58,7 +58,7 @@ public class PawnController {
     @GetMapping("/pawnList/{auctionsId}")
     public Result getPawnOne(@RequestHeader("x-access-token") String accessToken,
                              @PathVariable("auctionsId") @ApiParam(value = "场次id", required = true) Integer auctionsId) throws Exception {
-        log.info("查询单个典当场次接口调用--get---</pawnList/{auctionsId}>:  auctionsId=" + auctionsId);
+        //log.info("查询单个典当场次接口调用--get---</pawnList/{auctionsId}>:  auctionsId=" + auctionsId);
         return auctionsService.selectByPrimaryKeyPawn(accessToken, auctionsId);
     }
 

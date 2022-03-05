@@ -24,7 +24,7 @@ public class AdminRoleMenuController {
     @GetMapping("/menu")
     public Result findAll(@RequestHeader("x-access-token") String accessToken,
                           @ApiParam(value = "角色id，当前角色的菜单返回 isCheck=1") @RequestParam(value = "roleId", required = false) Integer roleId) {
-        log.info("查询菜单列表接口调用-------get---------</menu>:  roleId=" + roleId);
+        //log.info("查询菜单列表接口调用-------get---------</menu>:  roleId=" + roleId);
         return adminRoleMenuService.selectAll(accessToken, roleId);
     }
 
@@ -34,7 +34,7 @@ public class AdminRoleMenuController {
                             @ApiParam(required = false, value = "第几页") @RequestParam(value = "pageNo", required = false) Integer pageNo,
                             @ApiParam(required = false, value = "每页条数") @RequestParam(value = "pageSize", required = false) Integer pageSize,
                             @ApiParam(value = "角色名称、描述") @RequestParam(required = false) String keyword) {
-        log.info("查询角色列表接口调用-------get------</rolelist>");
+        //log.info("查询角色列表接口调用-------get------</rolelist>");
         return adminRoleMenuService.selectRoleAll(accessToken, pageNo, pageSize, keyword);
     }
 
@@ -42,7 +42,7 @@ public class AdminRoleMenuController {
     @GetMapping(value = "/rolelist/{roleId}")
     public Result selectByPrimaryKey(@RequestHeader("x-access-token") String accessToken,
                                      @PathVariable("roleId") @ApiParam(value = "角色id", required = true) Integer roleId) {
-        log.info("获取角色详细信息接口调用-----get------</rolelist/{roleId}>:  roleId=" + roleId);
+        //log.info("获取角色详细信息接口调用-----get------</rolelist/{roleId}>:  roleId=" + roleId);
         return adminRoleMenuService.selectByPrimaryKey(accessToken, roleId);
     }
 
@@ -73,7 +73,7 @@ public class AdminRoleMenuController {
     @ApiOperation(value = "获取用户权限", notes = "角色管理")
     @GetMapping("/permission")
     public Result getPermission(@RequestHeader("x-access-token") String accessToken) {
-        log.info("获取用户权限接口调用-----get----</permission>");
+        //log.info("获取用户权限接口调用-----get----</permission>");
         return adminRoleMenuService.getPermission(accessToken);
     }
 

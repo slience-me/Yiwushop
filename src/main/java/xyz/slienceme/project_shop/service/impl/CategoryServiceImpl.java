@@ -95,7 +95,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public Result categoryPut(String accessToken, Category category) throws Exception {
         Category category1 = categoryMapper.selectByPrimaryKey(category.getCategoryId());
-        System.out.println("category1 = " + category1);
+        //System.out.println("category1 = " + category1);
         if (Objects.isNull(category1)) {
             return Result.createByErrorMessage("类型不存在");
         }

@@ -94,7 +94,7 @@ public class AuctionsServiceImpl implements IAuctionsService {
     @Override
     public Result auctionsPut(String accessToken, Auctions auctions) throws Exception {
         Auctions auctions1 = auctionsMapper.selectByPrimaryKey(auctions.getAuctionsId());
-        System.out.println("auctions1 = " + auctions1);
+        //System.out.println("auctions1 = " + auctions1);
         if (Objects.isNull(auctions1)) {
             return Result.createByErrorMessage("该拍卖场次不存在");
         }
@@ -137,7 +137,7 @@ public class AuctionsServiceImpl implements IAuctionsService {
     @Override
     public Result pawnPut(String accessToken, Pawn pawn) throws Exception {
         Pawn pawn1 = pawnMapper.selectByPrimaryKey(pawn.getAuctionsId());
-        System.out.println("auctions1 = " + pawn1);
+        //System.out.println("auctions1 = " + pawn1);
         if (Objects.isNull(pawn1)) {
             return Result.createByErrorMessage("该场次不存在");
         }
@@ -149,7 +149,7 @@ public class AuctionsServiceImpl implements IAuctionsService {
     public Result doPawn(String accessToken, PawnScheduleVO pawnScheduleVO) throws Exception {
         Pawn pawn = pawnMapper.selectByPrimaryKey(pawnScheduleVO.getPawnId());
         Goods goods1 = goodsMapper.selectByPrimaryKey(pawn.getGoodsId());
-        System.out.println("pawn = " + pawn);
+        //System.out.println("pawn = " + pawn);
         if (Objects.isNull(pawn)) {
             return Result.createByErrorMessage("订单不存在");
         }

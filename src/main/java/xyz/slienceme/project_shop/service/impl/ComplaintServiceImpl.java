@@ -94,7 +94,7 @@ public class ComplaintServiceImpl implements IComplaintService {
     @Override
     public Result complaintPut(String accessToken, Complaint complaint) {
         Complaint complaint1 = complaintMapper.selectByPrimaryKey(complaint.getComplaintId());
-        System.out.println("complaint1 = " + complaint1);
+       //println("complaint1 = " + complaint1);
         if (Objects.isNull(complaint1)) {
             return Result.createByErrorMessage("投诉单不存在");
         }

@@ -41,7 +41,7 @@ public class ChatController {
                            @ApiParam(value = "买家读取状态") @RequestParam(value = "readStatusBuy", required = false) Integer readStatusBuy,
                            @ApiParam(value = "买家删除状态") @RequestParam(value = "isDeleteBuy", required = false) Integer isDeleteBuy,
                            @ApiParam(value = "卖家删除状态") @RequestParam(value = "isDeleteSell", required = false) Integer isDeleteSell) throws Exception {
-        log.info("查询聊天列表接口调用--get---</chat>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",sellUser=" + sellUser + ",buyUser=" + buyUser + ",msgType=" + msgType + ",readStatusSell=" + readStatusSell + ",readStatusBuy=" + readStatusBuy + ",isDeleteBuy=" + isDeleteBuy + ",isDeleteSell=" + isDeleteSell);
+        //log.info("查询聊天列表接口调用--get---</chat>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",sellUser=" + sellUser + ",buyUser=" + buyUser + ",msgType=" + msgType + ",readStatusSell=" + readStatusSell + ",readStatusBuy=" + readStatusBuy + ",isDeleteBuy=" + isDeleteBuy + ",isDeleteSell=" + isDeleteSell);
         return chatService.chatList(accessToken, pageNo, pageSize, sellUser, buyUser, msgType, readStatusSell, readStatusBuy, isDeleteBuy, isDeleteSell);
     }
 
@@ -55,7 +55,7 @@ public class ChatController {
                                  @ApiParam(value = "消息类型 0 文字 1 图片") @RequestParam(value = "msgType", required = false) Integer msgType,
                                  @ApiParam(value = "卖家读取状态") @RequestParam(value = "readStatusSell", required = false) Integer readStatusSell,
                                  @ApiParam(value = "买家读取状态") @RequestParam(value = "readStatusBuy", required = false) Integer readStatusBuy) throws Exception {
-        log.info("查询买家聊天列表接口调用--get---</chat/buy>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",sellUser=" + sellUser + ",buyUser=" + buyUser + ",msgType=" + msgType + ",readStatusSell=" + readStatusSell + ",readStatusBuy=" + readStatusBuy);
+        //log.info("查询买家聊天列表接口调用--get---</chat/buy>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",sellUser=" + sellUser + ",buyUser=" + buyUser + ",msgType=" + msgType + ",readStatusSell=" + readStatusSell + ",readStatusBuy=" + readStatusBuy);
         return chatService.chatListForBuy(accessToken, pageNo, pageSize, sellUser, buyUser, msgType, readStatusSell, readStatusBuy);
     }
 
@@ -69,7 +69,7 @@ public class ChatController {
                                   @ApiParam(value = "消息类型 0 文字 1 图片") @RequestParam(value = "msgType", required = false) Integer msgType,
                                   @ApiParam(value = "卖家读取状态") @RequestParam(value = "readStatusSell", required = false) Integer readStatusSell,
                                   @ApiParam(value = "买家读取状态") @RequestParam(value = "readStatusBuy", required = false) Integer readStatusBuy) throws Exception {
-        log.info("查询买家聊天列表接口调用--get---</chat/sell>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",sellUser=" + sellUser + ",buyUser=" + buyUser + ",msgType=" + msgType + ",readStatusSell=" + readStatusSell + ",readStatusBuy=" + readStatusBuy);
+        //log.info("查询买家聊天列表接口调用--get---</chat/sell>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",sellUser=" + sellUser + ",buyUser=" + buyUser + ",msgType=" + msgType + ",readStatusSell=" + readStatusSell + ",readStatusBuy=" + readStatusBuy);
         return chatService.chatListForSell(accessToken, pageNo, pageSize, sellUser, buyUser, msgType, readStatusSell, readStatusBuy);
     }
 
@@ -77,7 +77,7 @@ public class ChatController {
     @PostMapping("")
     public Result chatAdd(@RequestHeader("x-access-token") String accessToken,
                           @RequestBody ChatVO chatVO) throws Exception {
-        log.info("添加管理员接口调用---post--</chat>:  chatVO=" + chatVO);
+        //log.info("添加聊天接口调用---post--</chat>:  chatVO=" + chatVO);
         return chatService.chatAdd(accessToken, chatVO);
     }
 
@@ -85,7 +85,7 @@ public class ChatController {
     @PutMapping("")
     public Result chatPut(@RequestHeader("x-access-token") String accessToken,
                           @RequestBody Chat chat) throws Exception {
-        log.info("修改已读状态接口调用---put--</chat>:  chat=" + chat);
+        //log.info("修改已读状态接口调用---put--</chat>:  chat=" + chat);
         return chatService.chatPut(accessToken, chat);
     }
 
@@ -102,7 +102,7 @@ public class ChatController {
     public Result chatPutUser(@RequestHeader("x-access-token") String accessToken,
                           @ApiParam(value = "消息id") @RequestParam(value = "chatId") Integer chatId,
                           @ApiParam(value = "用户类型 1买家  2卖家") @RequestParam(value = "userType") Integer userType) throws Exception {
-        log.info("更新聊天状态接口调用---get--</chat/status>:  chatId=" + chatId + ",userType=" + userType);
+        //og.info("更新聊天状态接口调用---get--</chat/status>:  chatId=" + chatId + ",userType=" + userType);
         return chatService.chatPutUser(accessToken, chatId, userType);
     }
 

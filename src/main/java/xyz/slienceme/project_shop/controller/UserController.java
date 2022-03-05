@@ -106,7 +106,7 @@ public class UserController {
                              @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
                              @ApiParam(value = "用户名、ID卡、账号、性别、手机、地址") @RequestParam(value = "keyword", required = false) String keyword,
                              @ApiParam(value = "openid") @RequestParam(value = "openid", required = false) String openid) throws Exception {
-        log.info("按页查询所有Member接口调用-------get---------</member>:  ");
+        //log.info("按页查询所有Member接口调用-------get---------</member>:  ");
         return userService.members(accessToken, pageNo, pageSize, keyword, openid);
     }
 
@@ -121,7 +121,7 @@ public class UserController {
                           @ApiParam(value = "用户名称") @RequestParam(value = "userName", required = false) String userName,
                           @ApiParam(value = "用户手机") @RequestParam(value = "userPhone", required = false) String userPhone,
                           @ApiParam(value = "用户地址") @RequestParam(value = "userAddress", required = false) String userAddress) throws Exception {
-        log.info("条件查询所有Member接口调用-------get---------</data>:  ");
+        //log.info("条件查询所有Member接口调用-------get---------</data>:  ");
         return userService.conMembers(accessToken, pageNo, pageSize, openid, idCard,userNumber,userName,userPhone,userAddress);
     }
 
@@ -129,7 +129,7 @@ public class UserController {
     @GetMapping("/member/{userId}")
     public Result getOne(@RequestHeader("x-access-token") String accessToken,
                          @PathVariable("userId") @ApiParam(value = "用户id", required = true) Integer userId) throws Exception {
-        log.info("查询单个用户接口调用-------get---------</member>:  ");
+        //log.info("查询单个用户接口调用-------get---------</member>:  ");
         return userService.getOneMenber(accessToken, userId);
     }
 

@@ -96,6 +96,7 @@ public class ChatServiceImpl implements IChatService {
         chat.setSellUser(chatVO.getSellUser());
         chat.setMsgType(chatVO.getMsgType());
         chat.setMsgContent(chatVO.getMsgContent());
+        chat.setOther(chatVO.getSendUser());
         chatMapper.insertSelective(chat);
         return Result.createBySuccessMessage("成功");
     }
@@ -131,11 +132,10 @@ public class ChatServiceImpl implements IChatService {
     @Override
     public Result chatPut(String accessToken, Chat chat) {
         Chat chat1 = chatMapper.selectByPrimaryKey(chat.getChatId());
-        System.out.println("chat1 = " + chat1);
         if (Objects.isNull(chat1)) {
             return Result.createByErrorMessage("聊天id不存在");
         }
-        chatMapper.updateByPrimaryKeySelective(chat1);
+        chatMapper.updateByPrimaryKeySelective(chat);
         return Result.createBySuccessMessage("成功");
     }
 
@@ -164,7 +164,6 @@ public class ChatServiceImpl implements IChatService {
     @Override
     public Result chatPutUser(String accessToken, Integer chatId, Integer userType) {
         Chat chat1 = chatMapper.selectByPrimaryKey(chatId);
-        System.out.println("chat1 = " + chat1);
         if (Objects.isNull(chat1)) {
             return Result.createByErrorMessage("聊天id不存在");
         }

@@ -39,7 +39,7 @@ public class AuctionScheduleController {
                                       @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                                       @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
                                       @ApiParam(value = "商品id", required = true) @RequestParam(value = "goodsId") Integer goodsId) throws Exception {
-        log.info("查询拍卖过程表接口调用--get---</auctionScheduleList>:  pageNo=" + pageNo + ",pageSize=" + pageSize);
+        //log.info("查询拍卖过程表接口调用--get---</auctionScheduleList>:  pageNo=" + pageNo + ",pageSize=" + pageSize);
         return auctionScheduleService.auctionScheduleList(accessToken, pageNo, pageSize, goodsId);
     }
 

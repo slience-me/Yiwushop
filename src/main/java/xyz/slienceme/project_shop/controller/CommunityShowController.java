@@ -60,7 +60,7 @@ public class CommunityShowController {
                              @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                              @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
                              @ApiParam(value = "名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
-        log.info("按页查询所有公益接口调用-------get---------</community>:  ");
+        //log.info("按页查询所有公益接口调用-------get---------</community>:  ");
         return communityShowService.community(accessToken, pageNo, pageSize, keyword);
     }
 

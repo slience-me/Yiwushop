@@ -65,7 +65,7 @@ public class ImageServiceImpl implements IImageService {
         HashMap<String, Object> data = new HashMap<>();
         data.put("url", url);
         data.put("imageId", i);
-        System.out.println("data = " + data);
+        //System.out.println("data = " + data);
         return Result.createBySuccess(data);
     }
 }

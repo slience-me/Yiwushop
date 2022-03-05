@@ -182,7 +182,7 @@ public class GoodsServiceImpl implements IGoodsService {
     @Override
     public Result goodsPut(String accessToken, Goods goods) throws Exception {
         Goods goods1 = goodsMapper.selectByPrimaryKey(goods.getGoodsId());
-        System.out.println("goods1 = " + goods1);
+       //println("goods1 = " + goods1);
         if (Objects.isNull(goods1)) {
             return Result.createByErrorMessage("商品不存在");
         }
@@ -193,7 +193,7 @@ public class GoodsServiceImpl implements IGoodsService {
     @Override
     public Result stateOn(String accessToken, AuctionsVO auctionsVO) throws Exception {
         Goods goods1 = goodsMapper.selectByPrimaryKey(auctionsVO.getGoodsId());
-        System.out.println("goods1 = " + goods1);
+        //System.out.println("goods1 = " + goods1);
         if (Objects.isNull(goods1)) {
             return Result.createByErrorMessage("商品不存在");
         } else {
@@ -218,7 +218,7 @@ public class GoodsServiceImpl implements IGoodsService {
     @Override
     public Result stateOnToPawn(String accessToken, PawnVO pawnVO) throws Exception {
         Goods goods1 = goodsMapper.selectByPrimaryKey(pawnVO.getGoodsId());
-        System.out.println("goods1 = " + goods1);
+        //System.out.println("goods1 = " + goods1);
         if (Objects.isNull(goods1)) {
             return Result.createByErrorMessage("商品不存在");
         } else {

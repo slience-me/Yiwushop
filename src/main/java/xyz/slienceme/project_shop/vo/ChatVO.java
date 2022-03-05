@@ -25,4 +25,9 @@ public class ChatVO {
      */
     private String msgContent;
 
+    /**
+     * 发送者
+     */
+    private String sendUser;
+
 }

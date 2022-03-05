@@ -34,7 +34,7 @@ public class ComplaintStatusController {
     @ApiOperation("查询投诉状态类型列表")
     @GetMapping("/type")
     public Result ComplaintStatusList() throws Exception {
-        log.info("查询投诉状态类型列表接口调用--get---</complaint/type>");
+        //log.info("查询投诉状态类型列表接口调用--get---</complaint/type>");
         return complaintStatusService.complaintTypeList();
     }
 

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import xyz.slienceme.project_shop.dto.Auctions;
@@ -37,6 +38,7 @@ public class ScheduleTask {
     @Autowired
     private GoodsMapper goodsMapper;
 
+    @Async
     @Scheduled(cron = "0 */1 * * * ?")//每分钟执行
     public void generateOrder() throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -44,7 +46,7 @@ public class ScheduleTask {
         String nowTime = sdf.format(nowMilliSecond);
         //log.info("定时任务开始执行--当前时间: " + nowTime);
         List<HashMap<String, Object>> auctionsList = auctionsMapper.selectUndoneList(nowTime);
-        List<HashMap<String, Object>> pawnList = pawnMapper.selectUndoneList(nowTime);
+        //List<HashMap<String, Object>> pawnList = pawnMapper.selectUndoneList(nowTime);
         for (HashMap<String, Object> auctionsi : auctionsList) {
             Orders orders = new Orders();
             orders.setSerialNum(StringUtil.serialNumber((Integer) auctionsi.get("goodsId")));
@@ -64,7 +66,7 @@ public class ScheduleTask {
             //log.info("竞拍场次删除 ：id="+ auctions.getAuctionsId());
             auctionsMapper.updateByPrimaryKeySelective(auctions);
         }
-        for (HashMap<String, Object> pawni : pawnList) {
+        /*for (HashMap<String, Object> pawni : pawnList) {
             Orders orders = new Orders();
             orders.setSerialNum(StringUtil.serialNumber((Integer) pawni.get("goodsId")));
             orders.setGoodsId((Integer) pawni.get("goodsId"));
@@ -82,6 +84,6 @@ public class ScheduleTask {
             pawn.setIsDelete(1);//结束
             //log.info("典当场次删除 ：id="+ pawn.getAuctionsId());
             pawnMapper.updateByPrimaryKeySelective(pawn);
-        }
+        }*/
     }
 }

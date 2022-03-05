@@ -37,7 +37,7 @@ public class AuctionsController {
                                @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                                @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
                                @ApiParam(value = "场次名称、商品id、商品名称、用户名称") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
-        log.info("查询竞拍场次列表接口调用--get---</auctionsList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
+        //log.info("查询竞拍场次列表接口调用--get---</auctionsList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return auctionsService.auctionsList(accessToken, pageNo, pageSize, keyword);
     }
 
@@ -48,7 +48,7 @@ public class AuctionsController {
                                   @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
                                   @ApiParam(value = "商品id") @RequestParam(value = "goodsId", required = false) Integer goodsId,
                                   @ApiParam(value = "场次名称") @RequestParam(value = "auctionsName", required = false) String auctionsName) throws Exception {
-        log.info("条件查询竞拍场次列表接口调用--get---</auctionsList/data>: goodsId" + goodsId + " auctionsName=" + auctionsName);
+        //log.info("条件查询竞拍场次列表接口调用--get---</auctionsList/data>: goodsId" + goodsId + " auctionsName=" + auctionsName);
         return auctionsService.getData(accessToken, pageNo, pageSize, goodsId, auctionsName);
     }
 

@@ -41,7 +41,7 @@ public class ComplaintController {
                                 @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                                 @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
                                 @ApiParam(value = "流水号、用户名、状态码") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
-        log.info("查询投诉表接口调用--get---</complaintList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
+        //log.info("查询投诉表接口调用--get---</complaintList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return complaintService.complaintList(accessToken, pageNo, pageSize, keyword);
     }
 
@@ -53,7 +53,7 @@ public class ComplaintController {
                                    @ApiParam(value = "订单id", required = true) @RequestParam(value = "ordersId") Integer ordersId,
                                    @ApiParam(value = "申请人", required = true) @RequestParam(value = "userId") Integer userId,
                                    @ApiParam(value = "投诉状态", required = true) @RequestParam(value = "complaintStatus") Integer complaintStatus) throws Exception {
-        log.info("查询投诉表接口调用--get---</complaintList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",ordersId=" + ordersId + ",userId=" + userId + ",complaintStatus=" + complaintStatus);
+        //log.info("查询投诉表接口调用--get---</complaintList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",ordersId=" + ordersId + ",userId=" + userId + ",complaintStatus=" + complaintStatus);
         return complaintService.complaintData(accessToken, pageNo, pageSize, ordersId, userId, complaintStatus);
     }
 
@@ -61,7 +61,7 @@ public class ComplaintController {
     @GetMapping("/complaintList/{complaintId}")
     public Result getGoodsOne(@RequestHeader("x-access-token") String accessToken,
                               @PathVariable("complaintId") @ApiParam(value = "投诉id", required = true) Integer complaintId) throws Exception {
-        log.info("查询单个投诉表接口调用--get---</categoryList/{complaintId}>: complaintId=" + complaintId);
+        //log.info("查询单个投诉表接口调用--get---</categoryList/{complaintId}>: complaintId=" + complaintId);
         return complaintService.selectByPrimaryKey(accessToken, complaintId);
     }
 

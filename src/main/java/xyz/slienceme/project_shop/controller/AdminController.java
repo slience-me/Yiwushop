@@ -46,7 +46,7 @@ public class AdminController {
                             @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                             @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
                             @ApiParam(value = "管理员名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
-        log.info("查询管理员列表接口调用--get---</adminList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
+        //log.info("查询管理员列表接口调用--get---</adminList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return adminService.adminList(accessToken, pageNo, pageSize, keyword);
     }
 

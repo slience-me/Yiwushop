@@ -43,7 +43,7 @@ public class Chat {
     private Integer readStatusBuy;
 
     /**
-     * 预留空间
+     * 预留空间 发送人
      */
     private String other;
 
