@@ -19,7 +19,7 @@
         </span>
         <span slot="action" slot-scope="text, record">
           <template>
-            <a v-action:select style="margin-left: 10px" @click="detailAction(record)">查看</a>
+            <a v-action:add style="margin-left: 10px" @click="detailAction(record)">查看</a>
             <a v-action:delete style="margin-left: 10px" @click="del(record)">删除</a>
           </template>
         </span>
