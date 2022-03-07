@@ -1,0 +1,66 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "竞拍",
+          "pathName": "pages/auction/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "公益",
+          "pathName": "pages/welfare/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "我的",
+          "pathName": "pages/mine/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "商品",
+          "pathName": "pages/goods/index",
+          "query": "goodsId=1",
+          "scene": null
+        },
+        {
+          "name": "拍卖",
+          "pathName": "pages/mine/paimai/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "个人信息",
+          "pathName": "pages/mine/info/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "投诉",
+          "pathName": "pages/mine/complaint/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "聊天",
+          "pathName": "pages/chat/index",
+          "query": "oppositeId=30",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

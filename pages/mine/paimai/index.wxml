@@ -1,0 +1,50 @@
+<!--pages/mine/paimai/index.wxml-->
+<form>
+  <view class="cu-form-group">
+		<view class="title">场次名称</view>
+		<input placeholder="请输入场次名称" bindinput="changeMsg" data-name="auctionsName"></input>
+  </view>
+  <view class="cu-form-group">
+		<view class="title">起拍价</view>
+		<input placeholder="请输入起拍价" bindinput="changeMsg" data-name="startingPrice"></input>
+  </view>
+  <view class="cu-form-group">
+		<view class="title">一口价</view>
+		<input placeholder="请输入一口价" bindinput="changeMsg" data-name="fixedPrice"></input>
+	</view>
+  <view class="cu-form-group">
+		<view class="title">起拍日期</view>
+		<picker mode="date" value="{{startDate}}" start="2015-09-01" end="2099-09-01" bindchange="StartDateChange">
+			<view class="picker">
+				{{startDate}}
+			</view>
+		</picker>
+	</view>
+	<view class="cu-form-group">
+		<view class="title">起拍时间</view>
+		<picker mode="time" value="{{startTime}}" start="00:00" end="24:59" bindchange="StartTimeChange">
+			<view class="picker">
+				{{startTime}}
+			</view>
+		</picker>
+	</view>
+	<view class="cu-form-group">
+		<view class="title">结束日期</view>
+		<picker mode="date" value="{{endDate}}" start="2015-09-01" end="2099-09-01" bindchange="EndDateChange">
+			<view class="picker">
+				{{endDate}}
+			</view>
+		</picker>
+	</view>
+	<view class="cu-form-group">
+		<view class="title">结束时间</view>
+		<picker mode="time" value="{{endTime}}" start="09:01" end="24:59" bindchange="EndTimeChange">
+			<view class="picker">
+				{{endTime}}
+			</view>
+		</picker>
+	</view>
+</form>
+<view class="padding flex flex-direction">
+  <button class="cu-btn bg-green margin-tb-sm lg" bindtap="paimai">拍卖</button>
+</view>

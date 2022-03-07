@@ -1,0 +1,130 @@
+page {
+  background-color: #F0F0F0;
+}
+.first_row {
+  background-color: #C9D6FF;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+.first_row .portrait {
+  width: 220rpx;
+  height: 300rpx;
+}
+.first_row .portrait .image {
+  position: absolute;
+  left: 62rpx;
+  top: 74rpx;
+  width: 146rpx;
+  height: 146rpx;
+  border-radius: 50%;
+}
+.first_row .portrait .camera {
+  position: absolute;
+  left: 160rpx;
+  top: 172rpx;
+  width: 48rpx;
+}
+.first_row .name_job {
+  width: 400rpx;
+}
+.first_row .name_job .name {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.first_row .name_job .name .text {
+  font-size: 32rpx;
+  font-family: PingFang SC;
+  font-weight: bold;
+  color: #333333;
+  padding-right: 20rpx;
+}
+.first_row .name_job .name .icon {
+  height: 40rpx;
+  width: 164rpx;
+  padding-right: 20rpx;
+}
+.first_row .name_job .job {
+  margin-top: 50rpx;
+  font-size: 26rpx;
+  font-family: PingFang SC;
+  font-weight: bold;
+  color: #666666;
+}
+.first_row .arrows {
+  padding-right: 67rpx;
+}
+.first_row .arrows image {
+  width: 33rpx;
+}
+.second_row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #ffffff;
+  margin-bottom: 20rpx;
+  padding: 20rpx 0;
+}
+.second_row .icon_text {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.second_row .icon_text .icon {
+  width: 80rpx;
+}
+.second_row .icon_text text {
+  padding: 10rpx 0;
+  font-size: 26rpx;
+  font-family: PingFang SC;
+  font-weight: 500;
+  color: #333333;
+}
+.second_row .icon_text button {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+.thrid_forth_row {
+  background-color: #ffffff;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+}
+.thrid_forth_row .title {
+  border-left: 8rpx solid #829EFD;
+  padding-left: 10rpx;
+  font-size: 30rpx;
+  font-family: PingFang SC;
+  font-weight: bold;
+  color: #333333;
+}
+.thrid_forth_row .content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 20rpx;
+}
+.thrid_forth_row .content .icon_text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 30rpx;
+}
+.thrid_forth_row .content .icon_text image {
+  width: 42rpx;
+}
+.thrid_forth_row .content .icon_text text {
+  padding: 10rpx 0;
+  font-size: 26rpx;
+  font-family: PingFang SC;
+  font-weight: 500;
+  color: #333333;
+}

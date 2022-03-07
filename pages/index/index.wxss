@@ -1,0 +1,122 @@
+.box {  
+  margin: 20rpx 0; 
+}
+
+.box view.cu-bar {
+  margin-top: 20rpx; 
+}
+.cates_container {
+  display: flex;
+  height: calc(100vh - 140rpx);
+}
+.cates_container .left_menu {
+  flex: 2;
+}
+.cates_container .left_menu .menu_item {
+  height: 80rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30rpx;
+}
+.cates_container .left_menu .active {
+  color: #39b54a;
+  border-left: 10rpx solid currentColor;
+}
+.cates_container .right_menu {
+  flex: 5;
+}
+.cates_container .right_menu .goods_group .goods_title {
+  height: 80rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cates_container .right_menu .goods_group .goods_title .title_leftandright {
+  color: #ccc;
+  padding: 0rpx 10rpx;
+}
+.cates_container .right_menu .goods_group .goods_list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.cates_container .right_menu .goods_group .goods_list navigator {
+  width: 33.33%;
+  text-align: center;
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.cates_container .right_menu .goods_group .goods_list navigator image {
+  width: 90rpx;
+  height: 90rpx;
+}
+.cates_container .right_menu .goods_group .goods_list navigator .goods_name {
+  width: 80%;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+
+}
+
+
+
+.switch-sex::after {
+  content: "\e716";
+}
+
+.switch-sex::before {
+  content: "\e7a9";
+}
+
+.switch-music::after {
+  content: "\e66a";
+}
+
+.switch-music::before {
+  content: "\e6db";
+}
+
+
+.modal {
+  position: fixed;
+  left: 0rpx;
+  top: 0rpx;
+  width: 100%;
+  height: 100%;
+}
+.modal .black {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: 0.5;
+}
+.modal .button {
+  position: fixed;
+  left: 0rpx;
+  bottom: 0rpx;
+  opacity: 100;
+  height: 12vh;
+  width: 100vw;
+  background-color: #f8f8f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal .button button {
+  opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 75vw;
+  height: 7vh;
+  background-color: #39b54a;
+  border-radius: 40rpx;
+  font-size: 34rpx;
+}
+.modal .button button::after {
+  border: 0rpx;
+}

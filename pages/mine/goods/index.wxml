@@ -1,0 +1,16 @@
+<!--pages/mine/goods/index.wxml-->
+<view class="cu-list menu-avatar" >
+  <view class="cu-item" wx:for="{{goods}}" wx:key="goodsId" wx:if="{{item.stateOn!=3}}">
+    <view class="cu-avatar round lg" style="background-image:url({{item.imageUrl}});"></view>
+    <view class="content">
+      <view class="text-grey width-sm text-cut">{{item.goodsName}}</view>
+      <view class="text-gray width-sm text-sm text-cut">{{item.goodsInfo}}</view>
+    </view>
+    <view class="grid col-5">
+      <button class="cu-btn round bg-{{item.stateOn==2?'green':'grey'}} margin-top-xs margin-left-xs" bindtap="paimai" data-index="{{index}}">拍卖</button>
+      <button class="cu-btn round bg-{{item.stateOn==5?'green':'grey'}} margin-top-xs margin-left-xs" bindtap="changeStateOn" data-state="5" data-index="{{index}}">上架</button>
+      <button class="cu-btn round bg-{{item.stateOn==4?'green':'grey'}} margin-top-xs margin-left-xs" bindtap="changeStateOn" data-state="4" data-index="{{index}}">典当</button>
+      <button class="cu-btn round bg-{{item.stateOn==1?'green':'grey'}} margin-top-xs margin-left-xs" bindtap="changeStateOn" data-state="1" data-index="{{index}}">下架</button>
+    </view>
+  </view>
+</view>

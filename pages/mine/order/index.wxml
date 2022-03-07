@@ -1,0 +1,34 @@
+<!--pages/mine/order/index.wxml-->
+<view class="text-center text-xxl padding">
+  <text class="text-black text-bold">购买订单</text>
+</view>
+<view class="cu-list menu-avatar">
+  <view class="cu-item" wx:for="{{buyOrder}}" wx:key="ordersId">
+    <view class="cu-avatar round lg" style="background-image:url({{item.good.imageUrl}});"></view>
+    <view class="content">
+      <view class="text-grey">{{item.good.goodsName}}</view>
+      <view class="text-gray text-sm text-cut">成交价：<text class="text-price text-red">{{item.buyPrice}}</text></view>
+    </view>
+    <view class="grid col-5 padding-top-sm padding-bottom-sm">
+        <button class="cu-btn round bg-green margin-sm" bindtap="call" data-phone="{{item.sellUser.userPhone}}">联系卖家</button>
+    </view>
+    <view class="grid col-5 padding-top-sm padding-bottom-sm">
+        <button class="cu-btn round bg-green margin-sm" bindtap="skipTo" data-url="/pages/mine/complaint/index?ordersId={{item.ordersId}}">投诉</button>
+    </view>
+  </view>
+</view>
+<view class="text-center text-xxl padding">
+  <text class="text-black text-bold">售卖订单</text>
+</view>
+<view class="cu-list menu-avatar">
+  <view class="cu-item" wx:for="{{sellOrder}}" wx:key="ordersId">
+    <view class="cu-avatar round lg" style="background-image:url({{item.good.imageUrl}});"></view>
+    <view class="content">
+      <view class="text-grey">{{item.good.goodsName}}</view>
+      <view class="text-gray text-sm text-cut">成交价：<text class="text-price text-red">{{item.buyPrice}}</text></view>
+    </view>
+    <view class="grid col-5 padding-top-sm padding-bottom-sm">
+        <button class="cu-btn round bg-green margin-sm" bindtap="call" data-phone="{{item.buyUser.userPhone}}">联系买家</button>
+    </view>
+  </view>
+</view>

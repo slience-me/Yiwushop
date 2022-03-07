@@ -1,0 +1,11 @@
+<!--pages/auction/index/index.wxml-->
+<view class="p_page">
+  <view class="p_item" wx:for="{{auctions}}" wx:key="auctionsId" bindtap="skipTo" data-index="{{index}}">
+    <image class="p_img" src="{{item.good.imageUrl}}" mode="widthFix"></image>
+    <view class="p_content">
+      <view class="p_name">{{item.good.goodsName}}</view>
+      <view class="p_tag bg-green">{{item.state}}</view>
+      <view class="p_info">{{item.good.goodsInfo}}</view>
+    </view>
+  </view>
+</view>

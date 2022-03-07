@@ -1,0 +1,4 @@
+/* pages/mine/info/index.wxss */
+radio-group{
+  width: 100%;
+}

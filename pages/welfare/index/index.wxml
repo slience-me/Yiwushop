@@ -1,0 +1,11 @@
+<!--pages/welfare/index/index.wxml-->
+<view class="cu-card case no-card">
+  <view class="cu-item shadow" wx:for="{{communitys}}" wx:key="showId">
+    <view class="image">
+      <image src="{{item.imageUrl}}" mode="widthFix"></image>
+      <view class="cu-bar bg-shadeBottom">
+        <text class="text-cut">{{item.showName}}</text>
+    </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,37 @@
+<!--pages/goods/index.wxml-->
+<image class="goods_img" mode="widthFix" src="{{goods.imageUrl}}"></image>
+<view class="solid-bottom text-center text-xxl padding">
+  <text class="text-black text-bold">{{goods.goodsName}}</text>
+</view>
+<view class="solid-bottom text-center text-xxl padding">
+  <text class="text-price text-red">{{goods.goodsPrice}}</text>
+</view>
+<!-- 商品详情 -->
+<view class="goods_info">
+  <view class="goods_info_name">商品详情</view>
+  <view class="goods_info_content">
+    <rich-text nodes='{{goods.goodsInfo}}'></rich-text>
+  </view>
+</view>
+<view class="goods_info">
+  <view class="goods_info_name">卖家信息</view>
+</view>
+<view class="p_page">
+  <view class="p_item">
+    <view class="cu-avatar xl round" style="background-image:url({{sellUser.userAvatarurl}});"></view>
+    <view class="p_content">
+      <view class="p_name">昵称：{{sellUser.userName}}</view>
+      <view class="p_info" bindtap="call">电话：{{sellUser.userPhone}}</view>
+    </view>
+  </view>
+</view>
+<!-- 底部工具栏 -->
+<view class="btm_tools">
+   <view class="tools_item">
+    <text class="item_content">分享</text>
+    <button open-type="share"></button>
+  </view>
+  <view class="tools_item tools_btn2" bindtap="skipTo">以物易物</view>
+  <view class="tools_item" bindtap="skipTo">联系商家购买</view>
+</view>
+<view class="fill"></view>

@@ -1,0 +1,56 @@
+<!--pages/mine/index/index.wxml-->
+<!-- 第一行，紫色的那一块 -->
+<view class="first_row">
+  <view class="portrait" bindtap="changeImage">
+    <image class="image" mode="scaleToFill" src="{{userInfo.userAvatarurl}}"></image>
+  </view>
+  <view class="name_job">
+    <view class="name">
+      <text class="text">{{userInfo.userName}}</text>
+    </view>
+  </view>
+  <view class="arrows" bindtap="skipTo" data-url="/pages/mine/info/index">
+    <image mode="widthFix" src="/image/write.png"></image>
+  </view>
+</view>
+<!-- 第二行，典当、帮助、售后、邀请 -->
+<view class="second_row">
+  <!-- <view class="icon_text" bindtap="skipTo" data-url="/pages/mine/diandang/index">
+    <image class="icon" mode="widthFix" src="/image/diandang.png"></image>
+    <text>典当</text>
+  </view> -->
+  <view class="icon_text" bindtap="skipTo" data-url="/pages/mine/help/index">
+    <image class="icon" mode="widthFix" src="/image/help.png"></image>
+    <text>帮助</text>
+  </view>
+  <view class="icon_text" bindtap="skipTo" data-url="/pages/mine/order/index">
+    <image class="icon" mode="widthFix" src="/image/order.png"></image>
+    <text>拍卖订单</text>
+  </view>
+  <view class="icon_text">
+    <image class="icon" mode="widthFix" src="/image/invite.png"></image>
+    <text>邀请</text>
+    <button open-type="share"></button>
+  </view>
+</view>
+<!--提示 -->
+<view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+  <view class="cu-item arrow">
+    <navigator class="content" url="/pages/mine/goods/index" hover-class="none">
+      <text class="cuIcon-formfill text-green"></text>
+      <text class="text-grey">我的商品</text>
+    </navigator>
+  </view>
+  <view class="cu-item arrow">
+    <navigator class="content" url="/pages/welfare/index/index" hover-class="none">
+      <text class="cuIcon-likefill text-orange"></text>
+      <text class="text-grey">公益展示</text>
+    </navigator>
+  </view>
+  <view class="cu-item arrow">
+    <button class="cu-btn content" open-type="feedback">
+      <text class="cuIcon-writefill text-cyan"></text>
+      <text class="text-grey">投诉与意见</text>
+    </button>
+  </view>
+</view>

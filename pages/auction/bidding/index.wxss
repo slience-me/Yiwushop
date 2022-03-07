@@ -1,0 +1,4 @@
+/* pages/auction/bidding/index.wxss */
+.goods_img{
+  width : 100vw
+}

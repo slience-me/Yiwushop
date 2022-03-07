@@ -1,0 +1,5 @@
+<!--pages/mine/help/index.wxml-->
+<view class="content">
+  <view class="text">客服电话：1111111111111</view>
+  <image bindtap="call" mode="widthFix" src="/image/phone_blue.png"></image>
+</view>

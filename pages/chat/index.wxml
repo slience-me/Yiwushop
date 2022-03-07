@@ -1,0 +1,27 @@
+<!--pages/chat/index.wxml-->
+<view class="cu-chat">
+  <view class="cu-item {{item.sellUser == me.userId?'self':''}}" wx:for="{{words}}" wx:key="chatId">
+    <!-- 头像 -->
+    <view wx:if="{{item.sellUser != me.userId}}" class="cu-avatar radius" style="background-image:url({{me.userId==item.sellUser?me.userAvatarurl:opposite.userAvatarurl}});"></view>
+    <!-- 对话内容 -->
+    <view class="main">
+      <view wx:if="{{item.sellUser == me.userId}}" class="text-{{item.readStatusSell==0?'grey':'orange'}} text-sm padding-right-sm">{{item.readStatusSell==0?'已读':'未读'}}</view>
+      <view class="content shadow">
+        <text wx:if="{{item.msgType == 0}}">{{item.msgContent}}</text>
+        <image wx:if="{{item.msgType == 1}}" src="{{item.msgContent}}" class="radius" mode="widthFix"></image>
+      </view>
+      <!-- <view wx:if="{{item.sellUser != me.userId}}"class="text-{{item.readStatusSell==0?'grey':'orange'}} text-sm padding-left-sm">{{item.readStatusSell==0?'已读':'未读'}}</view> -->
+    </view>
+    <!-- 头像 -->
+    <view wx:if="{{item.sellUser == me.userId}}" class="cu-avatar radius" style="background-image:url({{me.userId==item.sellUser?me.userAvatarurl:opposite.userAvatarurl}});"></view>
+    <view class="date">{{item.time}}</view>
+  </view>
+</view>
+<!-- 文本图片发送 -->
+<view class="cu-bar foot input {{InputBottom!=0?'cur':''}}" style="bottom:{{InputBottom}}px">
+  <input class="solid-bottom" bindinput="msgChange"  maxlength="300" cursor-spacing="10" value="{{msg}}"></input>
+  <view class="action" bindtap="sendImage">
+    <text class="cuIcon-pic text-grey"></text>
+  </view>
+  <button class="cu-btn bg-green shadow" bindtap="send">发送</button>
+</view>

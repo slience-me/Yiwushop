@@ -1,0 +1,28 @@
+/* pages/mine/help/index.wxss */
+page {
+  background-color: #F0F0F0;
+}
+.content {
+  background-color: #ffffff;
+  border-top: 1rpx solid #eeeeee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 45rpx;
+  padding-right: 58rpx;
+}
+.content .text {
+  padding: 37rpx 0;
+  font-size: 26rpx;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: #999999;
+  line-height: 34rpx;
+}
+.content image {
+  width: 38rpx;
+  height: 40rpx;
+}
+.content input {
+  text-align: right;
+}

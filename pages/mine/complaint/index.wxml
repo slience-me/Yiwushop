@@ -1,0 +1,18 @@
+<!--pages/mine/complaint/index.wxml-->
+<form>
+	<view class="cu-form-group margin-top">
+		<view class="title">普通选择</view>
+		<picker bindchange="PickerChange" value="{{index}}" range="{{picker}}">
+			<view class="picker">
+				{{index?picker[index]:picker[0]}}
+			</view>
+		</picker>
+	</view>
+  <view class="cu-form-group align-start">
+		<view class="title">描述</view>
+		<textarea maxlength="-1" bindinput="textareaBInput" placeholder="请描述您遇到的问题"></textarea>
+	</view>
+</form>
+<view class="padding flex flex-direction">
+    <button class="cu-btn bg-green margin-tb-sm lg" bindtap="complaint">提交</button>
+</view>
