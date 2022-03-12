@@ -102,6 +102,16 @@ Page({
           mask: true,
           duration:3000,
         })
+        //清除商品
+        that.setData({
+          goodsMsg:{
+            goodsName:null,
+            goodsPrice:null,
+            goodsImgId:null,
+            goodsInfo:null
+          },
+          imgUrl:""
+        })
       }else{
         wx.showToast({
           title:"商品未成功上架，请检查商品信息是否正确",
