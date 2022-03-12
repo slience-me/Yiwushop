@@ -56,6 +56,23 @@ Page({
     let res = await put({url:"/goods/goodsList",data:{goodsId:goods.goodsId,stateOn:state}});
     console.log(res)
   },
+  //删除商品
+  async deleteGoods(e){
+    var that = this;
+    const index = e.currentTarget.dataset.index;
+    const goods = that.data.goods[index];
+    const goodss = that.data.goods;
+    let res = await wxapi.showModal("确定要删除该商品吗？");
+    if(res.confirm){
+      goodss.splice(index,1);
+      that.setData({
+        goods:goodss
+      })
+      res = await put({url:"/goods/goodsList",data:{goodsId:goods.goodsId,isDelete:1}});
+      wxapi.showToast("商品已删除");
+    }
+    console.log(res)
+  },
   //拍卖
   async paimai(e){
     var that = this;
