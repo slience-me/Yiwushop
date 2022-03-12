@@ -85,5 +85,29 @@ Page({
     wx.makePhoneCall({
       phoneNumber: e.currentTarget.dataset.phone
     })
-  }
+  },
+  //与卖家对话
+  chatToSell(e){
+    const index = e.currentTarget.dataset.index;
+    const oppositeId = this.data.sellOrder[index].sellUsersId;
+    if(oppositeId == app.globalData.userInfo.userId){
+      wxapi.showToast("不能与自己联系")
+      return
+    }
+    wx.navigateTo({
+      url: "/pages/chat/index?oppositeId="+oppositeId
+    })
+  },
+  //与买对话
+  chatToBuy(e){
+    const index = e.currentTarget.dataset.index;
+    const oppositeId = this.data.buyOrder[index].buyUsersId;
+    if(oppositeId == app.globalData.userInfo.userId){
+      wxapi.showToast("不能与自己联系")
+      return
+    }
+    wx.navigateTo({
+      url: "/pages/chat/index?oppositeId="+oppositeId
+    })
+  },
 })

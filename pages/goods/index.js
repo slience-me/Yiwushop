@@ -48,7 +48,7 @@ Page({
       phoneNumber: that.data.sellUser.userPhone
     })
   },
-  //跳转到某个页面
+  //跳转到对话页面
   skipTo(e){
     const oppositeId = this.data.sellUser.userId;
     if(oppositeId == app.globalData.userInfo.userId){
