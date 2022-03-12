@@ -6,7 +6,7 @@
   <view class="cu-item" wx:for="{{buyOrder}}" wx:key="ordersId">
     <view class="cu-avatar round lg" style="background-image:url({{item.good.imageUrl}});"></view>
     <view class="content">
-      <view class="text-grey">{{item.good.goodsName}}</view>
+      <view class="text-grey goodsName">{{item.good.goodsName}}</view>
       <view class="text-gray text-sm text-cut">成交价：<text class="text-price text-red">{{item.buyPrice}}</text></view>
     </view>
     <view class="grid col-5 padding-top-sm padding-bottom-sm">
@@ -23,7 +23,7 @@
   <view class="cu-item" wx:for="{{sellOrder}}" wx:key="ordersId">
     <view class="cu-avatar round lg" style="background-image:url({{item.good.imageUrl}});"></view>
     <view class="content">
-      <view class="text-grey">{{item.good.goodsName}}</view>
+      <view class="text-grey goodsName">{{item.good.goodsName}}</view>
       <view class="text-gray text-sm text-cut">成交价：<text class="text-price text-red">{{item.buyPrice}}</text></view>
     </view>
     <view class="grid col-5 padding-top-sm padding-bottom-sm">
