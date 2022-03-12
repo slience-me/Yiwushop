@@ -31,8 +31,9 @@
       </view>
     </scroll-view>
 </view>
+<!-- 搜索出来的商品 -->
 <view class="cu-list menu-avatar" hidden="{{!displaySearchMsg}}">
-  <view class="cu-item" wx:for="{{goods}}" wx:key="goodsId" bindtap="skipTo" data-url="/pages/goods/index?goodsId={{item.goodsId}}">
+  <view class="cu-item" wx:for="{{goods}}" wx:key="goodsId" bindtap="skipTo" data-url="/pages/goods/index?goodsId={{item.goodsId}}" wx:if="{{item.stateOn == 5}}">
     <view class="cu-avatar round lg" style="background-image:url({{item.imageUrl}});"></view>
     <view class="content">
       <view class="text-grey">{{item.goodsName}}</view>
