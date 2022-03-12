@@ -91,6 +91,24 @@ Page({
       })
       return
     }
+    if(new Date(endTime)<new Date()){
+      wx.showToast({
+        title:"拍卖结束时间应大于当前时间",
+        icon:"none",
+        mask: true,
+        duration:2000,
+      })
+      return;
+    }
+    if((new Date(endTime).getTime()-new Date(startTime).getTime())<60*60*1000 || (new Date(endTime).getTime()-new Date(startTime).getTime())>24*60*60*1000){
+      wx.showToast({
+        title:"拍卖时间应该在1-24小时之间",
+        icon:"none",
+        mask: true,
+        duration:2000,
+      })
+      return;
+    }
     if(auctions.auctionsName==null||auctions.fixedPrice==null||auctions.startingPrice==null){
       wx.showToast({
         title:"商品未成功上架拍卖，请检查商品信息是否正确",
