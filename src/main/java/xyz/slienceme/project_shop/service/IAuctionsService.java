@@ -18,18 +18,6 @@ import xyz.slienceme.project_shop.vo.PawnVO;
  */
 public interface IAuctionsService {
 
-    /**
-     * 竞拍场次表列表
-     *
-     * @param accessToken 请求token
-     * @param page        页码
-     * @param limit       每页个数
-     * @param keyword     关键词
-     */
-    Result auctionsList(String accessToken,
-                        Integer page,
-                        Integer limit,
-                        String keyword) throws Exception;
 
     /**
      * 根据竞拍场次信息添加
@@ -47,19 +35,6 @@ public interface IAuctionsService {
     Result auctionsPut(String accessToken, Auctions auctions) throws Exception;
 
     /**
-     * 竞拍场次表列表
-     *
-     * @param accessToken 请求token
-     * @param page        页码
-     * @param limit       每页个数
-     * @param keyword     关键词
-     */
-    Result pawnList(String accessToken,
-                        Integer page,
-                        Integer limit,
-                        String keyword) throws Exception;
-
-    /**
      * 根据竞拍场次信息添加
      */
     Result pawnAdd(String accessToken, PawnVO pawnVO) throws Exception;
@@ -74,13 +49,11 @@ public interface IAuctionsService {
      */
     Result pawnPut(String accessToken, Pawn pawn) throws Exception;
 
-    Result doPawn(String accessToken, PawnScheduleVO pawnScheduleVO) throws Exception;
-
     Result selectByPrimaryKey(String accessToken, Integer auctionsId);
 
-    Result getData(String accessToken, Integer pageNo, Integer pageSize, Integer goodsId, String auctionsName);
+    Result auctions(String accessToken, Integer pageNo, Integer pageSize, Integer goodsId, String auctionsName);
 
-    Result getPawnData(String accessToken, Integer pageNo, Integer pageSize, Integer goodsId, String pawnName);
+    Result pawn(String accessToken, Integer pageNo, Integer pageSize, Integer goodsId, String pawnName);
 
     Result selectByPrimaryKeyPawn(String accessToken, Integer auctionsId);
 

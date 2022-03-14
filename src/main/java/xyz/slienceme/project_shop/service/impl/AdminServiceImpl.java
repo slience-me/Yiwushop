@@ -50,7 +50,6 @@ public class AdminServiceImpl implements IAdminService {
     public Result login(LoginVO loginVO) throws Exception {
 
         HashMap<String, Object> admin = adminMapper.selectByNameAndPwd(loginVO.getUsername(), loginVO.getPwd());
-        //System.out.println(admin);
         if (Objects.isNull(admin)) {
             System.out.println("用户不存在！" + loginVO);
             return Result.createByErrorMessage("账号或密码错误");
@@ -88,7 +87,7 @@ public class AdminServiceImpl implements IAdminService {
         admin.setAdminName(adminVO.getAdminName());
         admin.setAdminNumber(adminVO.getAdminNumber());
         if (Objects.isNull(adminVO.getAdminPwd())) {
-            admin.setAdminPwd("00000000");
+            admin.setAdminPwd("dd4b21e9ef71e1291183a46b913ae6f2");
         } else {
             admin.setAdminPwd(adminVO.getAdminPwd());
         }
@@ -116,7 +115,6 @@ public class AdminServiceImpl implements IAdminService {
             return Result.createByErrorMessage("默认管理员不可修改");
         }
         Admin admin1 = adminMapper.selectByPrimaryKey(admin.getAdminId());
-        //System.out.println("admin1 = " + admin1);
         if (Objects.isNull(admin1)) {
             return Result.createByErrorMessage("账号不存在");
         }
@@ -134,12 +132,10 @@ public class AdminServiceImpl implements IAdminService {
     public Result adminPwdPut(String accessToken, PwdVO pwdVO) throws Exception {
         TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         Admin admin = adminMapper.selectByPrimaryKey(unsign.getUserId());
-        //System.out.println("旧admin = " + admin);
         if (!Objects.equals(pwdVO.getOldPwd(), admin.getAdminPwd())) {
             return Result.createByErrorMessage("旧密码不正确");
         }
         admin.setAdminPwd(pwdVO.getNewPwd());
-        //System.out.println("新admin = " + admin);
         adminMapper.updateByPrimaryKeySelective(admin);
         return Result.createBySuccessMessage("成功");
     }

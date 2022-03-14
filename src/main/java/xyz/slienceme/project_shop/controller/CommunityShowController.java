@@ -23,39 +23,39 @@ import xyz.slienceme.project_shop.vo.CommunityShowVO;
 @Slf4j
 @Api(tags = "公益展示表")
 @RestController
-@RequestMapping("/community")
+@RequestMapping("/admin")
 public class CommunityShowController {
 
     @Autowired
     private ICommunityShowService communityShowService;
 
     @ApiOperation("新增公益")
-    @PostMapping("")
+    @PostMapping("/community")
     public Result addCommunity(@RequestHeader("x-access-token") String accessToken,
                             @RequestBody CommunityShowVO communityShowVO) throws Exception {
         log.info("新增公益接口调用-------post---------</community>");
-        return communityShowService.addCommunity(accessToken, communityShowVO);
+        return communityShowService.communityAdd(accessToken, communityShowVO);
     }
 
     @ApiOperation("删除公益")
-    @DeleteMapping("")
+    @DeleteMapping("/community")
     public Result deleteCommunity(@RequestHeader("x-access-token") String accessToken,
                                @ApiParam(value = "id", required = true) @RequestParam(value = "id") Integer id) throws Exception {
         log.info("删除公益接口调用-------Delete---------</community>:  id=" + id);
-        return communityShowService.deleteCommunity(accessToken, id);
+        return communityShowService.communityDel(accessToken, id);
     }
 
     @ApiOperation("修改公益信息")
-    @PutMapping("")
+    @PutMapping("/community")
     public Result updateCommunity(@RequestHeader("x-access-token") String accessToken,
                                @RequestBody CommunityShow communityShow) throws Exception {
         log.info("修改公益信息接口调用-------Put---------</community>");
-        return communityShowService.updateCommunity(accessToken, communityShow);
+        return communityShowService.communityPut(accessToken, communityShow);
     }
 
 
     @ApiOperation("按页查询所有公益")
-    @GetMapping("")
+    @GetMapping("/community")
     public Result getCommunity(@RequestHeader("x-access-token") String accessToken,
                              @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                              @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,

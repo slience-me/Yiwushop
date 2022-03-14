@@ -5,8 +5,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.slienceme.project_shop.common.Result;
@@ -24,24 +22,24 @@ import xyz.slienceme.project_shop.service.ICategoryService;
 @Slf4j
 @Api(tags = "物品类型表")
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/admin")
 public class CategoryController {
 
     @Autowired
     private ICategoryService categoryService;
 
     @ApiOperation("查询物品类型")
-    @GetMapping("/categoryList")
-    public Result categoryList(@RequestHeader("x-access-token") String accessToken,
+    @GetMapping("/category")
+    public Result category(@RequestHeader("x-access-token") String accessToken,
                                @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                                @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
                                @ApiParam(value = "名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
         //log.info("查询物品类型列表接口调用--get---</categoryList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
-        return categoryService.categoryList(accessToken, pageNo, pageSize, keyword);
+        return categoryService.category(accessToken, pageNo, pageSize, keyword);
     }
 
     @ApiOperation("添加物品类型")
-    @PostMapping("/categoryList")
+    @PostMapping("/category")
     public Result categoryAdd(@RequestHeader("x-access-token") String accessToken,
                               @ApiParam(value = "分类名称") @RequestParam String categoryName) throws Exception {
         log.info("添加物品类型接口调用---post--</categoryList>:  categoryName=" + categoryName);
@@ -49,7 +47,7 @@ public class CategoryController {
     }
 
     @ApiOperation("通过id删除物品类型")
-    @DeleteMapping("/categoryList")
+    @DeleteMapping("/category")
     public Result categoryDel(@RequestHeader("x-access-token") String accessToken,
                               @ApiParam(value = "物品类型id") @RequestParam(value = "categoryId") Integer categoryId) throws Exception {
         log.info("通过id删除物品类型接口调用---delete--</categoryList>:  categoryId=" + categoryId);
@@ -58,7 +56,7 @@ public class CategoryController {
 
 
     @ApiOperation("修改物品类型")
-    @PutMapping("/categoryList")
+    @PutMapping("/category")
     public Result categoryPut(@RequestHeader("x-access-token") String accessToken,
                               @RequestBody Category category) throws Exception {
         log.info("修改物品类型接口调用---put--</categoryList>:  Category=" + category);

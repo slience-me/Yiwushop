@@ -15,11 +15,14 @@ import xyz.slienceme.project_shop.vo.CommunityShowVO;
  */
 public interface ICommunityShowService {
 
-    Result addCommunity(String accessToken, CommunityShowVO communityShowVO) throws Exception;
-    Result deleteCommunity(String accessToken, Integer id) throws Exception;
-    Result updateCommunity(String accessToken, CommunityShow communityShow) throws Exception;
+    Result communityAdd(String accessToken, CommunityShowVO communityShowVO) throws Exception;
+
+    Result communityDel(String accessToken, Integer id) throws Exception;
+
+    Result communityPut(String accessToken, CommunityShow communityShow) throws Exception;
+
     Result community(String accessToken,
-                   Integer page,
-                   Integer limit,
-                   String keyword) throws Exception;
+                     Integer page,
+                     Integer limit,
+                     String keyword) throws Exception;
 }

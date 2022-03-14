@@ -18,11 +18,6 @@ public class GoodsVO {
     private BigDecimal goodsPrice;
 
     /**
-     * 当前价格
-     */
-    /*private BigDecimal priceNow;*/
-
-    /**
      * 商品描述
      */
     private String goodsInfo;
@@ -45,6 +40,5 @@ public class GoodsVO {
     /**
      * 商品照片
      */
-    private Integer goodsImgId;
-
+    private Integer[] imageIds;
 }

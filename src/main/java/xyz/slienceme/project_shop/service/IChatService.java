@@ -29,7 +29,7 @@ public interface IChatService {
      * @param isDeleteSell   卖家删除状态
      * @return
      */
-    Result chatList(String accessToken,
+    Result chat(String accessToken,
                     Integer pageNo,
                     Integer pageSize,
                     Integer sellUser,
@@ -40,49 +40,6 @@ public interface IChatService {
                     Integer isDeleteBuy,
                     Integer isDeleteSell);
 
-    /**
-     * 查询买家聊天列表
-     *
-     * @param accessToken    请求token
-     * @param pageNo         页码
-     * @param pageSize       个数
-     * @param sellUser       卖家id
-     * @param buyUser        卖家id
-     * @param msgType        消息类型
-     * @param readStatusSell 卖家消息读取状态
-     * @param readStatusBuy  买家家消息读取状态
-     * @return
-     */
-    Result chatListForBuy(String accessToken,
-                          Integer pageNo,
-                          Integer pageSize,
-                          Integer sellUser,
-                          Integer buyUser,
-                          Integer msgType,
-                          Integer readStatusSell,
-                          Integer readStatusBuy);
-
-    /**
-     * 查询卖家聊天列表
-     *
-     * @param accessToken    请求token
-     * @param pageNo         页码
-     * @param pageSize       个数
-     * @param sellUser       卖家id
-     * @param buyUser        卖家id
-     * @param msgType        消息类型
-     * @param readStatusSell 卖家消息读取状态
-     * @param readStatusBuy  买家家消息读取状态
-     * @return
-     */
-    Result chatListForSell(String accessToken,
-                           Integer pageNo,
-                           Integer pageSize,
-                           Integer sellUser,
-                           Integer buyUser,
-                           Integer msgType,
-                           Integer readStatusSell,
-                           Integer readStatusBuy);
 
     /**
      * 添加聊天
@@ -124,13 +81,4 @@ public interface IChatService {
      */
     Result selectByPrimaryKey(String accessToken, Integer chatId);
 
-    /**
-     * 更新聊天状态
-     *
-     * @param accessToken 请求token
-     * @param chatId      消息id
-     * @param userType    用户类型 1买家  2卖家
-     * @return
-     */
-    Result chatPutUser(String accessToken, Integer chatId, Integer userType);
 }

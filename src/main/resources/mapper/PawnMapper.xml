@@ -230,27 +230,4 @@
         </if>
         order by a.CREATED_TIME desc
     </select>
-    <!-- 查询未结束场次列表-->
-    <!-- 返回值类型:  List<HashMap<String, Object>> selectUndoneList -->
-    <!-- 参数: -->
-    <!--  @param nowTime 当前时间   -->
-    <select id="selectUndoneList" resultType="java.util.HashMap">
-        SELECT a.auctions_id    as                              auctionsId,
-               a.goods_id       as                              goodsId,
-               g.goods_name     as                              goodName,
-               a.pawn_name      as                              pawnName,
-               a.fixed_price    as                              fixedPrice,
-               a.present_person as                              presentPerson,
-               a.present_price  as                              presentPrice,
-               a.starting_price as                              startingPrice,
-               DATE_FORMAT(a.start, '%Y-%m-%d %H:%i:%s')        startTime,
-               DATE_FORMAT(a.end, '%Y-%m-%d %H:%i:%s')          endTime,
-               DATE_FORMAT(a.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime,
-               a.CREATED_BY as createdBy
-        FROM pawn a
-                 left join goods g on a.goods_id = g.goods_id
-        where a.is_delete = 0
-          and a.end &lt;= #{nowTime}
-        order by a.CREATED_TIME desc
-    </select>
 </mapper>

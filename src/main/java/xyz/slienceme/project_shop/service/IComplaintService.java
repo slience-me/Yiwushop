@@ -16,19 +16,6 @@ import xyz.slienceme.project_shop.vo.ComplaintVO;
 public interface IComplaintService {
 
     /**
-     * 投诉表
-     *
-     * @param accessToken 请求token
-     * @param page        页码
-     * @param limit       每页个数
-     * @param keyword     关键词
-     */
-    Result complaintList(String accessToken,
-                        Integer page,
-                        Integer limit,
-                        String keyword) throws Exception;
-
-    /**
      * 根据投诉信息添加
      */
     Result complaintAdd(String accessToken, ComplaintVO complaintVO) throws Exception;
@@ -38,7 +25,7 @@ public interface IComplaintService {
      */
     Result complaintDel(String accessToken, Integer complaintId) throws Exception;
 
-    Result complaintData(String accessToken, Integer pageNo, Integer pageSize, Integer ordersId, Integer userId, Integer complaintStatus);
+    Result complaint(String accessToken, Integer pageNo, Integer pageSize, String ordersId, Integer userId, Integer complaintStatus);
 
     Result selectByPrimaryKey(String accessToken, Integer complaintId);
 

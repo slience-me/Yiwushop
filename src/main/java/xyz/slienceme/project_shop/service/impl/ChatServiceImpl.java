@@ -36,49 +36,9 @@ public class ChatServiceImpl implements IChatService {
      * @return
      */
     @Override
-    public Result chatList(String accessToken, Integer pageNo, Integer pageSize, Integer sellUser, Integer buyUser, Integer msgType, Integer readStatusSell, Integer readStatusBuy, Integer isDeleteBuy, Integer isDeleteSell) {
+    public Result chat(String accessToken, Integer pageNo, Integer pageSize, Integer sellUser, Integer buyUser, Integer msgType, Integer readStatusSell, Integer readStatusBuy, Integer isDeleteBuy, Integer isDeleteSell) {
         PageHelper.startPage(pageNo, pageSize);
         List<HashMap<String, Object>> list = chatMapper.selectList(sellUser, buyUser, msgType, readStatusSell, readStatusBuy, isDeleteBuy, isDeleteSell);
-        return Result.createBySuccess(new PageInfo<>(list));
-    }
-
-    /**
-     * 查询买家聊天列表
-     *
-     * @param accessToken    请求token
-     * @param pageNo         页码
-     * @param pageSize       个数
-     * @param sellUser       卖家id
-     * @param buyUser        卖家id
-     * @param msgType        消息类型
-     * @param readStatusSell 卖家消息读取状态
-     * @param readStatusBuy  买家家消息读取状态
-     * @return
-     */
-    @Override
-    public Result chatListForBuy(String accessToken, Integer pageNo, Integer pageSize, Integer sellUser, Integer buyUser, Integer msgType, Integer readStatusSell, Integer readStatusBuy) {
-        PageHelper.startPage(pageNo, pageSize);
-        List<HashMap<String, Object>> list = chatMapper.selectListForBuy(sellUser, buyUser, msgType, readStatusSell, readStatusBuy);
-        return Result.createBySuccess(new PageInfo<>(list));
-    }
-
-    /**
-     * 查询卖家聊天列表
-     *
-     * @param accessToken    请求token
-     * @param pageNo         页码
-     * @param pageSize       个数
-     * @param sellUser       卖家id
-     * @param buyUser        卖家id
-     * @param msgType        消息类型
-     * @param readStatusSell 卖家消息读取状态
-     * @param readStatusBuy  买家家消息读取状态
-     * @return
-     */
-    @Override
-    public Result chatListForSell(String accessToken, Integer pageNo, Integer pageSize, Integer sellUser, Integer buyUser, Integer msgType, Integer readStatusSell, Integer readStatusBuy) {
-        PageHelper.startPage(pageNo, pageSize);
-        List<HashMap<String, Object>> list = chatMapper.selectListForSell(sellUser, buyUser, msgType, readStatusSell, readStatusBuy);
         return Result.createBySuccess(new PageInfo<>(list));
     }
 
@@ -152,29 +112,5 @@ public class ChatServiceImpl implements IChatService {
             return Result.createByErrorMessage("id不正确");
         }
         return Result.createBySuccess(chat);
-    }
-
-    /**
-     *
-     * @param accessToken 请求token
-     * @param chatId      消息id
-     * @param userType    用户类型 1买家  2卖家
-     * @return
-     */
-    @Override
-    public Result chatPutUser(String accessToken, Integer chatId, Integer userType) {
-        Chat chat1 = chatMapper.selectByPrimaryKey(chatId);
-        if (Objects.isNull(chat1)) {
-            return Result.createByErrorMessage("聊天id不存在");
-        }
-        if (userType.equals(1)){
-            chat1.setReadStatusBuy(1);  //用户类型 1买家  2卖家
-        } else if (userType.equals(2)){
-            chat1.setReadStatusSell(1);
-        } else {
-            return Result.createByErrorMessage("userType参数不正确");
-        }
-        chatMapper.updateByPrimaryKeySelective(chat1);
-        return Result.createBySuccessMessage("成功");
     }
 }

@@ -18,7 +18,7 @@ public enum ResponseCode {
     private int code;//响应码
     private String desc;//描述description、内容
 
-    //枚举的构造方法。
+    //枚举的构造方法
     ResponseCode(int code, String desc) {
         this.code = code;
         this.desc = desc;

@@ -5,9 +5,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.slienceme.project_shop.common.Result;
-import xyz.slienceme.project_shop.dto.AuctionSchedule;
 import xyz.slienceme.project_shop.dto.Auctions;
-import xyz.slienceme.project_shop.dto.Goods;
 import xyz.slienceme.project_shop.dto.Pawn;
 import xyz.slienceme.project_shop.mapper.AuctionsMapper;
 import xyz.slienceme.project_shop.mapper.GoodsMapper;
@@ -16,7 +14,6 @@ import xyz.slienceme.project_shop.service.IAuctionsService;
 import xyz.slienceme.project_shop.utils.DateUtil;
 import xyz.slienceme.project_shop.utils.JWT;
 import xyz.slienceme.project_shop.vo.AuctionsVO;
-import xyz.slienceme.project_shop.vo.PawnScheduleVO;
 import xyz.slienceme.project_shop.vo.PawnVO;
 import xyz.slienceme.project_shop.vo.TokenVO;
 
@@ -39,23 +36,6 @@ public class AuctionsServiceImpl implements IAuctionsService {
     private AuctionsMapper auctionsMapper;
     @Autowired
     private PawnMapper pawnMapper;
-    @Autowired
-    private GoodsMapper goodsMapper;
-
-    /**
-     * 竞拍场次表列表
-     *
-     * @param accessToken 请求token
-     * @param page        页码
-     * @param limit       每页个数
-     * @param keyword     关键词
-     */
-    @Override
-    public Result auctionsList(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
-        PageHelper.startPage(page, limit);
-        List<HashMap<String, Object>> list = auctionsMapper.selectList(keyword);
-        return Result.createBySuccess(new PageInfo<>(list));
-    }
 
     /**
      * 根据竞拍场次信息添加
@@ -94,19 +74,11 @@ public class AuctionsServiceImpl implements IAuctionsService {
     @Override
     public Result auctionsPut(String accessToken, Auctions auctions) throws Exception {
         Auctions auctions1 = auctionsMapper.selectByPrimaryKey(auctions.getAuctionsId());
-        //System.out.println("auctions1 = " + auctions1);
         if (Objects.isNull(auctions1)) {
             return Result.createByErrorMessage("该拍卖场次不存在");
         }
         auctionsMapper.updateByPrimaryKeySelective(auctions);
         return Result.createBySuccessMessage("成功");
-    }
-
-    @Override
-    public Result pawnList(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
-        PageHelper.startPage(page, limit);
-        List<HashMap<String, Object>> list = pawnMapper.selectList(keyword);
-        return Result.createBySuccess(new PageInfo<>(list));
     }
 
     @Override
@@ -137,26 +109,10 @@ public class AuctionsServiceImpl implements IAuctionsService {
     @Override
     public Result pawnPut(String accessToken, Pawn pawn) throws Exception {
         Pawn pawn1 = pawnMapper.selectByPrimaryKey(pawn.getAuctionsId());
-        //System.out.println("auctions1 = " + pawn1);
         if (Objects.isNull(pawn1)) {
             return Result.createByErrorMessage("该场次不存在");
         }
         pawnMapper.updateByPrimaryKeySelective(pawn);
-        return Result.createBySuccessMessage("成功");
-    }
-
-    @Override
-    public Result doPawn(String accessToken, PawnScheduleVO pawnScheduleVO) throws Exception {
-        Pawn pawn = pawnMapper.selectByPrimaryKey(pawnScheduleVO.getPawnId());
-        Goods goods1 = goodsMapper.selectByPrimaryKey(pawn.getGoodsId());
-        //System.out.println("pawn = " + pawn);
-        if (Objects.isNull(pawn)) {
-            return Result.createByErrorMessage("订单不存在");
-        }
-        pawn.setPresentPerson(pawnScheduleVO.getUserId());
-        pawnMapper.updateByPrimaryKeySelective(pawn);
-        goods1.setStateOn(3);//设置已售
-        goodsMapper.updateByPrimaryKeySelective(goods1);
         return Result.createBySuccessMessage("成功");
     }
 
@@ -170,14 +126,14 @@ public class AuctionsServiceImpl implements IAuctionsService {
     }
 
     @Override
-    public Result getData(String accessToken, Integer pageNo, Integer pageSize, Integer goodsId, String auctionsName) {
+    public Result auctions(String accessToken, Integer pageNo, Integer pageSize, Integer goodsId, String auctionsName) {
         PageHelper.startPage(pageNo, pageSize);
         List<HashMap<String, Object>> list = auctionsMapper.selectConditionList(goodsId, auctionsName);
         return Result.createBySuccess(new PageInfo<>(list));
     }
 
     @Override
-    public Result getPawnData(String accessToken, Integer pageNo, Integer pageSize, Integer goodsId, String pawnName) {
+    public Result pawn(String accessToken, Integer pageNo, Integer pageSize, Integer goodsId, String pawnName) {
         PageHelper.startPage(pageNo, pageSize);
         List<HashMap<String, Object>> list = pawnMapper.selectConditionList(goodsId, pawnName);
         return Result.createBySuccess(new PageInfo<>(list));

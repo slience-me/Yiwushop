@@ -24,6 +24,7 @@ public interface GoodsMapper {
     int insertSelective(Goods record);
 
     Goods selectByPrimaryKey(Integer goodsId);
+
     Goods selectByPrimaryKey1(Integer goodsId);
 
     int updateByPrimaryKeySelective(Goods record);
@@ -36,35 +37,6 @@ public interface GoodsMapper {
      * @param keyword 关键词
      */
     List<HashMap<String, Object>> selectList(@Param("keyword") String keyword);
-
-    /**
-     * 查询上架商品列表
-     *
-     * @param keyword 关键词
-     */
-    List<HashMap<String, Object>> selectOnList(@Param("keyword") String keyword);
-
-    /**
-     * 查询未上架商品列表
-     *
-     * @param keyword 关键词
-     */
-    List<HashMap<String, Object>> selectNoList(@Param("keyword") String keyword);
-
-    /**
-     * 查询已售商品列表
-     *
-     * @param keyword 关键词
-     */
-    List<HashMap<String, Object>> selectDoneList(@Param("keyword") String keyword);
-
-    /**
-     * 查询典当商品列表
-     *
-     * @param keyword 关键词
-     */
-    List<HashMap<String, Object>> selectPawnList(@Param("keyword") String keyword);
-
 
     List<HashMap<String, Object>> selectConditionList(@Param("goodsName") String goodsName,
                                                       @Param("goodsInfo") String goodsInfo,

@@ -35,19 +35,8 @@ public interface ComplaintMapper {
      */
     List<HashMap<String, Object>> selectList(@Param("keyword") String keyword);
 
-    List<HashMap<String, Object>> selectConditionList(@Param("ordersId") Integer ordersId,
+    List<HashMap<String, Object>> selectConditionList(@Param("ordersId") String ordersId,
                                                       @Param("userId") Integer userId,
                                                       @Param("complaintStatus") Integer complaintStatus);
 
-    /**
-     * 查询投诉表根据用户（卖家）
-     *
-     */
-//    List<HashMap<String, Object>> selectListBySeller(@Param("userId") Integer userId);
-
-    /**
-     * 查询投诉表根据用户（买家）
-     *
-     */
-//    List<HashMap<String, Object>> selectListByBuyer(@Param("ordersId") Integer ordersId);
 }

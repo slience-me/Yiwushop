@@ -22,4 +22,5 @@ public interface IImageService {
      */
     Result uploadImg(MultipartFile multipartFile) throws Exception;
 
+    Result selectImgs(Integer goodsId);
 }

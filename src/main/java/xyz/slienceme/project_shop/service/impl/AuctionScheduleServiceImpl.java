@@ -69,9 +69,7 @@ public class AuctionScheduleServiceImpl implements IAuctionScheduleService {
      */
     @Override
     public Result doAuctions(String accessToken, AuctionScheduleVO auctionScheduleVO) throws Exception {
-        //Goods goods1 = goodsMapper.selectByPrimaryKey(auctionScheduleVO.getGoodsId());
         Auctions auctions = auctionsMapper.selectByPrimaryKey(auctionScheduleVO.getAuctionsId());
-        //System.out.println("auctions = " + auctions);
         if (Objects.isNull(auctions)) {
             return Result.createByErrorMessage("场次不存在");
         }

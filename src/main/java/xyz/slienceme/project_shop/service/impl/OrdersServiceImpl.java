@@ -43,7 +43,7 @@ public class OrdersServiceImpl implements IOrdersService {
      * @throws Exception
      */
     @Override
-    public Result ordersList(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
+    public Result orders(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
         PageHelper.startPage(page,limit);
         List<HashMap<String, Object>> list = ordersMapper.selectList(keyword);
         return Result.createBySuccess(new PageInfo<>(list));
@@ -62,7 +62,6 @@ public class OrdersServiceImpl implements IOrdersService {
 
     @Override
     public Result ordersAdd(String accessToken, OrdersVO ordersVO) {
-        TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         Orders orders = new Orders();
         orders.setSerialNum(StringUtil.serialNumber(ordersVO.getGoodsId()));
         orders.setGoodsId(ordersVO.getGoodsId());

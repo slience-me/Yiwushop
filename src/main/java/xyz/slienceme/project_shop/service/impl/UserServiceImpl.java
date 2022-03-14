@@ -17,8 +17,9 @@ import xyz.slienceme.project_shop.utils.PropertyUtil;
 import xyz.slienceme.project_shop.vo.TokenVO;
 import xyz.slienceme.project_shop.vo.UserVO;
 
-import java.util.*;
-import java.util.concurrent.TimeUnit;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -37,16 +38,6 @@ public class UserServiceImpl implements IUserService {
     private String redisAppLoginKey;
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
-
-    private static Integer getTime(String timeFormat) {
-        String[] num = timeFormat.split(":");
-        int sum = 0;
-        int hour = Integer.parseInt(num[0]);
-        int min = Integer.parseInt(num[1]);
-        int sec = Integer.parseInt(num[2]);
-        sum = hour * 3600 + min * 60 + sec;
-        return sum * 1000;
-    }
 
     /**
      * 微信登陆
@@ -72,7 +63,6 @@ public class UserServiceImpl implements IUserService {
             hashMap.put("isLogin", 0);
             hashMap.put("session_key", sessionKey);
             hashMap.put("openid", openid);
-            //将token存储到redis中
             HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
             hashOperations.put(redisAppLoginKey, user.getUserId().toString(), token);
             return Result.createBySuccess(hashMap);
@@ -87,7 +77,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Result addMember(String accessToken, UserVO userVO) throws Exception {
+    public Result memberAdd(String accessToken, UserVO userVO) throws Exception {
         TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         User user1 = userMapper.selectByOpenId(userVO.getOpenid());
         if (Objects.nonNull(user1)){
@@ -110,7 +100,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Result deleteMember(String accessToken, Integer id) throws Exception {
+    public Result memberDel(String accessToken, Integer id) throws Exception {
         User user = userMapper.selectByPrimaryKey(id);
         user.setIsDelete(1);
         userMapper.updateByPrimaryKeySelective(user);
@@ -118,7 +108,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Result updateMember(String accessToken, User user) throws Exception {
+    public Result memberPut(String accessToken, User user) throws Exception {
         User user1 = userMapper.selectByUserId(user.getUserId());
         if (Objects.isNull(user1)) {
             return Result.createByErrorMessage("userId不存在");
@@ -129,25 +119,14 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Result members(String accessToken,
-                          Integer page,
-                          Integer limit,
-                          String keyword,
-                          String openid) throws Exception {
-        PageHelper.startPage(page, limit);
-        List<HashMap<String, Object>> list = userMapper.selectList(keyword, openid);
-        return Result.createBySuccess(new PageInfo<>(list));
-    }
-
-    @Override
-    public Result conMembers(String accessToken, Integer page, Integer limit, String openid, String idCard, String userNumber, String userName, String userPhone, String userAddress) throws Exception {
+    public Result member(String accessToken, Integer page, Integer limit, String openid, String idCard, String userNumber, String userName, String userPhone, String userAddress) throws Exception {
         PageHelper.startPage(page, limit);
         List<HashMap<String, Object>> list = userMapper.selectConditionList(openid, idCard, userNumber, userName, userPhone, userAddress);
         return Result.createBySuccess(new PageInfo<>(list));
     }
 
     @Override
-    public Result getOneMenber(String accessToken, Integer id) throws Exception {
+    public Result memberOne(String accessToken, Integer id) throws Exception {
         User user = userMapper.selectByPrimaryKey(id);
         if (Objects.isNull(user)) {
             return Result.createByErrorMessage("id不正确");

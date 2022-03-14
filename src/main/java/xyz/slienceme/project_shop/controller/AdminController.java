@@ -5,8 +5,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.slienceme.project_shop.common.Result;
@@ -42,14 +40,13 @@ public class AdminController {
 
     @ApiOperation("查询管理员列表")
     @GetMapping("/adminList")
-    public Result adminList(@RequestHeader("x-access-token") String accessToken,
+    public Result admin(@RequestHeader("x-access-token") String accessToken,
                             @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                             @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
                             @ApiParam(value = "管理员名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
         //log.info("查询管理员列表接口调用--get---</adminList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return adminService.adminList(accessToken, pageNo, pageSize, keyword);
     }
-
 
     @ApiOperation("添加管理员")
     @PostMapping("/adminList")

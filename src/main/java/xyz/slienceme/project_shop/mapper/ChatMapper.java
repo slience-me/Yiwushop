@@ -40,34 +40,4 @@ public interface ChatMapper {
                                              @Param("readStatusBuy") Integer readStatusBuy,
                                              @Param("isDeleteBuy") Integer isDeleteBuy,
                                              @Param("isDeleteSell") Integer isDeleteSell);
-
-    /**
-     * 查询买家聊天列表
-     * @param sellUser       卖家id
-     * @param buyUser        卖家id
-     * @param msgType        消息类型
-     * @param readStatusSell 卖家消息读取状态
-     * @param readStatusBuy  买家家消息读取状态
-     * @return
-     */
-    List<HashMap<String, Object>> selectListForBuy(@Param("sellUser") Integer sellUser,
-                                                   @Param("buyUser") Integer buyUser,
-                                                   @Param("msgType") Integer msgType,
-                                                   @Param("readStatusSell") Integer readStatusSell,
-                                                   @Param("readStatusBuy") Integer readStatusBuy);
-
-    /**
-     * 查询卖家聊天列表
-     * @param sellUser       卖家id
-     * @param buyUser        卖家id
-     * @param msgType        消息类型
-     * @param readStatusSell 卖家消息读取状态
-     * @param readStatusBuy  买家家消息读取状态
-     * @return
-     */
-    List<HashMap<String, Object>> selectListForSell(@Param("sellUser") Integer sellUser,
-                                                    @Param("buyUser") Integer buyUser,
-                                                    @Param("msgType") Integer msgType,
-                                                    @Param("readStatusSell") Integer readStatusSell,
-                                                    @Param("readStatusBuy") Integer readStatusBuy);
 }

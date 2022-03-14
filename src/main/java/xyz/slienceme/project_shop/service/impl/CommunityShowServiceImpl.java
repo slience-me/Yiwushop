@@ -32,7 +32,7 @@ public class CommunityShowServiceImpl implements ICommunityShowService {
     private CommunityShowMapper communityShowMapper;
 
     @Override
-    public Result addCommunity(String accessToken, CommunityShowVO communityShowVO) throws Exception {
+    public Result communityAdd(String accessToken, CommunityShowVO communityShowVO) throws Exception {
         TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         CommunityShow communityShow = new CommunityShow();
         communityShow.setShowName(communityShowVO.getShowName());
@@ -43,7 +43,7 @@ public class CommunityShowServiceImpl implements ICommunityShowService {
     }
 
     @Override
-    public Result deleteCommunity(String accessToken, Integer id) throws Exception {
+    public Result communityDel(String accessToken, Integer id) throws Exception {
         CommunityShow communityShow = communityShowMapper.selectByPrimaryKey(id);
         communityShow.setIsDelete(1);
         communityShowMapper.updateByPrimaryKeySelective(communityShow);
@@ -51,7 +51,7 @@ public class CommunityShowServiceImpl implements ICommunityShowService {
     }
 
     @Override
-    public Result updateCommunity(String accessToken, CommunityShow communityShow) throws Exception {
+    public Result communityPut(String accessToken, CommunityShow communityShow) throws Exception {
         CommunityShow communityShow1 = communityShowMapper.selectByPrimaryKey(communityShow.getShowId());
         if (Objects.isNull(communityShow1)) {
             return Result.createByErrorMessage("该公益展示信息不存在");

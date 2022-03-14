@@ -6,25 +6,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import xyz.slienceme.project_shop.common.Result;
-import xyz.slienceme.project_shop.dto.Admin;
 import xyz.slienceme.project_shop.dto.User;
-import xyz.slienceme.project_shop.mapper.AdminMapper;
 import xyz.slienceme.project_shop.service.IUserService;
 import xyz.slienceme.project_shop.utils.HttpClientHelper;
-import xyz.slienceme.project_shop.utils.JWT;
-import xyz.slienceme.project_shop.utils.PropertyUtil;
-import xyz.slienceme.project_shop.vo.TokenVO;
 import xyz.slienceme.project_shop.vo.UserVO;
 
-import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -47,14 +37,8 @@ public class UserController {
     private String wx_appid;
     @Value("${XF.wx_secret}")
     private String wx_secret;
-    @Value("${redis.app.login.token}")
-    private String redisAppLoginKey;
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
     @Autowired
     private IUserService userService;
-    @Autowired
-    private AdminMapper adminMapper;
 
     @ApiOperation("根据js_code获取openid")
     @GetMapping("/getCode")
@@ -76,43 +60,31 @@ public class UserController {
 
     @ApiOperation("新增成员")
     @PostMapping("/member")
-    public Result addMember(@RequestHeader("x-access-token") String accessToken,
+    public Result memberAdd(@RequestHeader("x-access-token") String accessToken,
                             @RequestBody UserVO userVO) throws Exception {
         log.info("新增成员接口调用-------post---------</member>:  user=" + userVO.getUserName());
-        return userService.addMember(accessToken, userVO);
+        return userService.memberAdd(accessToken, userVO);
     }
 
     @ApiOperation("删除成员")
     @DeleteMapping("/member")
-    public Result deleteMember(@RequestHeader("x-access-token") String accessToken,
+    public Result memberDel(@RequestHeader("x-access-token") String accessToken,
                                @ApiParam(value = "id", required = true) @RequestParam(value = "id") Integer id) throws Exception {
         log.info("删除成员接口调用-------Delete---------</member>:  id=" + id);
-        return userService.deleteMember(accessToken, id);
+        return userService.memberDel(accessToken, id);
     }
 
     @ApiOperation("修改成员信息")
     @PutMapping("/member")
-    public Result updateMember(@RequestHeader("x-access-token") String accessToken,
+    public Result memberPut(@RequestHeader("x-access-token") String accessToken,
                                @RequestBody User user) throws Exception {
         log.info("修改成员信息接口调用-------Put---------</member>:  user=" + user.getUserId());
-        return userService.updateMember(accessToken, user);
-    }
-
-
-    @ApiOperation("按页查询所有Member")
-    @GetMapping("/member")
-    public Result getMembers(@RequestHeader("x-access-token") String accessToken,
-                             @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
-                             @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
-                             @ApiParam(value = "用户名、ID卡、账号、性别、手机、地址") @RequestParam(value = "keyword", required = false) String keyword,
-                             @ApiParam(value = "openid") @RequestParam(value = "openid", required = false) String openid) throws Exception {
-        //log.info("按页查询所有Member接口调用-------get---------</member>:  ");
-        return userService.members(accessToken, pageNo, pageSize, keyword, openid);
+        return userService.memberPut(accessToken, user);
     }
 
     @ApiOperation("条件查询所有Member")
-    @GetMapping("/member/data")
-    public Result getData(@RequestHeader("x-access-token") String accessToken,
+    @GetMapping("/member")
+    public Result member(@RequestHeader("x-access-token") String accessToken,
                              @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
                              @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
                              @ApiParam(value = "openid") @RequestParam(value = "openid", required = false) String openid,
@@ -122,15 +94,15 @@ public class UserController {
                           @ApiParam(value = "用户手机") @RequestParam(value = "userPhone", required = false) String userPhone,
                           @ApiParam(value = "用户地址") @RequestParam(value = "userAddress", required = false) String userAddress) throws Exception {
         //log.info("条件查询所有Member接口调用-------get---------</data>:  ");
-        return userService.conMembers(accessToken, pageNo, pageSize, openid, idCard,userNumber,userName,userPhone,userAddress);
+        return userService.member(accessToken, pageNo, pageSize, openid, idCard,userNumber,userName,userPhone,userAddress);
     }
 
     @ApiOperation("查询单个用户")
     @GetMapping("/member/{userId}")
-    public Result getOne(@RequestHeader("x-access-token") String accessToken,
+    public Result memberOne(@RequestHeader("x-access-token") String accessToken,
                          @PathVariable("userId") @ApiParam(value = "用户id", required = true) Integer userId) throws Exception {
         //log.info("查询单个用户接口调用-------get---------</member>:  ");
-        return userService.getOneMenber(accessToken, userId);
+        return userService.memberOne(accessToken, userId);
     }
 
 }

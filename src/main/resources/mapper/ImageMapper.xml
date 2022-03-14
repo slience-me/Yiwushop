@@ -73,4 +73,5 @@
     FROM image i
     where i.image_url=#{path}
   </select>
+
 </mapper>

@@ -23,7 +23,7 @@ public interface IOrdersService {
      * @return
      * @throws Exception
      */
-    Result ordersList(String accessToken,
+    Result orders(String accessToken,
                                Integer page,
                                Integer limit,
                                String keyword) throws Exception;

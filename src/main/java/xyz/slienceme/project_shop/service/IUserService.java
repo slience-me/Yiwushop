@@ -25,19 +25,13 @@ public interface IUserService {
      */
     Result getCode(String openid, String sessionKey) throws Exception;
 
-    Result addMember(String accessToken, UserVO userVO) throws Exception;
+    Result memberAdd(String accessToken, UserVO userVO) throws Exception;
 
-    Result deleteMember(String accessToken, Integer id) throws Exception;
+    Result memberDel(String accessToken, Integer id) throws Exception;
 
-    Result updateMember(String accessToken, User user) throws Exception;
+    Result memberPut(String accessToken, User user) throws Exception;
 
-    Result members(String accessToken,
-                   Integer page,
-                   Integer limit,
-                   String keyword,
-                   String openid) throws Exception;
-
-    Result conMembers(String accessToken,
+    Result member(String accessToken,
                       Integer page,
                       Integer limit,
                       String openid,
@@ -47,5 +41,5 @@ public interface IUserService {
                       String userPhone,
                       String userAddress) throws Exception;
 
-    Result getOneMenber(String accessToken, Integer id) throws Exception;
+    Result memberOne(String accessToken, Integer id) throws Exception;
 }

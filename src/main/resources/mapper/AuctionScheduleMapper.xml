@@ -98,8 +98,10 @@
     SELECT a.auction_schedule_id as auctionScheduleId,
     a.goods_id as goodsId,
     g.goods_name as goodsName,
+    g.goods_info as goodsInfo,
     a.user_id as userId,
     u.user_name as userName,
+    u.user_avatarurl as userAvatarUrl,
     a.auction_schedule_price as auctionSchedulePrice,
     DATE_FORMAT(a.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime
     FROM auction_schedule a

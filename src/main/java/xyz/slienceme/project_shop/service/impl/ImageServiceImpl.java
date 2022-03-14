@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.dto.Image;
+import xyz.slienceme.project_shop.mapper.GoodsImageMapper;
 import xyz.slienceme.project_shop.mapper.ImageMapper;
 import xyz.slienceme.project_shop.service.IImageService;
 import xyz.slienceme.project_shop.utils.DateUtil;
@@ -14,6 +15,7 @@ import xyz.slienceme.project_shop.utils.DateUtil;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -29,6 +31,8 @@ public class ImageServiceImpl implements IImageService {
 
     @Autowired
     private ImageMapper imageMapper;
+    @Autowired
+    private GoodsImageMapper goodsImageMapper;
     @Value("${file.fileupload}")
     private String fileupload;
     @Value("${spring.path.url}")
@@ -45,18 +49,15 @@ public class ImageServiceImpl implements IImageService {
         if (!filePath.exists()) {
             filePath.mkdirs();
         }
-        //获取文件名
         String filename = multipartFile.getOriginalFilename();
         filename = filename.substring(filename.lastIndexOf("."));
         String uuid = UUID.randomUUID().toString().replace("-", "");
         filename = date + uuid + filename;
         try {
-            //导入文件
             multipartFile.transferTo(new File(dirPath, filename));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        /*String path = dirPath + filename;*/
         String url = baseUrl + "/image" + fileupload + date + "/" + filename;
         Image image = new Image();
         image.setImageUrl(url);
@@ -65,7 +66,17 @@ public class ImageServiceImpl implements IImageService {
         HashMap<String, Object> data = new HashMap<>();
         data.put("url", url);
         data.put("imageId", i);
-        //System.out.println("data = " + data);
         return Result.createBySuccess(data);
+    }
+
+    @Override
+    public Result selectImgs(Integer goodsId) {
+        List<String> list = goodsImageMapper.selectImageByGoodsId(goodsId);
+        if (list.size() != 0){
+            return Result.createBySuccess(list);
+        } else {
+            return Result.createByErrorMessage("图片不存在");
+        }
+
     }
 }

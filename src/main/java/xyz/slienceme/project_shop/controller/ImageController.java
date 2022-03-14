@@ -3,13 +3,8 @@ package xyz.slienceme.project_shop.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.service.IImageService;
@@ -25,18 +20,24 @@ import xyz.slienceme.project_shop.service.IImageService;
 @Slf4j
 @Api(tags = "上传文件")
 @RestController
-@RequestMapping("/upload")
+@RequestMapping("/admin")
 public class ImageController {
 
     @Autowired
     private IImageService imageService;
 
     @ApiOperation("上传图片")
-    @PostMapping("/img")
+    @PostMapping("/upload")
     public Result uploadImg(@RequestParam("multipartFile") MultipartFile multipartFile
     ) throws Exception {
-        log.info("上传接口调用-----------------------post----------------------</upload/img>:");
+        log.info("上传接口调用-----------------------post----------------------</admin/upload>:");
         return imageService.uploadImg(multipartFile);
+    }
+
+    @ApiOperation("查询图片")
+    @GetMapping("/image")
+    public Result selectImgs(@RequestParam("goodsId") Integer goodsId) throws Exception {
+        return imageService.selectImgs(goodsId);
     }
 
 }

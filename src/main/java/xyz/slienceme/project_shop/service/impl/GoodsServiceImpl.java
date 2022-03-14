@@ -5,21 +5,13 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.slienceme.project_shop.common.Result;
-import xyz.slienceme.project_shop.dto.Auctions;
 import xyz.slienceme.project_shop.dto.Goods;
-import xyz.slienceme.project_shop.dto.Pawn;
-import xyz.slienceme.project_shop.mapper.AuctionsMapper;
+import xyz.slienceme.project_shop.dto.GoodsImage;
+import xyz.slienceme.project_shop.mapper.GoodsImageMapper;
 import xyz.slienceme.project_shop.mapper.GoodsMapper;
-import xyz.slienceme.project_shop.mapper.PawnMapper;
 import xyz.slienceme.project_shop.service.IGoodsService;
-import xyz.slienceme.project_shop.utils.DateUtil;
-import xyz.slienceme.project_shop.utils.JWT;
-import xyz.slienceme.project_shop.vo.AuctionsVO;
 import xyz.slienceme.project_shop.vo.GoodsVO;
-import xyz.slienceme.project_shop.vo.PawnVO;
-import xyz.slienceme.project_shop.vo.TokenVO;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -38,90 +30,7 @@ public class GoodsServiceImpl implements IGoodsService {
     @Autowired
     private GoodsMapper goodsMapper;
     @Autowired
-    private AuctionsMapper auctionsMapper;
-    @Autowired
-    private PawnMapper pawnMapper;
-
-    /**
-     * 查询商品列表
-     *
-     * @param accessToken 请求token
-     * @param page        页码
-     * @param limit       每页个数
-     * @param keyword     关键词
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public Result goodsList(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
-        PageHelper.startPage(page, limit);
-        List<HashMap<String, Object>> list = goodsMapper.selectList(keyword);
-        return Result.createBySuccess(new PageInfo<>(list));
-    }
-
-    /**
-     * 查询上架商品列表
-     *
-     * @param accessToken 请求token
-     * @param page        页码
-     * @param limit       每页个数
-     * @param keyword     关键词
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public Result goodsOnList(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
-        PageHelper.startPage(page, limit);
-        List<HashMap<String, Object>> list = goodsMapper.selectOnList(keyword);
-        return Result.createBySuccess(new PageInfo<>(list));
-    }
-
-    /**
-     * 查询未上架商品列表
-     *
-     * @param accessToken 请求token
-     * @param page        页码
-     * @param limit       每页个数
-     * @param keyword     关键词
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public Result goodsNoList(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
-        PageHelper.startPage(page, limit);
-        List<HashMap<String, Object>> list = goodsMapper.selectNoList(keyword);
-        return Result.createBySuccess(new PageInfo<>(list));
-    }
-
-    /**
-     * 查询已售商品列表
-     *
-     * @param accessToken 请求token
-     * @param page        页码
-     * @param limit       每页个数
-     * @param keyword     关键词
-     */
-    @Override
-    public Result goodsDoneList(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
-        PageHelper.startPage(page, limit);
-        List<HashMap<String, Object>> list = goodsMapper.selectDoneList(keyword);
-        return Result.createBySuccess(new PageInfo<>(list));
-    }
-
-    /**
-     * 查询典当商品列表
-     *
-     * @param accessToken 请求token
-     * @param page        页码
-     * @param limit       每页个数
-     * @param keyword     关键词
-     */
-    @Override
-    public Result goodsPawnList(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
-        PageHelper.startPage(page, limit);
-        List<HashMap<String, Object>> list = goodsMapper.selectPawnList(keyword);
-        return Result.createBySuccess(new PageInfo<>(list));
-    }
+    private GoodsImageMapper goodsImageMapper;
 
     /**
      * 根据商品信息添加商品
@@ -133,26 +42,37 @@ public class GoodsServiceImpl implements IGoodsService {
      */
     @Override
     public Result goodsAdd(String accessToken, GoodsVO goodsVO) throws Exception {
-        Goods goods = new Goods();
-        goods.setGoodsName(goodsVO.getGoodsName());
-        goods.setGoodsPrice(goodsVO.getGoodsPrice());
-//        goods.setPriceNow(goodsVO.getGoodsPrice());
-        //goods.setPriceUserId(goodsVO.getUserId());//默认自己
-        goods.setGoodsInfo(goodsVO.getGoodsInfo());
-        if (Objects.isNull(goodsVO.getStateOn())){
-            goods.setStateOn(1);//默认不上架
+
+        List<HashMap<String, Object>> data = goodsMapper.selectConditionList(goodsVO.getGoodsName(), null, null, null, goodsVO.getUserId());
+        if (data.size() != 0){
+            return Result.createByErrorMessage("相同用户拥有的商品的名称不能相同");
         } else {
-            goods.setStateOn(goodsVO.getStateOn());
+            Goods goods = new Goods();
+            goods.setGoodsName(goodsVO.getGoodsName());
+            goods.setGoodsPrice(goodsVO.getGoodsPrice());
+            goods.setGoodsInfo(goodsVO.getGoodsInfo());
+            if (Objects.isNull(goodsVO.getStateOn())) {
+                goods.setStateOn(1);//默认不上架
+            } else {
+                goods.setStateOn(goodsVO.getStateOn());
+            }
+            goods.setCategoryId(goodsVO.getCategoryId());
+            goods.setUserId(goodsVO.getUserId());
+            goodsMapper.insertSelective(goods);
+            List<HashMap<String, Object>> data1 = goodsMapper.selectConditionList(goodsVO.getGoodsName(), null, null, null, goodsVO.getUserId());
+            Integer goodsId = 0;
+            for (HashMap<String, Object> datum : data1) {
+                goodsId = (Integer) datum.get("goodsId");
+            }
+            for (int i = 0; i < goodsVO.getImageIds().length; i++) {
+                GoodsImage goodsImage = new GoodsImage();
+                goodsImage.setGoodsId(goodsId);
+                goodsImage.setImageId(goodsVO.getImageIds()[i]);
+                goodsImageMapper.insertSelective(goodsImage);
+            }
+            return Result.createBySuccessMessage("成功");
         }
-        goods.setCategoryId(goodsVO.getCategoryId());
-        goods.setUserId(goodsVO.getUserId());
-        if (Objects.isNull(goodsVO.getGoodsImgId())){
-            goods.setGoodsImgId(0);//TODO 先留空
-        } else {
-            goods.setGoodsImgId(goodsVO.getGoodsImgId());
-        }
-        goodsMapper.insertSelective(goods);
-        return Result.createBySuccessMessage("成功");
+
     }
 
     /**
@@ -182,7 +102,6 @@ public class GoodsServiceImpl implements IGoodsService {
     @Override
     public Result goodsPut(String accessToken, Goods goods) throws Exception {
         Goods goods1 = goodsMapper.selectByPrimaryKey(goods.getGoodsId());
-       //println("goods1 = " + goods1);
         if (Objects.isNull(goods1)) {
             return Result.createByErrorMessage("商品不存在");
         }
@@ -191,69 +110,25 @@ public class GoodsServiceImpl implements IGoodsService {
     }
 
     @Override
-    public Result stateOn(String accessToken, AuctionsVO auctionsVO) throws Exception {
-        Goods goods1 = goodsMapper.selectByPrimaryKey(auctionsVO.getGoodsId());
-        //System.out.println("goods1 = " + goods1);
-        if (Objects.isNull(goods1)) {
-            return Result.createByErrorMessage("商品不存在");
-        } else {
-            goods1.setStateOn(2);//上架拍卖
-        }
-        goodsMapper.updateByPrimaryKeySelective(goods1);
-        TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
-        Auctions auctions = new Auctions();
-        auctions.setAuctionsName(auctionsVO.getAuctionsName());
-        auctions.setGoodsId(auctionsVO.getGoodsId());
-        auctions.setStart(DateUtil.StringToLocalDateTime(auctionsVO.getStartTime()));
-        auctions.setEnd(DateUtil.StringToLocalDateTime(auctionsVO.getEndTime()));
-        auctions.setCreatedBy(unsign.getUserId());
-        auctions.setStartingPrice(auctionsVO.getStartingPrice());
-        auctions.setPresentPerson(0);//默认0
-        auctions.setPresentPrice(BigDecimal.valueOf(0));//默认0
-        auctions.setFixedPrice(BigDecimal.valueOf(0));//默认0
-        auctionsMapper.insertSelective(auctions);
-        return Result.createBySuccessMessage("成功");
-    }
-
-    @Override
-    public Result stateOnToPawn(String accessToken, PawnVO pawnVO) throws Exception {
-        Goods goods1 = goodsMapper.selectByPrimaryKey(pawnVO.getGoodsId());
-        //System.out.println("goods1 = " + goods1);
-        if (Objects.isNull(goods1)) {
-            return Result.createByErrorMessage("商品不存在");
-        } else {
-            goods1.setStateOn(4);//上架典当
-        }
-        goodsMapper.updateByPrimaryKeySelective(goods1);
-        TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
-        Pawn pawn = new Pawn();
-        pawn.setPawnName(pawnVO.getPawnName());
-        pawn.setGoodsId(pawnVO.getGoodsId());
-        pawn.setStart(DateUtil.StringToLocalDateTime(pawnVO.getStartTime()));
-        pawn.setEnd(DateUtil.StringToLocalDateTime(pawnVO.getEndTime()));
-        pawn.setStartingPrice(pawnVO.getFixedPrice());
-        pawn.setCreatedBy(unsign.getUserId());
-
-        pawn.setStartingPrice(BigDecimal.valueOf(0));//默认0
-        pawn.setPresentPerson(0);//默认0
-        pawn.setPresentPrice(BigDecimal.valueOf(0));//默认0
-        pawnMapper.insertSelective(pawn);
-        return Result.createBySuccessMessage("成功");
-    }
-
-    @Override
     public Result selectByPrimaryKey(String accessToken, Integer goodsId) {
         Goods goods = goodsMapper.selectByPrimaryKey1(goodsId);
-        if (Objects.isNull(goods)){
+        if (Objects.isNull(goods)) {
             return Result.createByErrorMessage("id不正确");
         }
         return Result.createBySuccess(goods);
     }
 
     @Override
-    public Result getData(String accessToken, Integer pageNo, Integer pageSize, String goodsName, String goodsInfo, Integer stateOn, Integer categoryId, Integer userId) {
+    public Result goods(String accessToken, Integer pageNo, Integer pageSize, String goodsName, String goodsInfo, Integer stateOn, Integer categoryId, Integer userId) {
         PageHelper.startPage(pageNo, pageSize);
         List<HashMap<String, Object>> list = goodsMapper.selectConditionList(goodsName, goodsInfo, stateOn, categoryId, userId);
+        for (HashMap<String, Object> map : list) {
+            Integer goodsId = (Integer) map.get("goodsId");
+            List<String> images = goodsImageMapper.selectImageByGoodsId(goodsId);
+            if (Objects.nonNull(images)){
+                map.put("images",images);
+            }
+        }
         return Result.createBySuccess(new PageInfo<>(list));
     }
 }

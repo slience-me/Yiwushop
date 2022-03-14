@@ -43,7 +43,7 @@ public class CategoryServiceImpl implements ICategoryService {
      * @throws Exception
      */
     @Override
-    public Result categoryList(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
+    public Result category(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
         PageHelper.startPage(page,limit);
         List<HashMap<String, Object>> list = categoryMapper.selectList(keyword);
         return Result.createBySuccess(new PageInfo<>(list));
@@ -95,7 +95,6 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public Result categoryPut(String accessToken, Category category) throws Exception {
         Category category1 = categoryMapper.selectByPrimaryKey(category.getCategoryId());
-        //System.out.println("category1 = " + category1);
         if (Objects.isNull(category1)) {
             return Result.createByErrorMessage("类型不存在");
         }

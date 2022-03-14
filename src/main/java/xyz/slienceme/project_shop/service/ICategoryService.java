@@ -22,7 +22,7 @@ public interface ICategoryService {
      * @param limit       每页个数
      * @param keyword     关键词
      */
-    Result categoryList(String accessToken,
+    Result category(String accessToken,
                         Integer page,
                         Integer limit,
                         String keyword) throws Exception;

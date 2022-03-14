@@ -51,7 +51,6 @@ public class AdminRoleMenuServiceImpl implements IAdminRoleMenuService {
      */
     @Override
     public Result selectAll(String accessToken, Integer roleId) {
-        TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         //一级菜单
         List<MenuListVO> menus1s = menuMapper.selectAll(1, 0, null, roleId);
         for (MenuListVO menus1 : menus1s) {
@@ -82,7 +81,6 @@ public class AdminRoleMenuServiceImpl implements IAdminRoleMenuService {
      */
     @Override
     public Result selectRoleAll(String accessToken, Integer page, Integer limit, String keyword) {
-        TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         if (Objects.isNull(page)) {
             List<HashMap<String, Object>> list = roleMapper.selectAll(keyword);
             return Result.createBySuccess(list);
@@ -112,7 +110,6 @@ public class AdminRoleMenuServiceImpl implements IAdminRoleMenuService {
      */
     @Override
     public Result selectByPrimaryKey(String accessToken, Integer roleId) {
-        TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         return Result.createBySuccess(roleMapper.selectByPrimaryKey(roleId));
     }
 
@@ -158,7 +155,6 @@ public class AdminRoleMenuServiceImpl implements IAdminRoleMenuService {
      */
     @Override
     public Result updateByPrimaryKey(String accessToken, RoleUpdateVO roleUpdateVO) {
-        TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         Role role = roleMapper.selectByName(roleUpdateVO.getRoleName());
         if (Objects.nonNull(role)) {
             if (roleUpdateVO.getRoleId().intValue() != role.getRoleId().intValue()) {
