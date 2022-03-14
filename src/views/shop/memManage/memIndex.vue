@@ -29,6 +29,9 @@
         :data="loadData"
         :alert="false"
         showPagination="auto">
+        <span slot="userAvatarurl" slot-scope="text">
+          <img :src="text" width="40px">
+        </span>
         <span slot="userGender" slot-scope="text">
           <a-badge :color="text | statusTypeFilter" :text="text | statusFilter" />
         </span>
@@ -90,8 +93,14 @@ import { checkChinese } from '@/utils/checkStr'
 
 const columns = [
     {
+      title: '头像',
+      dataIndex: 'userAvatarurl',
+      scopedSlots: { customRender: 'userAvatarurl' }
+    },
+    {
       title: '姓名',
       dataIndex: 'userName',
+      align: 'center',
       scopedSlots: { customRender: 'userName' }
     },
     {
@@ -116,11 +125,11 @@ const columns = [
       align: 'center',
       dataIndex: 'userAddress'
     },
-    {
-      title: '信用分',
-      align: 'center',
-      dataIndex: 'userCredit'
-    },
+    // {
+    //   title: '信用分',
+    //   align: 'center',
+    //   dataIndex: 'userCredit'
+    // },
     {
       title: '操作',
       dataIndex: 'action',
@@ -157,8 +166,8 @@ const columns = [
           callback(new Error('请输入姓名'))
         }
       }
-      this.columns = columns
       return {
+        columns,
         // create model
         visible: false,
         confirmLoading: false,

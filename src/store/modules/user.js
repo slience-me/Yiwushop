@@ -1,13 +1,11 @@
 import storage from 'store'
 import { login, getInfo, logout } from '@/api/login'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
-import { welcome } from '@/utils/util'
 
 const user = {
   state: {
     token: '',
     name: '',
-    welcome: '',
     avatar: '',
     roleId: '',
     roles: [],
@@ -22,9 +20,6 @@ const user = {
     SET_NAME: (state, name) => {
       state.name = name
       sessionStorage.setItem('userName', name)
-    },
-    SET_WELCOME: (state, welcome) => {
-      state.welcome = welcome
     },
     SET_AVATAR: (state, avatar) => {
       state.avatar = avatar
@@ -47,7 +42,6 @@ const user = {
   },
 
   actions: {
-    // 登录
     Login ({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
         login(userInfo).then(response => {
@@ -58,7 +52,6 @@ const user = {
           commit('SET_ID', result.id)
           commit('SET_INFO', result.userInfo)
           commit('SET_NAME', result.userInfo.adminName)
-          commit('SET_WELCOME', welcome())
           commit('SET_AVATAR', result.avatar)
           storage.set('userId', result.userInfo.adminId)
           storage.set('userName', result.userInfo.adminName)

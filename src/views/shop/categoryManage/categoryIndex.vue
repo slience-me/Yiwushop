@@ -29,9 +29,11 @@
         :data="loadData"
         :alert="false"
         showPagination="auto">
-        <span slot="categoryName" slot-scope="text">
-          <ellipsis :length="20" tooltip>{{ text }}</ellipsis>
-        </span>
+        <div style="background:#ECECEC; padding:30px">
+          <a-card title="" :bordered="false" style="width: 300px">
+            <p>Card content</p>
+          </a-card>
+        </div>
         <span slot="action" slot-scope="text, record">
           <template>
             <a v-action:edit style="margin-left: 10px" @click="handleAccount(1, record)">编辑</a>
@@ -102,8 +104,9 @@ const columns = [
           callback(new Error('请输入名称'))
         }
       }
-      this.columns = columns
+      // this.columns = columns
       return {
+        columns,
         // create model
         visible: false,
         confirmLoading: false,

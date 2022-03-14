@@ -1,8 +1,8 @@
 <template>
   <div class="main">
     <div style="display: flex; flex-direction: column">
-      <a style="font-size: 30px; font-weight: 500; cursor: auto">欢迎使用，</a>
-      <a style="font-size: 32px; font-weight: 700; cursor: auto">大学生易物平台后台管理系统</a>
+      <a style="font-size: 26px; font-weight: 500; cursor: auto">欢迎使用，</a>
+      <a style="font-size: 28px; font-weight: 700; cursor: auto">大学生易物平台后台管理系统</a>
     </div>
     <a-form
       id="formLogin"
@@ -42,6 +42,7 @@
       <a-form-item>
         <a-checkbox v-model="checked">记住密码</a-checkbox>
         <a style="float: right" @click="forgetPwd">忘记密码</a>
+        <!--<router-link style="float: right" class="regist" :to="{ name: 'register' }">点击注册</router-link>-->
       </a-form-item>
 
       <a-form-item style="margin-top:24px">
@@ -59,11 +60,10 @@
 </template>
 
 <script>
-// import md5 from 'md5'
+import md5 from 'md5'
 import TwoStepCaptcha from '@/components/tools/TwoStepCaptcha'
 import { mapActions } from 'vuex'
 import { timeFix } from '@/utils/util'
-import { getSmsCaptcha } from '@/api/login' // get2step
 import { Modal } from 'ant-design-vue'
 
 export default {
@@ -92,8 +92,6 @@ export default {
       checked: true
     }
   },
-  created () {
-  },
   mounted () {
     this.form.setFieldsValue({
       username: sessionStorage.getItem('userName1'),
@@ -102,7 +100,6 @@ export default {
   },
   methods: {
     ...mapActions(['Login', 'Logout']),
-    // handler
     handleUsernameOrEmail (rule, value, callback) {
       const { state } = this
       const regex = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/
@@ -112,10 +109,6 @@ export default {
         state.loginType = 1
       }
       callback()
-    },
-    handleTabClick (key) {
-      this.customActiveKey = key
-      // this.form.resetFields()
     },
     handleSubmit (e) {
       e.preventDefault()
@@ -137,7 +130,7 @@ export default {
           this.password = values.password
           delete loginParams.username
           loginParams.username = this.username
-          loginParams.pwd = this.password
+          loginParams.pwd = md5(this.password)
           console.log(loginParams)
           Login(loginParams)
             .then((res) => this.loginSuccess(res))
@@ -167,32 +160,7 @@ export default {
               window.clearInterval(interval)
             }
           }, 1000)
-
-          const hide = this.$message.loading('验证码发送中..', 0)
-          getSmsCaptcha({ mobile: values.mobile }).then(res => {
-            setTimeout(hide, 2500)
-            this.$notification['success']({
-              message: '提示',
-              description: '验证码获取成功，您的验证码为：' + res.result.captcha,
-              duration: 8
-            })
-          }).catch(err => {
-            setTimeout(hide, 1)
-            clearInterval(interval)
-            state.time = 60
-            state.smsSendBtn = false
-            this.requestFailed(err)
-          })
         }
-      })
-    },
-    stepCaptchaSuccess () {
-      this.loginSuccess()
-    },
-    stepCaptchaCancel () {
-      this.Logout().then(() => {
-        this.loginBtn = false
-        this.stepCaptchaVisible = false
       })
     },
     loginSuccess (res) {
@@ -201,8 +169,6 @@ export default {
         sessionStorage.setItem('userName1', this.username)
         sessionStorage.setItem('password', this.password)
       }
-      // this.$router.push({ path: '/' })
-      // this.$router.push('/index')
       window.location.reload()
       // 延迟 1 秒显示欢迎信息
       setTimeout(() => {
@@ -225,7 +191,7 @@ export default {
     forgetPwd () {
       Modal.confirm({
         title: '提示',
-        content: '请联系开户管理员',
+        content: '请联系开户管理员重置密码',
         okText: '确定',
         cancelText: '取消',
         onOk: () => {}

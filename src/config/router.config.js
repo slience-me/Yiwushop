@@ -39,69 +39,26 @@ export const asyncRouterMap = [
         hideChildrenInMenu: true,
         children: []
       },
-      // {
-      //   path: '/shop/pawn',
-      //   name: 'PawnIndex',
-      //   meta: { title: '典当场次管理', keepAlive: false, icon: 'profile', permission: ['PawnIndex'] },
-      //   component: () => import('@/views/shop/pawnManage/pawnIndex'),
-      //   hideChildrenInMenu: true,
-      //   children: []
-      // },
       {
         path: '/shop/auctions',
         name: 'AuctionsIndex',
         meta: { title: '竞拍场次管理', keepAlive: false, icon: 'profile', permission: ['AuctionsIndex'] },
         component: () => import('@/views/shop/auctionsManage/auctionsIndex'),
-        hideChildrenInMenu: true,
-        children: []
+        hideChildrenInMenu: true
       },
       {
         path: '/shop/category',
         name: 'CategoryIndex',
         meta: { title: '物品类型管理', keepAlive: false, icon: 'profile', permission: ['CategoryIndex'] },
         component: () => import('@/views/shop/categoryManage/categoryIndex'),
-        hideChildrenInMenu: true,
-        children: []
+        hideChildrenInMenu: true
       },
       {
         path: '/shop/goodsManage',
         name: 'GoodsManageIndex',
         meta: { title: '商品管理', keepAlive: false, icon: 'tags', permission: ['GoodsIndex', 'GoodsDoneIndex', 'GoodsOnIndex', 'GoodsNoIndex'] },
-        component: RouteView,
-        hideChildrenInMenu: false,
-        redirect: '/shop',
-        children: [
-          {
-            path: '/shop/goodsManage/goodsIndex',
-            name: 'GoodsIndex',
-            component: () => import('@/views/shop/goodsManage/goodsIndex'),
-            meta: { title: '商品一览', keepAlive: false, hidden: true, permission: ['GoodsIndex'] }
-          },
-          {
-            path: '/shop/goodsManage/goodsNoIndex',
-            name: 'GoodsNoIndex',
-            component: () => import('@/views/shop/goodsManage/goodsNoIndex'),
-            meta: { title: '未上架商品', keepAlive: false, hidden: true, permission: ['GoodsNoIndex'] }
-          },
-          {
-            path: '/shop/goodsManage/goodsDoneIndex',
-            name: 'GoodsDoneIndex',
-            component: () => import('@/views/shop/goodsManage/goodsDoneIndex'),
-            meta: { title: '已拍卖商品', keepAlive: false, hidden: true, permission: ['GoodsDoneIndex'] }
-          },
-          {
-            path: '/shop/goodsManage/goodsOnIndex',
-            name: 'GoodsOnIndex',
-            component: () => import('@/views/shop/goodsManage/goodsOnIndex'),
-            meta: { title: '出售商品', keepAlive: false, hidden: true, permission: ['GoodsOnIndex'] }
-          },
-          {
-            path: '/shop/goodsManage/goodsPawnIndex',
-            name: 'GoodsPawnIndex',
-            component: () => import('@/views/shop/goodsManage/goodsPawnIndex'),
-            meta: { title: '典当商品', keepAlive: false, hidden: true, permission: ['GoodsPawnIndex'] }
-          }
-        ]
+        component: () => import('@/views/shop/goodsManage/goodsIndex'),
+        hideChildrenInMenu: true
       },
       {
         path: '/shop/community',

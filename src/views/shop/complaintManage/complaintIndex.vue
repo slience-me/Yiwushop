@@ -118,8 +118,8 @@ const columns = [
           callback(new Error('请输入名称'))
         }
       }
-      this.columns = columns
       return {
+        columns,
         // create model
         visible: false,
         confirmLoading: false,

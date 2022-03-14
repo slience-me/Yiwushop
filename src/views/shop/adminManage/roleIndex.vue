@@ -110,8 +110,8 @@
       Ellipsis
     },
     data () {
-      this.columns = columns
       return {
+        columns,
         // create model
         visible: false,
         confirmLoading: false,

@@ -133,8 +133,8 @@
           // callback(new Error('请输入联系方式'))
         }
       }
-      this.columns = columns
       return {
+        columns,
         // create model
         visible: false,
         confirmLoading: false,

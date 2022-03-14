@@ -1,43 +1,35 @@
 import request from '@/utils/request'
 
 const api = {
-  upload: '/upload/img',
+  upload: '/admin/upload',
   roleUrl: '/admin/rolelist',
   menu: '/admin/menu',
   adminUrl: '/admin/adminList',
   adminPwd: '/admin/adminPwd',
   userUrl: '/app/member',
-  category: '/category/categoryList',
-  goods: '/goods/goodsList',
-  goodsdata: '/goods/data',
-  goods1: '/goods/goodsDoneList',
-  goods2: '/goods/goodsOnList',
-  goods3: '/goods/stateOn',
-  goods4: '/goods/goodsNoList',
-  goods5: '/goods/goodsPawnList',
-  goods6: '/goods/stateOnToPawn',
-  auctions: '/auctions/auctionsList',
-  schedule: '/auction/auctionScheduleList',
-  orders: '/orders/ordersList',
-  complaint: '/complaint/complaintList',
-  pawn: '/pawn/pawnList',
-  pawndo: '/pawn/do',
-  community: '/community'
+  category: '/admin/category',
+  goods: '/admin/goods',
+  auctions: '/admin/auctions',
+  schedule: '/admin/process',
+  orders: '/admin/orders',
+  complaint: '/admin/complaint',
+  community: '/admin/community',
+  image: '/admin/image'
 }
 
 export default api
 
-export function getCommunityList (parameter) {
+export function getImage (parameter) {
   return request({
-    url: api.community,
+    url: api.image,
     method: 'get',
     params: parameter
   })
 }
 
-export function getGoodsData (parameter) {
+export function getCommunityList (parameter) {
   return request({
-    url: api.goodsdata,
+    url: api.community,
     method: 'get',
     params: parameter
   })
@@ -62,38 +54,6 @@ export function addCommunity (parameter) {
 export function editCommunity (parameter) {
   return request({
     url: api.community,
-    method: 'put',
-    data: parameter
-  })
-}
-
-export function getPawnList (parameter) {
-  return request({
-    url: api.pawn,
-    method: 'get',
-    params: parameter
-  })
-}
-
-export function delPawn (parameter) {
-  return request({
-    url: api.pawn,
-    method: 'delete',
-    params: parameter
-  })
-}
-
-export function addPawn (parameter) {
-  return request({
-    url: api.pawn,
-    method: 'post',
-    data: parameter
-  })
-}
-
-export function editPawn (parameter) {
-  return request({
-    url: api.pawn,
     method: 'put',
     data: parameter
   })
@@ -190,38 +150,6 @@ export function getGoodsList (parameter) {
   })
 }
 
-export function getGoodsDoneList (parameter) {
-  return request({
-    url: api.goods1,
-    method: 'get',
-    params: parameter
-  })
-}
-
-export function getGoodsPawnList (parameter) {
-  return request({
-    url: api.goods5,
-    method: 'get',
-    params: parameter
-  })
-}
-
-export function getGoodsOnList (parameter) {
-  return request({
-    url: api.goods2,
-    method: 'get',
-    params: parameter
-  })
-}
-
-export function getGoodsNoList (parameter) {
-  return request({
-    url: api.goods4,
-    method: 'get',
-    params: parameter
-  })
-}
-
 export function addGoods (parameter) {
   return request({
     url: api.goods,
@@ -235,22 +163,6 @@ export function delGoods (parameter) {
     url: api.goods,
     method: 'delete',
     params: parameter
-  })
-}
-
-export function addStateOn (parameter) {
-  return request({
-    url: api.goods3,
-    method: 'post',
-    data: parameter
-  })
-}
-
-export function addStateOnToPawn (parameter) {
-  return request({
-    url: api.goods6,
-    method: 'post',
-    data: parameter
   })
 }
 

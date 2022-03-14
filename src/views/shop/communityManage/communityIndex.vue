@@ -254,7 +254,7 @@ const columns = [
           content: '确定删除？',
           onOk: () => {
             delCommunity({
-              communityId: obj.goodsId
+              id: obj.showId
             }).then(() => {
               this.$refs.table.refresh(true)
             })
