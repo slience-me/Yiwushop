@@ -81,6 +81,7 @@ Page({
     })
   },
   call(e){
+    console.log(e.currentTarget.dataset.phone)
     //拨打电话
     wx.makePhoneCall({
       phoneNumber: e.currentTarget.dataset.phone

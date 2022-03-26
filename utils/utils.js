@@ -89,7 +89,7 @@ export const uploadImage = async ()=>{
   var res = await wxapi.chooseImage();
   var tempFilePath = res.tempFilePaths[0];
   //把图片上传到服务器
-  res = await uploadFile("/upload/img",tempFilePath);
+  res = await uploadFile("/admin/upload",tempFilePath);
   return res.data.data;
 }
 //获取membIdentify

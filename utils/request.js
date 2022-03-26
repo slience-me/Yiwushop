@@ -1,6 +1,22 @@
-const baseUrl="https://ihchina.slienceme.xyz";//根地址
+const baseUrl="https://blog.slienceme.xyz";//根地址
 
 const request=(params)=>{
+  //处理接口名修改问题
+  if(params.url.substr(0,4)!="/app"){
+    if(params.url.substr(0,9)=="/category"){
+      params.url = "/category"
+    }
+    if(params.url.substr(0,6)=="/goods"){
+      params.url = "/goods"
+    }
+    if(params.url.substr(0,7)=="/orders"){
+      params.url = "/orders"
+    }
+    if(params.url.substr(0,9)=="/auctions"){
+      params.url = "/auctions"
+    }
+    params.url = "/admin" + params.url
+  }
   return new Promise((resolve,reject)=>{
     wx.request({
       ...params,

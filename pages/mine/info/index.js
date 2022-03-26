@@ -43,6 +43,18 @@ Page({
     console.log(e)
     this.data.userInfo["userGender"] = e.currentTarget.dataset.gender
   },
+  //修改地址
+  async changeAddress(){
+    var that = this;
+    //获取地址
+    var res = await wxapi.chooseLocation();
+    console.log(res)
+    const userInfo = this.data.userInfo;
+    userInfo.userAddress = res.name;
+    that.setData({
+      userInfo
+    })
+  },
   //提交
   async submit(){
     var that = this;

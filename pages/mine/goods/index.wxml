@@ -4,7 +4,7 @@
     <text class="text-black text-bold">未售商品</text>
   </view>
   <view class="cu-item" wx:for="{{goods}}" wx:key="goodsId" wx:if="{{item.stateOn!=3}}">
-    <view class="cu-avatar round lg" style="background-image:url({{item.imageUrl}});"></view>
+    <view class="cu-avatar round lg" style="background-image:url({{item.images[0]}});"></view>
     <view class="content">
       <view class="text-grey width-sm text-cut">{{item.goodsName}}</view>
       <view class="text-gray width-sm text-sm text-cut">{{item.goodsInfo}}</view>
@@ -20,7 +20,7 @@
     <text class="text-black text-bold">已售商品</text>
   </view>
   <view class="cu-item" wx:for="{{goods}}" wx:key="goodsId" wx:if="{{item.stateOn==3}}">
-    <view class="cu-avatar round lg" style="background-image:url({{item.imageUrl}});"></view>
+    <view class="cu-avatar round lg" style="background-image:url({{item.images[0]}});"></view>
     <view class="content">
       <view class="text-grey width-sm text-cut">{{item.goodsName}}</view>
       <view class="text-gray width-sm text-sm text-cut">{{item.goodsInfo}}</view>

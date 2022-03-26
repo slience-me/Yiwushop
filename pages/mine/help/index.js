@@ -12,7 +12,7 @@ Page({
   call(e){
     //拨打电话
     wx.makePhoneCall({
-      phoneNumber: "11111111111" 
+      phoneNumber: "15932270918" 
     })
   }
 })
