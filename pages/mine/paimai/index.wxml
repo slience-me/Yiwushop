@@ -1,17 +1,18 @@
 <!--pages/mine/paimai/index.wxml-->
 <form>
-  <view class="cu-form-group">
-		<view class="title">场次名称</view>
-		<input placeholder="请输入场次名称" bindinput="changeMsg" data-name="auctionsName"></input>
+	<radio-group>
+    <view class="cu-form-group">
+      <view class="title">场次</view>
+    <view>
+      上午场<radio class="blue margin-left-sm margin-right-sm radio" bindtap="changeChangCi" data-chang="上午场" checked></radio>
+      下午场<radio class="red margin-left-sm radio" bindtap="changeChangCi" data-chang="下午场"></radio>
+    </view>
   </view>
+  </radio-group>
   <view class="cu-form-group">
 		<view class="title">起拍价</view>
-		<input placeholder="请输入起拍价" bindinput="changeMsg" data-name="startingPrice"></input>
+		<input placeholder="请输入起拍价" bindinput="changeMsg"  type="number" data-name="startingPrice" value="{{startingPrice}}"></input>
   </view>
-  <view class="cu-form-group">
-		<view class="title">一口价</view>
-		<input placeholder="请输入一口价" bindinput="changeMsg" data-name="fixedPrice"></input>
-	</view>
   <view class="cu-form-group">
 		<view class="title">起拍日期</view>
 		<picker mode="date" value="{{startDate}}" start="2015-09-01" end="2099-09-01" bindchange="StartDateChange">

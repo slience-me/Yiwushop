@@ -16,20 +16,37 @@ Page({
     endTime:"00:00",
     goodsId:"",
     //拍卖信息
-    auctions:{
-      auctionsName:null,
-      startingPrice:null,
-      fixedPrice:null,
-    }
+    startingPrice:null,
+    goods:{},
+    auctionsName:"上午场"
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad:async function (options) {
     var that = this;
     that.setData({
       goodsId:options.goodsId
+    })
+    let res = await request({url:"/goods",data:{pageNo:1,pageSize:999}});
+    const goods = res.data.data.list.find((item)=>{
+      return item.goodsId == options.goodsId;
+    })
+    this.setData({
+      goods: goods,
+      startingPrice: goods.goodsId*0.8
+    })
+    //次日
+    const ciri = new Date();
+    ciri.setDate(ciri.getDate()+1);
+    //次次日零点
+    const ciciri = new Date();
+    ciciri.setDate(ciciri.getDate()+2);
+    //设置时间
+    this.setData({
+      startDate:`${ciri.getFullYear()}-${ciri.getMonth()+1<10?"0"+(ciri.getMonth()+1):ciri.getMonth()+1}-${ciri.getDate()<10?"0"+ciri.getDate():ciri.getDate()}`,
+      endDate:`${ciciri.getFullYear()}-${ciciri.getMonth()+1<10?"0"+(ciciri.getMonth()+1):ciciri.getMonth()+1}-${ciciri.getDate()<10?"0"+ciciri.getDate():ciciri.getDate()}`,
     })
   },
 
@@ -43,12 +60,11 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-
+  onShow:function () {
   },
   //更新信息
   changeMsg(e){
-    this.data.auctions[e.target.dataset.name] = e.detail.value
+    this.data[e.target.dataset.name] = e.detail.value
   },
   //开始日期
   StartDateChange(e) {
@@ -74,13 +90,15 @@ Page({
       endTime:e.detail.value
     })
   },
+  //提交拍卖信息
   async paimai(){
     var that = this;
     const startTime = that.data.startDate+" "+that.data.startTime+":00";
     const endTime = that.data.endDate+" "+that.data.endTime+":00";
-    const auctions = that.data.auctions;
     const goodsId = that.data.goodsId;
-    let res = await request({url:"/auctions/data",data:{goodsId:goodsId,pageNo:1,pageSize:1}});
+    const startingPrice = that.data.startingPrice;
+    const auctionsName = that.data.auctionsName;
+    let res = await request({url:"/auctions",data:{goodsId:goodsId,pageNo:1,pageSize:1}});
     if(res.data.data.total > 0){
       //已经有了
       wx.showToast({
@@ -109,7 +127,7 @@ Page({
       })
       return;
     }
-    if(auctions.auctionsName==null||auctions.fixedPrice==null||auctions.startingPrice==null){
+    if(startingPrice==null){
       wx.showToast({
         title:"商品未成功上架拍卖，请检查商品信息是否正确",
         icon:"none",
@@ -117,11 +135,19 @@ Page({
         duration:3000,
       })
       return;
+    }else if(startingPrice>that.data.goods.goodsId*0.8){
+      wx.showToast({
+        title:"起拍价应不大于商品价格的80%",
+        icon:"none",
+        mask: true,
+        duration:2000,
+      })
+      return;
     }
     //商品状态改为拍卖
-    res = await put({url:"/goods/goodsList",data:{goodsId:goodsId,stateOn:2}});
+    res = await put({url:"/goods",data:{goodsId:goodsId,stateOn:2}});
     //添加拍卖场次
-    res = await post({url:"/auctions/auctionsList",data:{...auctions,startTime:startTime,endTime:endTime,goodsId:goodsId}});
+    res = await post({url:"/auctions",data:{auctionsName:auctionsName,startingPrice:startingPrice,startTime:startTime,endTime:endTime,goodsId:goodsId}});
     if(res.data.status == 0){
       wx.showToast({
         title:"商品已成功上架拍卖",
@@ -130,5 +156,12 @@ Page({
         duration:2000,
       })
     }
-  }
+  },
+  //修改场次
+  changeChangCi(e){
+    console.log(e)
+    this.setData({
+      auctionsName:e.currentTarget.dataset.chang
+    })
+  },
 })

@@ -39,11 +39,11 @@ Page({
   },
   async getCates(){
     var that = this;
-    let res = await request({url:"/category/categoryList",data:{pageNo:1,pageSize:999}});
+    let res = await request({url:"/category",data:{pageNo:1,pageSize:999}});
     console.log(res)
     let left = res.data.data.list;
     console.log(left)
-    res = await request({url:"/goods/data",data:{pageNo:1,pageSize:999,stateOn:5}});
+    res = await request({url:"/goods",data:{pageNo:1,pageSize:999,stateOn:5}});
     let right = res.data.data.list;
     console.log(right)
     //构造右侧大菜单栏数据
@@ -94,17 +94,20 @@ Page({
   //点击搜索
   async searchGoods(){
     var that = this;
-    let res = await request({url:"/goods/goodsList",data:{pageNo:1,pageSize:999,keyword:that.data.search}});
     if(that.data.search == null){
       wxapi.showToast("请输入要搜索的商品");
       return;
     }
-    if(res.data.data.total==0){
+    let res = await request({url:"/goods",data:{pageNo:1,pageSize:999,stateOn:5}});
+    let list = res.data.data.list.filter(item=>{
+      return item.goodsName.indexOf(that.data.search)>=0 || item.goodsInfo.indexOf(that.data.search)>=0
+    })
+    if(list.length==0){
       wxapi.showToast("没有相关商品");
       return;
     }else{
       that.setData({
-        goods:res.data.data.list,
+        goods:list,
         displaySearchMsg:true
       })
     }

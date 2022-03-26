@@ -1,5 +1,5 @@
 <!--pages/goods/index.wxml-->
-<image class="goods_img" mode="widthFix" src="{{goods.imageUrl}}"></image>
+<image class="goods_img" mode="widthFix" src="{{goods.images[0]}}"></image>
 <view class="solid-bottom text-center text-xxl padding">
   <text class="text-black text-bold">{{goods.goodsName}}</text>
 </view>

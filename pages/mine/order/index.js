@@ -17,16 +17,30 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad:async function (options) {
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: async function () {
     var that = this;
     const userId = app.globalData.userInfo.userId;
     //获取商品信息
-    let res = await request({url:"/goods/goodsList",data:{pageNo:1,pageSize:999,stateOn:3}})
+    let res = await request({url:"/goods",data:{pageNo:1,pageSize:999,stateOn:3}})
     const goods = res.data.data.list;
     //获取用户信息
     res = await request({url:"/app/member",data:{pageNo:1,pageSize:999}})
     const users = res.data.data.list;
     //获取拍卖场次
-    res = await request({url:"/orders/ordersList",data:{pageNo:1,pageSize:999}});
+    res = await request({url:"/orders",data:{pageNo:1,pageSize:999}});
     const orders = res.data.data.list;
     let buyOrder = orders.filter((item)=>{
       return item.buyUsersId == userId;
@@ -60,20 +74,6 @@ Page({
       buyOrder,sellOrder
     })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
   //跳转到某个页面
   skipTo(e){
     wx.navigateTo({
@@ -81,7 +81,6 @@ Page({
     })
   },
   call(e){
-    console.log(e.currentTarget.dataset.phone)
     //拨打电话
     wx.makePhoneCall({
       phoneNumber: e.currentTarget.dataset.phone

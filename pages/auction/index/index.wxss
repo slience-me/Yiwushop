@@ -42,7 +42,7 @@
 .p_tag{
   font-size: 24rpx;
 	position: relative;
-  left: 278rpx;
+  left: 200rpx;
   bottom: 62rpx;
   border-top-right-radius: 10rpx;
   display: inline-flex;

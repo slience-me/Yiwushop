@@ -32,10 +32,10 @@ Page({
   onShow:async function () {
     var that = this;
     //获取拍卖场次
-    let res = await request({url:"/auctions/auctionsList",data:{pageNo:1,pageSize:999}});
+    let res = await request({url:"/auctions",data:{pageNo:1,pageSize:999}});
     const auctions = res.data.data.list;
     //获取拍卖商品
-    res = await request({url:"/goods/goodsList",data:{pageNo:1,pageSize:999,stateOn:2}})
+    res = await request({url:"/goods",data:{pageNo:1,pageSize:999,stateOn:2}})
     const goods = res.data.data.list;
     //拍卖场次与商品对应,并添加拍卖状态
     const newAuctions = auctions.map((auction)=>{

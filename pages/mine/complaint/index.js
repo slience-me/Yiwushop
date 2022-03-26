@@ -56,7 +56,7 @@ Page({
       return
     }
     //提交
-    let res = await post({url:"/complaint/complaintList",data:{ordersId:that.data.ordersId,remark:remark}})
+    let res = await post({url:"/complaint",data:{ordersId:that.data.ordersId,remark:remark}})
     console.log(res)
     if(res.data.status == 0){
       wxapi.showToast("提交成功")

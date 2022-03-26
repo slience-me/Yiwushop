@@ -17,7 +17,7 @@ Page({
    */
   onLoad:async function (options) {
     var that = this;
-    let res = await request({url:"/goods/data",data:{userId:app.globalData.userInfo.userId,pageNo:1,pageSize:999}});
+    let res = await request({url:"/goods",data:{userId:app.globalData.userInfo.userId,pageNo:1,pageSize:999}});
     that.setData({
       goods:res.data.data.list
     })
@@ -53,7 +53,7 @@ Page({
     that.setData({
       goods:goodss
     })
-    let res = await put({url:"/goods/goodsList",data:{goodsId:goods.goodsId,stateOn:state}});
+    let res = await put({url:"/goods",data:{goodsId:goods.goodsId,stateOn:state}});
     console.log(res)
   },
   //删除商品
@@ -68,7 +68,7 @@ Page({
       that.setData({
         goods:goodss
       })
-      res = await put({url:"/goods/goodsList",data:{goodsId:goods.goodsId,isDelete:1}});
+      res = await put({url:"/goods",data:{goodsId:goods.goodsId,isDelete:1}});
       wxapi.showToast("商品已删除");
     }
     console.log(res)
@@ -82,10 +82,10 @@ Page({
     if(goods.stateOn == 2){
       return;
     }
-    let res = await request({url:"/auctions/data",data:{pageNo:1,pageSize:999,goodsId:goods.goodsId}});
+    let res = await request({url:"/auctions",data:{pageNo:1,pageSize:999,goodsId:goods.goodsId}});
     //曾经拍卖过
     if(res.data.data.total == 1){
-      res = await put({url:"/goods/goodsList",data:{goodsId:goods.goodsId,stateOn:2}});
+      res = await put({url:"/goods",data:{goodsId:goods.goodsId,stateOn:2}});
       that.data.goods[index].stateOn = 2;
       that.setData({
         goods:that.data.goods

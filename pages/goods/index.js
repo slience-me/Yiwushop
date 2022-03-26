@@ -18,7 +18,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
    onLoad: async function (options) {
-    let res = await request({url:"/goods/data",data:{pageNo:1,pageSize:999,stateOn:5}});
+    let res = await request({url:"/goods",data:{pageNo:1,pageSize:999,stateOn:5}});
     const goods = res.data.data.list.find((item)=>{
       return item.goodsId == options.goodsId;
     })

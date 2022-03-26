@@ -1,5 +1,5 @@
 <!--pages/auction/bidding/index.wxml-->
-<image class="goods_img" mode="widthFix" src="{{goods.imageUrl}}"></image>
+<image class="goods_img" mode="widthFix" src="{{goods.images[0]}}"></image>
 <view class="cu-list menu">
   <view class="flex-sub text-center">
     <view class="solid-bottom text-xl padding">
@@ -29,11 +29,11 @@
       当前最高报价：<text class="text-price text-red">{{auctions.presentPrice!=null?auctions.presentPrice:'0'}}</text>
     </view>
   </view>
-  <view class="cu-item">
+  <!-- <view class="cu-item">
     <view class="text-xl">
       一口价：<text class="text-price text-red">{{auctions.fixedPrice}}</text>
     </view>
-  </view>
+  </view> -->
   <view class="cu-form-group margin-top">
 		<view class="title">报价</view>
 		<input placeholder="请输入报价" bindinput="changeQuote" ></input>

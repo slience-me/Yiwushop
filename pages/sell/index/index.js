@@ -28,7 +28,7 @@ Page({
    */
   onLoad:async function (options) {
     var that = this;
-    let res = await request({url:"/category/categoryList",data:{pageNo:1,pageSize:999}})
+    let res = await request({url:"/category",data:{pageNo:1,pageSize:999}})
     const picker = res.data.data.list.map((value)=>{
       return value.categoryName
     })
@@ -93,33 +93,24 @@ Page({
       return
     }
     if(goods.goodsName!=null&&goods.goodsPrice!=null&&goods.categoryId!=null&&goods.goodsImgId!=null&&goods.goodsInfo!=null){
-      let res = await post({url:"/goods/goodsList",data:{goodsName:goods.goodsName,goodsPrice:goods.goodsPrice,categoryId:goods.categoryId,goodsImgId:goods.goodsImgId,goodsInfo:goods.goodsInfo,stateOn:stateOn,userId:app.globalData.userInfo.userId}})
+      let res = await post({url:"/goods",data:{goodsName:goods.goodsName,goodsPrice:goods.goodsPrice,categoryId:goods.categoryId,goodsImgId:goods.goodsImgId,goodsInfo:goods.goodsInfo,stateOn:stateOn,userId:app.globalData.userInfo.userId}})
       console.log(res)
-      if(res.data.status == 0){
-        wx.showToast({
-          title:"商品已成功上架，如需修改商品状态，请在《我的》里修改",
-          icon:"none",
-          mask: true,
-          duration:3000,
-        })
-        //清除商品
-        that.setData({
-          goodsMsg:{
-            goodsName:null,
-            goodsPrice:null,
-            goodsImgId:null,
-            goodsInfo:null
-          },
-          imgUrl:""
-        })
-      }else{
-        wx.showToast({
-          title:"商品未成功上架，请检查商品信息是否正确",
-          icon:"none",
-          mask: true,
-          duration:3000,
-        })
-      }
+      wx.showToast({
+        title:"商品已成功上架，如需修改商品状态，请在《我的》里修改",
+        icon:"none",
+        mask: true,
+        duration:3000,
+      })
+      //清除商品
+      that.setData({
+        goodsMsg:{
+          goodsName:null,
+          goodsPrice:null,
+          goodsImgId:null,
+          goodsInfo:null
+        },
+        imgUrl:""
+      })
     }else{
       wxapi.showToast("请完善商品信息");
       return;
