@@ -7,12 +7,18 @@ Page({
    * 页面的初始数据
    */
   data: {
-    phone:[]//客服电话
+    //客服电话
+    phone:[
+      "17391876334",
+      "19827060613",
+      "19522555850"
+    ]
   },
   call(e){
     //拨打电话
+    console.log(e)
     wx.makePhoneCall({
-      phoneNumber: "15932270918" 
+      phoneNumber: e.currentTarget.dataset.phone
     })
   }
 })

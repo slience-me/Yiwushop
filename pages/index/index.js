@@ -42,26 +42,33 @@ Page({
     let res = await request({url:"/category",data:{pageNo:1,pageSize:999}});
     console.log(res)
     let left = res.data.data.list;
+    //添加全部
+    left.unshift({categoryName:"全部",categoryId:-1});
     console.log(left)
     res = await request({url:"/goods",data:{pageNo:1,pageSize:999,stateOn:5}});
     let right = res.data.data.list;
     console.log(right)
     //构造右侧大菜单栏数据
-    let rightContent = right.filter((value,index)=>{
-      return value.categoryId == left[0].categoryId;
-    })
+    // let rightContent = right.filter((value,index)=>{
+    //   return value.categoryId == left[0].categoryId;
+    // })
     that.setData({
       leftMenuList:left,
       right:right,
-      rightContent
+      rightContent:right
     })
   },
   handleItemTap(e){
     var that = this;
     const {operation}=e.currentTarget.dataset;
-    let rightContent =that.data.right.filter((value,index)=>{
-      return value.categoryId == that.data.leftMenuList[operation].categoryId;
-    });
+    let rightContent = null;
+    if(operation == 0){//如果是全部
+      rightContent = that.data.right;
+    }else{
+      rightContent =that.data.right.filter((value,index)=>{
+        return value.categoryId == that.data.leftMenuList[operation].categoryId;
+      });
+    }
     that.setData({
       currentIndex : operation,
       rightContent,

@@ -1,5 +1,5 @@
 <!--pages/mine/help/index.wxml-->
-<view class="content">
-  <view class="text">客服电话：1111111111111</view>
-  <image bindtap="call" mode="widthFix" src="/image/phone_blue.png"></image>
+<view class="content" wx:for="{{phone}}" wx:key="*this">
+  <view class="text">客服电话：{{item}}</view>
+  <image bindtap="call" data-phone="{{item}}" mode="widthFix" src="/image/phone_blue.png"></image>
 </view>

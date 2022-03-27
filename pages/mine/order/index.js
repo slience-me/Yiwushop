@@ -82,6 +82,10 @@ Page({
   },
   call(e){
     //拨打电话
+    if(e.currentTarget.dataset.phone==null||e.currentTarget.dataset.phone==""){
+      wxapi.showToast("对方未设置电话号码")
+      return
+    }
     wx.makePhoneCall({
       phoneNumber: e.currentTarget.dataset.phone
     })
