@@ -23,7 +23,7 @@
   </view>
 	<view class="cu-form-group">
 		<view class="title">地址</view>
-		<input placeholder="请输入地址"  bindinput="changeMsg" data-name="userAddress" disabled="{{true}}" value="{{userInfo.userAddress}}"></input>
+		<input placeholder="请点击右侧图标选择地址"  bindinput="changeMsg" data-name="userAddress" disabled="{{true}}" value="{{userInfo.userAddress}}"></input>
 		<text class="cuIcon-locationfill text-orange" bindtap="changeAddress"></text>
   </view>
   <view class="cu-form-group">

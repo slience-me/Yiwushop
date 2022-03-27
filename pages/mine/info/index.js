@@ -46,8 +46,28 @@ Page({
   //修改地址
   async changeAddress(){
     var that = this;
-    //获取地址
-    var res = await wxapi.chooseLocation();
+    let res;
+    //获取用户位置
+    res = await wxapi.getSetting();
+    console.log(res)
+    if (!res.authSetting['scope.userLocation']) {
+      try {
+        //获取位置权限
+        res = await  wxapi.authorize('scope.userLocation');
+        console.log(res)
+        res = await wxapi.chooseLocation();
+      } catch (error) {
+        console.log(error)
+        wx.showToast({
+          title: '请点击右上角授权位置权限',
+          icon:'none',
+          mask:true
+        })
+        return;
+      }
+    }else{
+      res = await wxapi.chooseLocation();
+    }
     console.log(res)
     const userInfo = this.data.userInfo;
     userInfo.userAddress = res.name;

@@ -96,7 +96,7 @@ Page({
   changeKeyword(e){
     this.setData({
       search:e.detail.value
-    })
+    }) 
   },
   //点击搜索
   async searchGoods(){
