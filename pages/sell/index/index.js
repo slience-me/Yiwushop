@@ -93,24 +93,28 @@ Page({
       return
     }
     if(goods.goodsName!=null&&goods.goodsPrice!=null&&goods.categoryId!=null&&goods.goodsImgId!=null&&goods.goodsInfo!=null){
-      let res = await post({url:"/goods",data:{goodsName:goods.goodsName,goodsPrice:goods.goodsPrice,categoryId:goods.categoryId,goodsImgId:goods.goodsImgId,goodsInfo:goods.goodsInfo,stateOn:stateOn,userId:app.globalData.userInfo.userId}})
-      console.log(res)
-      wx.showToast({
-        title:"商品已成功上架，如需修改商品状态，请在《我的》里修改",
-        icon:"none",
-        mask: true,
-        duration:3000,
-      })
-      //清除商品
-      that.setData({
-        goodsMsg:{
-          goodsName:null,
-          goodsPrice:null,
-          goodsImgId:null,
-          goodsInfo:null
-        },
-        imgUrl:""
-      })
+      let res = await post({url:"/goods",data:{goodsName:goods.goodsName,goodsPrice:goods.goodsPrice,categoryId:goods.categoryId,imageIds:[goods.goodsImgId],goodsInfo:goods.goodsInfo,stateOn:stateOn,userId:app.globalData.userInfo.userId}})
+      if(res.data.status==0){
+        console.log(res)
+        wx.showToast({
+          title:"商品已成功上架，如需修改商品状态，请在《我的》里修改",
+          icon:"none",
+          mask: true,
+          duration:3000,
+        })
+        //清除商品
+        const categoryId = that.data.goodsMsg.categoryId;
+        that.setData({
+          goodsMsg:{
+            goodsName:null,
+            goodsPrice:null,
+            goodsImgId:null,
+            goodsInfo:null,
+            categoryId:categoryId,
+          },
+          imgUrl:""
+        })
+      }
     }else{
       wxapi.showToast("请完善商品信息");
       return;
