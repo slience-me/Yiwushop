@@ -45,8 +45,12 @@ public class ComplaintServiceImpl implements IComplaintService {
         complaint.setRemark(complaintVO.getRemark());
         complaint.setComplaintStatus(1);//待受理
         complaint.setCreatedBy(unsign.getUserId());
-        complaintMapper.insertSelective(complaint);
-        return Result.createBySuccessMessage("成功");
+        int flag = complaintMapper.insertSelective(complaint);
+        if (flag > 0) {
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     /**
@@ -56,8 +60,12 @@ public class ComplaintServiceImpl implements IComplaintService {
     public Result complaintDel(String accessToken, Integer complaintId) throws Exception {
         Complaint complaint = complaintMapper.selectByPrimaryKey(complaintId);
         complaint.setIsDelete(1);
-        complaintMapper.updateByPrimaryKeySelective(complaint);
-        return Result.createBySuccessMessage("成功");
+        int flag = complaintMapper.updateByPrimaryKeySelective(complaint);
+        if (flag > 0) {
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     @Override
@@ -70,7 +78,7 @@ public class ComplaintServiceImpl implements IComplaintService {
     @Override
     public Result selectByPrimaryKey(String accessToken, Integer complaintId) {
         Complaint complaint = complaintMapper.selectByPrimaryKey(complaintId);
-        if (Objects.isNull(complaint)){
+        if (Objects.isNull(complaint)) {
             return Result.createByErrorMessage("id不正确");
         }
         return Result.createBySuccess(complaint);
@@ -82,7 +90,11 @@ public class ComplaintServiceImpl implements IComplaintService {
         if (Objects.isNull(complaint1)) {
             return Result.createByErrorMessage("投诉单不存在");
         }
-        complaintMapper.updateByPrimaryKeySelective(complaint);
-        return Result.createBySuccessMessage("成功");
+        int flag = complaintMapper.updateByPrimaryKeySelective(complaint);
+        if (flag > 0) {
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 }

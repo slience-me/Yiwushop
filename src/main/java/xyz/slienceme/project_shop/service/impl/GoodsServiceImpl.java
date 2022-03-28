@@ -44,7 +44,7 @@ public class GoodsServiceImpl implements IGoodsService {
     public Result goodsAdd(String accessToken, GoodsVO goodsVO) throws Exception {
 
         List<HashMap<String, Object>> data = goodsMapper.selectConditionList(goodsVO.getGoodsName(), null, null, null, goodsVO.getUserId());
-        if (data.size() != 0){
+        if (data.size() != 0) {
             return Result.createByErrorMessage("相同用户拥有的商品的名称不能相同");
         } else {
             Goods goods = new Goods();
@@ -58,19 +58,25 @@ public class GoodsServiceImpl implements IGoodsService {
             }
             goods.setCategoryId(goodsVO.getCategoryId());
             goods.setUserId(goodsVO.getUserId());
-            goodsMapper.insertSelective(goods);
-            List<HashMap<String, Object>> data1 = goodsMapper.selectConditionList(goodsVO.getGoodsName(), null, null, null, goodsVO.getUserId());
-            Integer goodsId = 0;
-            for (HashMap<String, Object> datum : data1) {
-                goodsId = (Integer) datum.get("goodsId");
+            int flag1 = goodsMapper.insertSelective(goods);
+            if (flag1 > 0) {
+                if (goodsVO.getImageIds().length != 0) {
+                    List<HashMap<String, Object>> data1 = goodsMapper.selectConditionList(goodsVO.getGoodsName(), null, null, null, goodsVO.getUserId());
+                    Integer goodsId = 0;
+                    for (HashMap<String, Object> datum : data1) {
+                        goodsId = (Integer) datum.get("goodsId");
+                    }
+                    for (int i = 0; i < goodsVO.getImageIds().length; i++) {
+                        GoodsImage goodsImage = new GoodsImage();
+                        goodsImage.setGoodsId(goodsId);
+                        goodsImage.setImageId(goodsVO.getImageIds()[i]);
+                        goodsImageMapper.insertSelective(goodsImage);
+                    }
+                }
+                return Result.createBySuccessMessage("成功");
+            } else {
+                return Result.createByErrorMessage("操作失败请稍后重试");
             }
-            for (int i = 0; i < goodsVO.getImageIds().length; i++) {
-                GoodsImage goodsImage = new GoodsImage();
-                goodsImage.setGoodsId(goodsId);
-                goodsImage.setImageId(goodsVO.getImageIds()[i]);
-                goodsImageMapper.insertSelective(goodsImage);
-            }
-            return Result.createBySuccessMessage("成功");
         }
 
     }
@@ -87,8 +93,12 @@ public class GoodsServiceImpl implements IGoodsService {
     public Result goodsDel(String accessToken, Integer goodsId) throws Exception {
         Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
         goods.setIsDelete(1);
-        goodsMapper.updateByPrimaryKeySelective(goods);
-        return Result.createBySuccessMessage("成功");
+        int flag = goodsMapper.updateByPrimaryKeySelective(goods);
+        if (flag > 0) {
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     /**
@@ -105,8 +115,12 @@ public class GoodsServiceImpl implements IGoodsService {
         if (Objects.isNull(goods1)) {
             return Result.createByErrorMessage("商品不存在");
         }
-        goodsMapper.updateByPrimaryKeySelective(goods);
-        return Result.createBySuccessMessage("成功");
+        int flag = goodsMapper.updateByPrimaryKeySelective(goods);
+        if (flag > 0) {
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     @Override
@@ -125,8 +139,8 @@ public class GoodsServiceImpl implements IGoodsService {
         for (HashMap<String, Object> map : list) {
             Integer goodsId = (Integer) map.get("goodsId");
             List<String> images = goodsImageMapper.selectImageByGoodsId(goodsId);
-            if (Objects.nonNull(images)){
-                map.put("images",images);
+            if (Objects.nonNull(images)) {
+                map.put("images", images);
             }
         }
         return Result.createBySuccess(new PageInfo<>(list));

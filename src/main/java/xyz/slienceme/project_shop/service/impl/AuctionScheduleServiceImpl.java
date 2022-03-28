@@ -56,8 +56,12 @@ public class AuctionScheduleServiceImpl implements IAuctionScheduleService {
         auctionSchedule.setGoodsId(auctions.getGoodsId());
         auctionSchedule.setUserId(auctionScheduleVO.getUserId());
         auctionSchedule.setAuctionSchedulePrice(auctionScheduleVO.getAuctionSchedulePrice());
-        auctionScheduleMapper.insertSelective(auctionSchedule);
-        return Result.createBySuccessMessage("成功");
+        int flag = auctionScheduleMapper.insertSelective(auctionSchedule);
+        if (flag > 0) {
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     /**
@@ -78,13 +82,17 @@ public class AuctionScheduleServiceImpl implements IAuctionScheduleService {
             auctionSchedule.setGoodsId(auctions.getGoodsId());
             auctionSchedule.setUserId(auctionScheduleVO.getUserId());
             auctionSchedule.setAuctionSchedulePrice(auctionScheduleVO.getAuctionSchedulePrice());
-            auctionScheduleMapper.insertSelective(auctionSchedule);
+            int flag1 = auctionScheduleMapper.insertSelective(auctionSchedule);
             auctions.setPresentPrice(auctionScheduleVO.getAuctionSchedulePrice());
             auctions.setPresentPerson(auctionScheduleVO.getUserId());
-            auctionsMapper.updateByPrimaryKeySelective(auctions);
+            int flag2 = auctionsMapper.updateByPrimaryKeySelective(auctions);
+            if (flag1 > 0 && flag2 > 0) {
+                return Result.createBySuccessMessage("成功");
+            } else {
+                return Result.createByErrorMessage("操作失败请稍后重试");
+            }
         } else {
             return Result.createByErrorMessage("出价异常");
         }
-        return Result.createBySuccessMessage("成功");
     }
 }

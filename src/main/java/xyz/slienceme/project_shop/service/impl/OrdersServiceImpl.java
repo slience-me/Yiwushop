@@ -35,6 +35,7 @@ public class OrdersServiceImpl implements IOrdersService {
 
     /**
      * 订单列表
+     *
      * @param accessToken
      * @param page
      * @param limit
@@ -44,7 +45,7 @@ public class OrdersServiceImpl implements IOrdersService {
      */
     @Override
     public Result orders(String accessToken, Integer page, Integer limit, String keyword) throws Exception {
-        PageHelper.startPage(page,limit);
+        PageHelper.startPage(page, limit);
         List<HashMap<String, Object>> list = ordersMapper.selectList(keyword);
         return Result.createBySuccess(new PageInfo<>(list));
     }
@@ -56,8 +57,12 @@ public class OrdersServiceImpl implements IOrdersService {
     public Result ordersDel(String accessToken, Integer ordersId) throws Exception {
         Orders orders = ordersMapper.selectByPrimaryKey(ordersId);
         orders.setIsDelete(1);
-        ordersMapper.updateByPrimaryKeySelective(orders);
-        return Result.createBySuccessMessage("成功");
+        int flag = ordersMapper.updateByPrimaryKeySelective(orders);
+        if (flag > 0) {
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     @Override
@@ -69,8 +74,12 @@ public class OrdersServiceImpl implements IOrdersService {
         orders.setBuyUsersId(ordersVO.getBuyUsersId());
         orders.setBuyPrice(ordersVO.getBuyPrice());
         orders.setCreatedBy(1);
-        ordersMapper.insertSelective(orders);
-        return Result.createBySuccessMessage("成功");
+        int flag = ordersMapper.insertSelective(orders);
+        if (flag > 0) {
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
 

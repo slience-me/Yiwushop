@@ -57,8 +57,12 @@ public class ChatServiceImpl implements IChatService {
         chat.setMsgType(chatVO.getMsgType());
         chat.setMsgContent(chatVO.getMsgContent());
         chat.setOther(chatVO.getSendUser());
-        chatMapper.insertSelective(chat);
-        return Result.createBySuccessMessage("成功");
+        int flag = chatMapper.insertSelective(chat);
+        if (flag > 0) {
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     /**
@@ -72,19 +76,22 @@ public class ChatServiceImpl implements IChatService {
     @Override
     public Result chatDel(String accessToken, Integer chatId, Integer userType) {
         Chat chat = chatMapper.selectByPrimaryKey(chatId);
-        if (userType.equals(1)){
+        if (userType.equals(1)) {
             chat.setIsDeleteBuy(1);  //用户类型 1买家  2卖家
-        } else if (userType.equals(2)){
+        } else if (userType.equals(2)) {
             chat.setIsDeleteSell(1);
         } else {
             return Result.createByErrorMessage("userType参数不正确");
         }
-        chatMapper.updateByPrimaryKeySelective(chat);
-        return Result.createBySuccessMessage("成功");
+        int flag = chatMapper.updateByPrimaryKeySelective(chat);
+        if (flag > 0) {
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     /**
-     *
      * @param accessToken 请求token
      * @param chat
      * @return
@@ -95,12 +102,15 @@ public class ChatServiceImpl implements IChatService {
         if (Objects.isNull(chat1)) {
             return Result.createByErrorMessage("聊天id不存在");
         }
-        chatMapper.updateByPrimaryKeySelective(chat);
-        return Result.createBySuccessMessage("成功");
+        int flag = chatMapper.updateByPrimaryKeySelective(chat);
+        if (flag > 0) {
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     /**
-     *
      * @param accessToken 请求token
      * @param chatId
      * @return
@@ -108,7 +118,7 @@ public class ChatServiceImpl implements IChatService {
     @Override
     public Result selectByPrimaryKey(String accessToken, Integer chatId) {
         Chat chat = chatMapper.selectByPrimaryKey(chatId);
-        if (Objects.isNull(chat)){
+        if (Objects.isNull(chat)) {
             return Result.createByErrorMessage("id不正确");
         }
         return Result.createBySuccess(chat);

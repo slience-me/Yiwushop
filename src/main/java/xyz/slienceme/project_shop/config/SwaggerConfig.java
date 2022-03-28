@@ -61,7 +61,6 @@ public class SwaggerConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
         ApplicationHome ah = new ApplicationHome(getClass());
         File parentPathStringLinux = ah.getSource().getParentFile();
         registry.addResourceHandler(staticAccessPath).addResourceLocations("file:" + parentPathStringLinux + fileupload);

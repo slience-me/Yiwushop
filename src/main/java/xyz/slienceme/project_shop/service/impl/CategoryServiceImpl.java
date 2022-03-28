@@ -66,8 +66,12 @@ public class CategoryServiceImpl implements ICategoryService {
         Category category = new Category();
         category.setCategoryName(categoryName);
         category.setCreatedBy(unsign.getUserId());
-        categoryMapper.insertSelective(category);
-        return Result.createBySuccessMessage("成功");
+        int flag = categoryMapper.insertSelective(category);
+        if(flag > 0){
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     /**
@@ -81,8 +85,12 @@ public class CategoryServiceImpl implements ICategoryService {
     public Result categoryDel(String accessToken, Integer categoryId) throws Exception {
         Category category = categoryMapper.selectByPrimaryKey(categoryId);
         category.setIsDelete(1);
-        categoryMapper.updateByPrimaryKeySelective(category);
-        return Result.createBySuccessMessage("成功");
+        int flag = categoryMapper.updateByPrimaryKeySelective(category);
+        if(flag > 0){
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     /**
@@ -98,7 +106,11 @@ public class CategoryServiceImpl implements ICategoryService {
         if (Objects.isNull(category1)) {
             return Result.createByErrorMessage("类型不存在");
         }
-        categoryMapper.updateByPrimaryKeySelective(category);
-        return Result.createBySuccessMessage("成功");
+        int flag = categoryMapper.updateByPrimaryKeySelective(category);
+        if(flag > 0){
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 }

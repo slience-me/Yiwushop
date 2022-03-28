@@ -53,8 +53,12 @@ public class AuctionsServiceImpl implements IAuctionsService {
         auctions.setPresentPrice(auctionsVO.getPresentPrice());
         auctions.setStartingPrice(auctionsVO.getStartingPrice());
         auctions.setCreatedBy(unsign.getUserId());
-        auctionsMapper.insertSelective(auctions);
-        return Result.createBySuccessMessage("成功");
+        int flag = auctionsMapper.insertSelective(auctions);
+        if(flag > 0){
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     /**
@@ -64,8 +68,12 @@ public class AuctionsServiceImpl implements IAuctionsService {
     public Result auctionsDel(String accessToken, Integer auctionsId) throws Exception {
         Auctions auctions = auctionsMapper.selectByPrimaryKey(auctionsId);
         auctions.setIsDelete(1);
-        auctionsMapper.updateByPrimaryKeySelective(auctions);
-        return Result.createBySuccessMessage("成功");
+        int flag = auctionsMapper.updateByPrimaryKeySelective(auctions);
+        if(flag > 0){
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     /**
@@ -77,8 +85,12 @@ public class AuctionsServiceImpl implements IAuctionsService {
         if (Objects.isNull(auctions1)) {
             return Result.createByErrorMessage("该拍卖场次不存在");
         }
-        auctionsMapper.updateByPrimaryKeySelective(auctions);
-        return Result.createBySuccessMessage("成功");
+        int flag = auctionsMapper.updateByPrimaryKeySelective(auctions);
+        if(flag > 0){
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     @Override
@@ -94,16 +106,24 @@ public class AuctionsServiceImpl implements IAuctionsService {
         pawn.setPresentPrice(pawnVO.getPresentPrice());
         pawn.setStartingPrice(pawnVO.getStartingPrice());
         pawn.setCreatedBy(unsign.getUserId());
-        pawnMapper.insertSelective(pawn);
-        return Result.createBySuccessMessage("成功");
+        int flag = pawnMapper.insertSelective(pawn);
+        if(flag > 0){
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     @Override
     public Result pawnDel(String accessToken, Integer pawnId) throws Exception {
         Pawn pawn = pawnMapper.selectByPrimaryKey(pawnId);
         pawn.setIsDelete(1);
-        pawnMapper.updateByPrimaryKeySelective(pawn);
-        return Result.createBySuccessMessage("成功");
+        int flag = pawnMapper.updateByPrimaryKeySelective(pawn);
+        if(flag > 0){
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     @Override
@@ -112,8 +132,12 @@ public class AuctionsServiceImpl implements IAuctionsService {
         if (Objects.isNull(pawn1)) {
             return Result.createByErrorMessage("该场次不存在");
         }
-        pawnMapper.updateByPrimaryKeySelective(pawn);
-        return Result.createBySuccessMessage("成功");
+        int flag = pawnMapper.updateByPrimaryKeySelective(pawn);
+        if(flag > 0){
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     @Override

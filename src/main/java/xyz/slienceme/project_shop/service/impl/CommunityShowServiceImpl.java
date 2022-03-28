@@ -38,16 +38,26 @@ public class CommunityShowServiceImpl implements ICommunityShowService {
         communityShow.setShowName(communityShowVO.getShowName());
         communityShow.setShowImgId(communityShowVO.getShowImgId());
         communityShow.setCreatedBy(unsign.getUserId());
-        communityShowMapper.insertSelective(communityShow);
-        return Result.createBySuccessMessage("成功");
+        int flag = communityShowMapper.insertSelective(communityShow);
+        System.out.println("flag = " + flag);
+        if (flag > 0) {
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     @Override
     public Result communityDel(String accessToken, Integer id) throws Exception {
         CommunityShow communityShow = communityShowMapper.selectByPrimaryKey(id);
         communityShow.setIsDelete(1);
-        communityShowMapper.updateByPrimaryKeySelective(communityShow);
-        return Result.createBySuccessMessage("成功");
+        int flag = communityShowMapper.updateByPrimaryKeySelective(communityShow);
+        System.out.println("flag = " + flag);
+        if (flag > 0) {
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     @Override
@@ -56,8 +66,12 @@ public class CommunityShowServiceImpl implements ICommunityShowService {
         if (Objects.isNull(communityShow1)) {
             return Result.createByErrorMessage("该公益展示信息不存在");
         } else {
-            communityShowMapper.updateByPrimaryKeySelective(communityShow);
-            return Result.createBySuccessMessage("成功");
+            int flag = communityShowMapper.updateByPrimaryKeySelective(communityShow);
+            if (flag > 0) {
+                return Result.createBySuccessMessage("成功");
+            } else {
+                return Result.createByErrorMessage("操作失败请稍后重试");
+            }
         }
     }
 

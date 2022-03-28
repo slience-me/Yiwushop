@@ -93,8 +93,12 @@ public class AdminServiceImpl implements IAdminService {
         }
         admin.setRoleId(adminVO.getRoleId());
         admin.setCreatedBy(unsign.getUserId());
-        adminMapper.insertSelective(admin);
-        return Result.createBySuccessMessage("成功");
+        int flag = adminMapper.insertSelective(admin);
+        if(flag > 0){
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     @Override
@@ -104,8 +108,12 @@ public class AdminServiceImpl implements IAdminService {
         }
         Admin admin = adminMapper.selectByPrimaryKey(adminId);
         admin.setIsDelete(1);
-        adminMapper.updateByPrimaryKeySelective(admin);
-        return Result.createBySuccessMessage("成功");
+        int flag = adminMapper.updateByPrimaryKeySelective(admin);
+        if(flag > 0){
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
 
@@ -118,8 +126,12 @@ public class AdminServiceImpl implements IAdminService {
         if (Objects.isNull(admin1)) {
             return Result.createByErrorMessage("账号不存在");
         }
-        adminMapper.updateByPrimaryKeySelective(admin);
-        return Result.createBySuccessMessage("成功");
+        int flag = adminMapper.updateByPrimaryKeySelective(admin);
+        if(flag > 0){
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     /**
@@ -136,8 +148,12 @@ public class AdminServiceImpl implements IAdminService {
             return Result.createByErrorMessage("旧密码不正确");
         }
         admin.setAdminPwd(pwdVO.getNewPwd());
-        adminMapper.updateByPrimaryKeySelective(admin);
-        return Result.createBySuccessMessage("成功");
+        int flag = adminMapper.updateByPrimaryKeySelective(admin);
+        if(flag > 0){
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     /**

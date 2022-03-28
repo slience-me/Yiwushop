@@ -61,18 +61,23 @@ public class ImageServiceImpl implements IImageService {
         String url = baseUrl + "/image" + fileupload + date + "/" + filename;
         Image image = new Image();
         image.setImageUrl(url);
-        imageMapper.insertSelective(image);
-        int i = imageMapper.selectByPath(url);
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("url", url);
-        data.put("imageId", i);
-        return Result.createBySuccess(data);
+        int flag = imageMapper.insertSelective(image);
+        if (flag > 0) {
+            int i = imageMapper.selectByPath(url);
+            HashMap<String, Object> data = new HashMap<>();
+            data.put("url", url);
+            data.put("imageId", i);
+            return Result.createBySuccess(data);
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
+
     }
 
     @Override
     public Result selectImgs(Integer goodsId) {
         List<String> list = goodsImageMapper.selectImageByGoodsId(goodsId);
-        if (list.size() != 0){
+        if (list.size() != 0) {
             return Result.createBySuccess(list);
         } else {
             return Result.createByErrorMessage("图片不存在");

@@ -80,7 +80,7 @@ public class UserServiceImpl implements IUserService {
     public Result memberAdd(String accessToken, UserVO userVO) throws Exception {
         TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         User user1 = userMapper.selectByOpenId(userVO.getOpenid());
-        if (Objects.nonNull(user1)){
+        if (Objects.nonNull(user1)) {
             return Result.createByErrorMessage("该用户已存在！");
         } else {
             User user = new User();
@@ -94,17 +94,25 @@ public class UserServiceImpl implements IUserService {
             user.setUserPhone(userVO.getUserPhone());
             user.setUserAddress(userVO.getUserAddress());
             user.setCreatedBy(unsign.getUserId());
-            userMapper.insertSelective(user);
+            int flag = userMapper.insertSelective(user);
+            if (flag > 0) {
+                return Result.createBySuccessMessage("成功");
+            } else {
+                return Result.createByErrorMessage("操作失败请稍后重试");
+            }
         }
-        return Result.createBySuccessMessage("成功");
     }
 
     @Override
     public Result memberDel(String accessToken, Integer id) throws Exception {
         User user = userMapper.selectByPrimaryKey(id);
         user.setIsDelete(1);
-        userMapper.updateByPrimaryKeySelective(user);
-        return Result.createBySuccessMessage("成功");
+        int flag = userMapper.updateByPrimaryKeySelective(user);
+        if (flag > 0) {
+            return Result.createBySuccessMessage("成功");
+        } else {
+            return Result.createByErrorMessage("操作失败请稍后重试");
+        }
     }
 
     @Override
@@ -113,8 +121,12 @@ public class UserServiceImpl implements IUserService {
         if (Objects.isNull(user1)) {
             return Result.createByErrorMessage("userId不存在");
         } else {
-            userMapper.updateByPrimaryKeySelective(user);
-            return Result.createBySuccessMessage("成功");
+            int flag = userMapper.updateByPrimaryKeySelective(user);
+            if (flag > 0) {
+                return Result.createBySuccessMessage("成功");
+            } else {
+                return Result.createByErrorMessage("操作失败请稍后重试");
+            }
         }
     }
 
