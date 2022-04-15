@@ -13,7 +13,10 @@
         :alert="false"
         showPagination="auto">
         <span slot="imageUrl" slot-scope="text">
-          <img :src="text" width="40px">
+          <img :src="text" width="300px">
+        </span>
+        <span slot="showName" slot-scope="text">
+          <ellipsis :length="50" tooltip>{{ text }}</ellipsis>
         </span>
         <span slot="action" slot-scope="text, record">
           <template>
@@ -73,13 +76,13 @@ const columns = [
     {
       title: '物品照片',
       dataIndex: 'imageUrl',
-      align: 'center',
+      align: 'left',
       scopedSlots: { customRender: 'imageUrl' }
     },
     {
       title: '物品介绍',
       dataIndex: 'showName',
-      align: 'center',
+      align: 'left',
       scopedSlots: { customRender: 'showName' }
     },
     {

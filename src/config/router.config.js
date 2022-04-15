@@ -79,8 +79,14 @@ export const asyncRouterMap = [
         name: 'MemberIndex',
         meta: { title: '成员管理', keepAlive: false, icon: 'team', permission: ['MemberIndex'] },
         component: () => import('@/views/shop/memManage/memIndex'),
-        hideChildrenInMenu: true,
-        children: []
+        hideChildrenInMenu: true
+      },
+      {
+        path: '/shop/logs',
+        name: 'LogsIndex',
+        meta: { title: '操作日志管理', keepAlive: false, icon: 'team', permission: ['LogsIndex'] },
+        component: () => import('@/views/shop/logsManage/logsIndex'),
+        hideChildrenInMenu: true
       },
       {
         path: '/shop/adminManage',

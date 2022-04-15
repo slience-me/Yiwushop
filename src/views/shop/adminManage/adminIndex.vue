@@ -29,7 +29,7 @@
         :data="loadData"
         :alert="false"
         showPagination="auto">
-        <span slot="status" slot-scope="text">
+        <span slot="adminStatus" slot-scope="text">
           <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
         </span>
         <span slot="roleName" slot-scope="text">
@@ -37,7 +37,8 @@
         </span>
         <span slot="action" slot-scope="text, record">
           <template>
-            <a v-action:reset @click="resetPwd(record)">重置密码</a>
+            <a v-action:reset @click="resetPwd(record)">重置密码</a>&emsp;
+            <a v-action:unlock @click="unlockAction(record)">解封账户</a>
             <a v-action:edit style="margin-left: 10px" @click="handleAccount(1, record)">编辑</a>
             <a v-action:delete style="margin-left: 10px" @click="delAction(record)">删除</a>
           </template>
@@ -79,7 +80,7 @@
 <script>
   import { Modal } from 'ant-design-vue'
   import { STable, Ellipsis } from '@/components'
-  import { getAdminList, delAdmin, addAdmin, editAdmin, resetAdmin, getRoleList } from '@/api/shop'
+  import { getAdminList, delAdmin, addAdmin, editAdmin, resetAdmin, getRoleList, getUnlock } from '@/api/shop'
   import { checkPhone } from '@/utils/checkStr' // checkChinese
   import md5 from 'md5'
   const columns = [
@@ -89,23 +90,32 @@
     },
     {
       title: '账号',
+      align: 'center',
       dataIndex: 'adminNumber'
     },
     {
       title: '角色',
+      align: 'center',
       dataIndex: 'roleName',
       scopedSlots: { customRender: 'roleName' }
     },
     {
+      title: '管理员状态',
+      dataIndex: 'adminStatus',
+      align: 'center',
+      scopedSlots: { customRender: 'adminStatus' }
+    },
+    {
       title: '操作',
+      align: 'center',
       dataIndex: 'action',
-      width: '180px',
+      width: '300px',
       scopedSlots: { customRender: 'action' }
     }
   ]
 
   const statusMap = {
-    2: {
+    1: {
       status: 'default',
       text: '停用'
     },
@@ -162,6 +172,7 @@
           adminName: '',
           password: '',
           adminNumber: '',
+          adminStatus: '',
           roleId: undefined
         },
         userRules: {
@@ -250,6 +261,13 @@
           }
         })
       },
+      unlockAction (obj) {
+        getUnlock({
+          adminId: obj.adminId
+        }).then(() => {
+          this.$refs.table.refresh(true)
+        })
+      },
       onSelectChange (selectedRowKeys, selectedRows) {
         this.selectedRowKeys = selectedRowKeys
         this.selectedRows = selectedRows
@@ -269,7 +287,7 @@
               this.userForm.password = md5(this.userForm.password).toUpperCase()
               addAdmin(this.userForm).then(() => {
                 Modal.success({
-                  content: '新增管理员成功，登录账号：' + this.userForm.adminNumber + '，登录密码：000000'
+                  content: '新增管理员成功，登录账号：' + this.userForm.adminNumber + '，登录密码：00000000'
                 })
                 this.$refs.table.refresh(true)
                 this.handleUser = false

@@ -13,11 +13,37 @@ const api = {
   schedule: '/admin/process',
   orders: '/admin/orders',
   complaint: '/admin/complaint',
+  adminLogs: '/adminlogs/log',
   community: '/admin/community',
-  image: '/admin/image'
+  image: '/admin/image',
+  unlock: '/admin/adminUnlock'
 }
 
 export default api
+
+export function getAdminLogsList (parameter) {
+  return request({
+    url: api.adminLogs,
+    method: 'get',
+    params: parameter
+  })
+}
+
+export function delAdminLogs (parameter) {
+  return request({
+    url: api.adminLogs,
+    method: 'delete',
+    params: parameter
+  })
+}
+
+export function getUnlock (parameter) {
+  return request({
+    url: api.unlock,
+    method: 'get',
+    params: parameter
+  })
+}
 
 export function getImage (parameter) {
   return request({
