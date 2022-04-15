@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   profiles:
-    active: pro
+    active: dev
   servlet:
     multipart:
       # 上传文件大小设置

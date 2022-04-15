@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author slience_me
- * @since 2022-01-15
+ * @since 2022-03-15
  */
 @Data
 @ApiModel(value = "Auctions竞拍场次表的实体", reference = "Auctions")

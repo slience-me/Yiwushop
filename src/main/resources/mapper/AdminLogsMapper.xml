@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.slienceme.project_shop.mapper.AdminLogsMapper">
+    <resultMap id="BaseResultMap" type="xyz.slienceme.project_shop.dto.AdminLogs">
+        <id column="admin_logs_id" jdbcType="INTEGER" property="adminLogsId" />
+        <result column="admin_logs_operate" jdbcType="VARCHAR" property="adminLogsOperate" />
+        <result column="admin_id" jdbcType="INTEGER" property="adminId" />
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+        <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        admin_logs_id, admin_logs_operate, admin_id, is_delete, CREATED_TIME
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from admin_logs
+        where admin_logs_id = #{adminLogsId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from admin_logs
+        where admin_logs_id = #{adminLogsId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="xyz.slienceme.project_shop.dto.AdminLogs">
+        insert into admin_logs (admin_logs_id, admin_logs_operate, admin_id,
+                                is_delete, CREATED_TIME)
+        values (#{adminLogsId,jdbcType=INTEGER}, #{adminLogsOperate,jdbcType=VARCHAR}, #{adminId,jdbcType=INTEGER},
+                #{isDelete,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="xyz.slienceme.project_shop.dto.AdminLogs">
+        insert into admin_logs
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="adminLogsId != null">
+                admin_logs_id,
+            </if>
+            <if test="adminLogsOperate != null">
+                admin_logs_operate,
+            </if>
+            <if test="adminId != null">
+                admin_id,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createdTime != null">
+                CREATED_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="adminLogsId != null">
+                #{adminLogsId,jdbcType=INTEGER},
+            </if>
+            <if test="adminLogsOperate != null">
+                #{adminLogsOperate,jdbcType=VARCHAR},
+            </if>
+            <if test="adminId != null">
+                #{adminId,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="xyz.slienceme.project_shop.dto.AdminLogs">
+        update admin_logs
+        <set>
+            <if test="adminLogsOperate != null">
+                admin_logs_operate = #{adminLogsOperate,jdbcType=VARCHAR},
+            </if>
+            <if test="adminId != null">
+                admin_id = #{adminId,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="createdTime != null">
+                CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where admin_logs_id = #{adminLogsId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="xyz.slienceme.project_shop.dto.AdminLogs">
+        update admin_logs
+        set admin_logs_operate = #{adminLogsOperate,jdbcType=VARCHAR},
+            admin_id = #{adminId,jdbcType=INTEGER},
+            is_delete = #{isDelete,jdbcType=INTEGER},
+            CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP}
+        where admin_logs_id = #{adminLogsId,jdbcType=INTEGER}
+    </update>
+    <!-- 查询日志列表-->
+    <!-- 返回值类型:  List<HashMap<String, Object>> selectList -->
+    <!-- 参数: -->
+    <!--  @param keyword 关键词   -->
+    <select id="selectList" resultType="java.util.HashMap">
+        SELECT al.admin_logs_id as adminLogsId,
+        al.admin_logs_operate as adminLogsOperate,
+        a.admin_name as adminName,
+        DATE_FORMAT(al.CREATED_TIME, '%Y-%m-%d %H:%i:%s') createdTime
+        FROM admin_logs al
+        left join admin a on al.admin_id = a.admin_id
+        WHERE al.is_delete=0
+        <if test="adminId != null">
+            and al.admin_id = #{adminId,jdbcType=INTEGER}
+        </if>
+        order by al.CREATED_TIME desc
+    </select>
+
+</mapper>

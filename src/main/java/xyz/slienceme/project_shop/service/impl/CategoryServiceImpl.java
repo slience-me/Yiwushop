@@ -8,7 +8,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import xyz.slienceme.project_shop.common.Result;
 import xyz.slienceme.project_shop.dto.Admin;
+import xyz.slienceme.project_shop.dto.AdminLogs;
 import xyz.slienceme.project_shop.dto.Category;
+import xyz.slienceme.project_shop.mapper.AdminLogsMapper;
 import xyz.slienceme.project_shop.mapper.AdminMapper;
 import xyz.slienceme.project_shop.mapper.CategoryMapper;
 import xyz.slienceme.project_shop.service.ICategoryService;
@@ -25,13 +27,17 @@ import java.util.Objects;
  * </p>
  *
  * @author slience_me
- * @since 2022-01-15
+ * @since 2022-03-15
  */
 @Service
 public class CategoryServiceImpl implements ICategoryService {
 
     @Autowired
     private CategoryMapper categoryMapper;
+    @Autowired
+    private AdminLogsMapper adminLogsMapper;
+    @Autowired
+    private AdminMapper adminMapper;
 
     /**
      * 物品类型表列表
@@ -68,6 +74,7 @@ public class CategoryServiceImpl implements ICategoryService {
         category.setCreatedBy(unsign.getUserId());
         int flag = categoryMapper.insertSelective(category);
         if(flag > 0){
+            adminLogsMapper.insertSelective(new AdminLogs(unsign.getUserId(), "新增了商品类型名称 " + category.getCategoryName()));
             return Result.createBySuccessMessage("成功");
         } else {
             return Result.createByErrorMessage("操作失败请稍后重试");
@@ -83,10 +90,12 @@ public class CategoryServiceImpl implements ICategoryService {
      */
     @Override
     public Result categoryDel(String accessToken, Integer categoryId) throws Exception {
+        TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         Category category = categoryMapper.selectByPrimaryKey(categoryId);
         category.setIsDelete(1);
         int flag = categoryMapper.updateByPrimaryKeySelective(category);
         if(flag > 0){
+            adminLogsMapper.insertSelective(new AdminLogs(unsign.getUserId(), "删除了商品类型名称 " + category.getCategoryName()));
             return Result.createBySuccessMessage("成功");
         } else {
             return Result.createByErrorMessage("操作失败请稍后重试");
@@ -102,12 +111,14 @@ public class CategoryServiceImpl implements ICategoryService {
      */
     @Override
     public Result categoryPut(String accessToken, Category category) throws Exception {
+        TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         Category category1 = categoryMapper.selectByPrimaryKey(category.getCategoryId());
         if (Objects.isNull(category1)) {
             return Result.createByErrorMessage("类型不存在");
         }
         int flag = categoryMapper.updateByPrimaryKeySelective(category);
         if(flag > 0){
+            adminLogsMapper.insertSelective(new AdminLogs(unsign.getUserId(), "修改了商品类型名称 " + category.getCategoryName()));
             return Result.createBySuccessMessage("成功");
         } else {
             return Result.createByErrorMessage("操作失败请稍后重试");

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author slience_me
- * @since 2022-01-16
+ * @since 2022-03-16
  */
 @Data
 public class AuctionSchedule {

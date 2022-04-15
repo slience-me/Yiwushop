@@ -18,7 +18,7 @@ import xyz.slienceme.project_shop.vo.ChatVO;
  * </p>
  *
  * @author slience_me
- * @since 2022-03-04
+ * @since 2022-03-17
  */
 @Slf4j
 @Api(tags = "聊天表")

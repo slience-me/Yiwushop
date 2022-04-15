@@ -20,7 +20,7 @@ import xyz.slienceme.project_shop.vo.PwdVO;
  * </p>
  *
  * @author slience_me
- * @since 2022-01-15
+ * @since 2022-03-15
  */
 @Slf4j
 @Api(tags = "管理员表")
@@ -41,9 +41,9 @@ public class AdminController {
     @ApiOperation("查询管理员列表")
     @GetMapping("/adminList")
     public Result admin(@RequestHeader("x-access-token") String accessToken,
-                            @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
-                            @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
-                            @ApiParam(value = "管理员名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
+                        @ApiParam(value = "第几页", required = true) @RequestParam(value = "pageNo") Integer pageNo,
+                        @ApiParam(value = "每页条数", required = true) @RequestParam(value = "pageSize") Integer pageSize,
+                        @ApiParam(value = "管理员名称、描述") @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
         //log.info("查询管理员列表接口调用--get---</adminList>:  pageNo=" + pageNo + ",pageSize=" + pageSize + ",keyword=" + keyword);
         return adminService.adminList(accessToken, pageNo, pageSize, keyword);
     }
@@ -87,14 +87,22 @@ public class AdminController {
     @GetMapping("/adminPwd")
     public Result adminPwd(@RequestHeader("x-access-token") String accessToken,
                            @ApiParam(value = "管理员id") @RequestParam(value = "adminId") Integer adminId) throws Exception {
-        log.info("重置密码接口调用---put--</adminPwd>:  adminId=" + adminId);
+        log.info("重置密码接口调用---get--</adminPwd>:  adminId=" + adminId);
         return adminService.adminPwd(accessToken, adminId);
+    }
+
+    @ApiOperation("解封账户")
+    @GetMapping("/adminUnlock")
+    public Result adminUnlock(@RequestHeader("x-access-token") String accessToken,
+                              @ApiParam(value = "管理员id") @RequestParam(value = "adminId") Integer adminId) throws Exception {
+        log.info("解封账户接口调用---get--</adminPwd>:  adminId=" + adminId);
+        return adminService.UnlockAccount(accessToken, adminId);
     }
 
     @ApiOperation("admin退出登陆")
     @GetMapping("/out")
     public Result adminOut(@RequestHeader("x-access-token") String accessToken) throws Exception {
-        log.info("admin退出登陆接口调用---put--</out>");
+        log.info("admin退出登陆接口调用---get--</out>");
         return adminService.adminOut(accessToken);
     }
 }

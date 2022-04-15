@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author slience_me
- * @since 2022-01-15
+ * @since 2022-03-15
  */
 @Data
 @ApiModel(value = "Admin管理员表的实体", reference = "Admin")
@@ -46,6 +46,16 @@ public class Admin {
      */
     @ApiParam(value = "角色id")
     private Integer roleId;
+
+    /**
+     * 密码错误次数
+     */
+    private Integer errorTimes;
+
+    /**
+     * 封禁状态 0 开放 1封禁
+     */
+    private Integer adminStatus;
 
     /**
      * 状态

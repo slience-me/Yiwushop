@@ -17,7 +17,7 @@ import xyz.slienceme.project_shop.service.ICategoryService;
  * </p>
  *
  * @author slience_me
- * @since 2022-01-15
+ * @since 2022-03-15
  */
 @Slf4j
 @Api(tags = "物品类型表")

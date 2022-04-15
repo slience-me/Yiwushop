@@ -5,9 +5,12 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.slienceme.project_shop.common.Result;
+import xyz.slienceme.project_shop.dto.AdminLogs;
 import xyz.slienceme.project_shop.dto.Category;
 import xyz.slienceme.project_shop.dto.Complaint;
 import xyz.slienceme.project_shop.dto.Goods;
+import xyz.slienceme.project_shop.mapper.AdminLogsMapper;
+import xyz.slienceme.project_shop.mapper.AdminMapper;
 import xyz.slienceme.project_shop.mapper.ComplaintMapper;
 import xyz.slienceme.project_shop.service.IComplaintService;
 import xyz.slienceme.project_shop.utils.JWT;
@@ -25,13 +28,17 @@ import java.util.Objects;
  * </p>
  *
  * @author slience_me
- * @since 2022-01-15
+ * @since 2022-03-15
  */
 @Service
 public class ComplaintServiceImpl implements IComplaintService {
 
     @Autowired
     private ComplaintMapper complaintMapper;
+    @Autowired
+    private AdminMapper adminMapper;
+    @Autowired
+    private AdminLogsMapper adminLogsMapper;
 
     /**
      * 根据投诉信息添加
@@ -58,10 +65,12 @@ public class ComplaintServiceImpl implements IComplaintService {
      */
     @Override
     public Result complaintDel(String accessToken, Integer complaintId) throws Exception {
+        TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         Complaint complaint = complaintMapper.selectByPrimaryKey(complaintId);
         complaint.setIsDelete(1);
         int flag = complaintMapper.updateByPrimaryKeySelective(complaint);
         if (flag > 0) {
+            adminLogsMapper.insertSelective(new AdminLogs(unsign.getUserId(), "删除投诉信息 " + complaint.getOrdersId()));
             return Result.createBySuccessMessage("成功");
         } else {
             return Result.createByErrorMessage("操作失败请稍后重试");

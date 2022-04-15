@@ -13,7 +13,7 @@ import xyz.slienceme.project_shop.vo.PwdVO;
  * </p>
  *
  * @author slience_me
- * @since 2022-01-15
+ * @since 2022-03-15
  */
 public interface IAdminService {
 
@@ -76,5 +76,16 @@ public interface IAdminService {
      * @param accessToken 请求token
      */
     Result adminOut(String accessToken) throws Exception;
+
+
+    /**
+     * 解封账户
+     *
+     * @param accessToken 请求token
+     * @param adminId     管理员id
+     * @return
+     */
+    Result UnlockAccount(String accessToken,
+                         Integer adminId);
 
 }

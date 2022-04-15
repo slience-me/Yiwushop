@@ -638,7 +638,7 @@ public class DateUtil {
         Date date4 = DateUtil.getDateByString("2020-02-19 00:00:00");
 
         System.out.println(computeIntersectionDays(date1, date2, date3, date4));*/
-        /*LocalDateTime localDateTime = StringToLocalDateTime("2022-01-16 09:44:25");
+        /*LocalDateTime localDateTime = StringToLocalDateTime("admin-16 09:44:25");
         System.out.println(localDateTime);*/
         String date = getDate("yyyyMMdd");
         System.out.println(date);

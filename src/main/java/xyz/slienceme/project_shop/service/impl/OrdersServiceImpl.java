@@ -5,8 +5,12 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.slienceme.project_shop.common.Result;
+import xyz.slienceme.project_shop.dto.Admin;
+import xyz.slienceme.project_shop.dto.AdminLogs;
 import xyz.slienceme.project_shop.dto.Category;
 import xyz.slienceme.project_shop.dto.Orders;
+import xyz.slienceme.project_shop.mapper.AdminLogsMapper;
+import xyz.slienceme.project_shop.mapper.AdminMapper;
 import xyz.slienceme.project_shop.mapper.AuctionScheduleMapper;
 import xyz.slienceme.project_shop.mapper.OrdersMapper;
 import xyz.slienceme.project_shop.service.IOrdersService;
@@ -25,13 +29,17 @@ import java.util.List;
  * </p>
  *
  * @author slience_me
- * @since 2022-01-15
+ * @since 2022-03-15
  */
 @Service
 public class OrdersServiceImpl implements IOrdersService {
 
     @Autowired
     private OrdersMapper ordersMapper;
+    @Autowired
+    private AdminLogsMapper adminLogsMapper;
+    @Autowired
+    private AdminMapper adminMapper;
 
     /**
      * 订单列表
@@ -55,10 +63,12 @@ public class OrdersServiceImpl implements IOrdersService {
      */
     @Override
     public Result ordersDel(String accessToken, Integer ordersId) throws Exception {
+        TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         Orders orders = ordersMapper.selectByPrimaryKey(ordersId);
         orders.setIsDelete(1);
         int flag = ordersMapper.updateByPrimaryKeySelective(orders);
         if (flag > 0) {
+            adminLogsMapper.insertSelective(new AdminLogs(unsign.getUserId(), "删除订单 " + orders.getSerialNum()));
             return Result.createBySuccessMessage("成功");
         } else {
             return Result.createByErrorMessage("操作失败请稍后重试");

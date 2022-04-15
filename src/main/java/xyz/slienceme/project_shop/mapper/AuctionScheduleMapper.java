@@ -13,7 +13,7 @@ import java.util.List;
  * </p>
  *
  * @author slience_me
- * @since 2022-01-16
+ * @since 2022-03-16
  */
 @Mapper
 public interface AuctionScheduleMapper {

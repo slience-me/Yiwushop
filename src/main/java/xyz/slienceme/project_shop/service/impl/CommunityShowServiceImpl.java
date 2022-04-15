@@ -5,8 +5,12 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.slienceme.project_shop.common.Result;
+import xyz.slienceme.project_shop.dto.Admin;
+import xyz.slienceme.project_shop.dto.AdminLogs;
 import xyz.slienceme.project_shop.dto.CommunityShow;
 import xyz.slienceme.project_shop.dto.User;
+import xyz.slienceme.project_shop.mapper.AdminLogsMapper;
+import xyz.slienceme.project_shop.mapper.AdminMapper;
 import xyz.slienceme.project_shop.mapper.CommunityShowMapper;
 import xyz.slienceme.project_shop.service.ICommunityShowService;
 import xyz.slienceme.project_shop.utils.JWT;
@@ -23,13 +27,17 @@ import java.util.Objects;
  * </p>
  *
  * @author slience_me
- * @since 2022-01-15
+ * @since 2022-03-15
  */
 @Service
 public class CommunityShowServiceImpl implements ICommunityShowService {
 
     @Autowired
     private CommunityShowMapper communityShowMapper;
+    @Autowired
+    private AdminMapper adminMapper;
+    @Autowired
+    private AdminLogsMapper adminLogsMapper;
 
     @Override
     public Result communityAdd(String accessToken, CommunityShowVO communityShowVO) throws Exception {
@@ -39,8 +47,8 @@ public class CommunityShowServiceImpl implements ICommunityShowService {
         communityShow.setShowImgId(communityShowVO.getShowImgId());
         communityShow.setCreatedBy(unsign.getUserId());
         int flag = communityShowMapper.insertSelective(communityShow);
-        System.out.println("flag = " + flag);
         if (flag > 0) {
+            adminLogsMapper.insertSelective(new AdminLogs(unsign.getUserId(), "新增公益展示 " + communityShow.getShowName()));
             return Result.createBySuccessMessage("成功");
         } else {
             return Result.createByErrorMessage("操作失败请稍后重试");
@@ -49,11 +57,12 @@ public class CommunityShowServiceImpl implements ICommunityShowService {
 
     @Override
     public Result communityDel(String accessToken, Integer id) throws Exception {
+        TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         CommunityShow communityShow = communityShowMapper.selectByPrimaryKey(id);
         communityShow.setIsDelete(1);
         int flag = communityShowMapper.updateByPrimaryKeySelective(communityShow);
-        System.out.println("flag = " + flag);
         if (flag > 0) {
+            adminLogsMapper.insertSelective(new AdminLogs(unsign.getUserId(), "删除公益展示 " + communityShow.getShowName()));
             return Result.createBySuccessMessage("成功");
         } else {
             return Result.createByErrorMessage("操作失败请稍后重试");
@@ -62,12 +71,14 @@ public class CommunityShowServiceImpl implements ICommunityShowService {
 
     @Override
     public Result communityPut(String accessToken, CommunityShow communityShow) throws Exception {
+        TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         CommunityShow communityShow1 = communityShowMapper.selectByPrimaryKey(communityShow.getShowId());
         if (Objects.isNull(communityShow1)) {
             return Result.createByErrorMessage("该公益展示信息不存在");
         } else {
             int flag = communityShowMapper.updateByPrimaryKeySelective(communityShow);
             if (flag > 0) {
+                adminLogsMapper.insertSelective(new AdminLogs(unsign.getUserId(), "修改公益展示信息 " + communityShow.getShowName()));
                 return Result.createBySuccessMessage("成功");
             } else {
                 return Result.createByErrorMessage("操作失败请稍后重试");

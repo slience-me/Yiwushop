@@ -119,7 +119,7 @@
 <!--               enableDeleteByExample="false" enableSelectByExample="false"-->
 <!--               selectByExampleQueryId="false">-->
 <!--        </table>-->
-        <table schema="" tableName="goods_image"
+        <table schema="" tableName="admin1"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">

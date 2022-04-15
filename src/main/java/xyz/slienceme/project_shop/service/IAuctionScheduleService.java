@@ -9,7 +9,7 @@ import xyz.slienceme.project_shop.vo.AuctionScheduleVO;
  * </p>
  *
  * @author slience_me
- * @since 2022-01-16
+ * @since 2022-03-16
  */
 public interface IAuctionScheduleService {
 

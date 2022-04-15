@@ -9,7 +9,11 @@ import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import xyz.slienceme.project_shop.common.Result;
+import xyz.slienceme.project_shop.dto.Admin;
+import xyz.slienceme.project_shop.dto.AdminLogs;
 import xyz.slienceme.project_shop.dto.User;
+import xyz.slienceme.project_shop.mapper.AdminLogsMapper;
+import xyz.slienceme.project_shop.mapper.AdminMapper;
 import xyz.slienceme.project_shop.mapper.UserMapper;
 import xyz.slienceme.project_shop.service.IUserService;
 import xyz.slienceme.project_shop.utils.JWT;
@@ -27,7 +31,7 @@ import java.util.Objects;
  * </p>
  *
  * @author slience_me
- * @since 2022-01-15
+ * @since 2022-03-15
  */
 @Service
 public class UserServiceImpl implements IUserService {
@@ -38,6 +42,10 @@ public class UserServiceImpl implements IUserService {
     private String redisAppLoginKey;
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
+    @Autowired
+    private AdminMapper adminMapper;
+    @Autowired
+    private AdminLogsMapper adminLogsMapper;
 
     /**
      * 微信登陆
@@ -105,10 +113,12 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Result memberDel(String accessToken, Integer id) throws Exception {
+        TokenVO unsign = JWT.unsign(accessToken, TokenVO.class);
         User user = userMapper.selectByPrimaryKey(id);
         user.setIsDelete(1);
         int flag = userMapper.updateByPrimaryKeySelective(user);
         if (flag > 0) {
+            adminLogsMapper.insertSelective(new AdminLogs(unsign.getUserId(), "删除成员 " + user.getUserName()));
             return Result.createBySuccessMessage("成功");
         } else {
             return Result.createByErrorMessage("操作失败请稍后重试");
