@@ -21,7 +21,7 @@
     <view class="cu-avatar xl round" style="background-image:url({{sellUser.userAvatarurl}});"></view>
     <view class="p_content">
       <view class="p_name">昵称：{{sellUser.userName}}</view>
-      <view class="p_info" bindtap="call">电话：{{sellUser.userPhone}}</view>
+      <!-- <view class="p_info" bindtap="call">电话：{{sellUser.userPhone}}</view> -->
     </view>
   </view>
 </view>

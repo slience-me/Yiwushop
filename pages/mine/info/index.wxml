@@ -4,10 +4,10 @@
 		<view class="title">昵称</view>
 		<input placeholder="请输入昵称" bindinput="changeMsg" data-name="userName" value="{{userInfo.userName}}"></input>
 	</view>
-	<view class="cu-form-group">
+	<!-- <view class="cu-form-group">
 		<view class="title">学号</view>
 		<input placeholder="请输入学号" bindinput="changeMsg" data-name="userNumber" value="{{userInfo.userNumber}}"></input>
-	</view>
+	</view> -->
 	<radio-group>
     <view class="cu-form-group">
       <view class="title">性别</view>
@@ -17,7 +17,7 @@
     </view>
   </view>
   </radio-group>
-  <view class="cu-form-group">
+  <!-- <view class="cu-form-group">
 		<view class="title">电话</view>
 		<input placeholder="请输入电话" bindinput="changeMsg" data-name="userPhone" value="{{userInfo.userPhone}}"></input>
   </view>
@@ -25,11 +25,11 @@
 		<view class="title">地址</view>
 		<input placeholder="请点击右侧图标选择地址"  bindinput="changeMsg" data-name="userAddress" disabled="{{true}}" value="{{userInfo.userAddress}}"></input>
 		<text class="cuIcon-locationfill text-orange" bindtap="changeAddress"></text>
-  </view>
-  <view class="cu-form-group">
+  </view> -->
+  <!-- <view class="cu-form-group">
 		<view class="title">身份证号</view>
 		<input placeholder="请输入身份证号" bindinput="changeMsg" data-name="idCard" value="{{userInfo.idCard}}"></input>
-	</view>
+	</view> -->
 </form>
 <view class="padding flex flex-direction">
     <button class="cu-btn bg-green margin-tb-sm lg" bindtap="submit">提交</button>

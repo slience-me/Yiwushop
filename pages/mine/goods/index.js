@@ -49,6 +49,11 @@ Page({
     const state = e.currentTarget.dataset.state;
     const goods = that.data.goods[index];
     const goodss = that.data.goods;
+    //正在拍卖,不能修改状态
+    if(goods.stateOn == 2){
+      wxapi.showToast("正在拍卖，不可修改状态")
+      return;
+    }
     goodss[index].stateOn = state;
     that.setData({
       goods:goodss

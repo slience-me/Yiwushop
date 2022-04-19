@@ -35,7 +35,7 @@ Page({
     })
     this.setData({
       goods: goods,
-      startingPrice: goods.goodsId*0.8
+      startingPrice: goods.goodsPrice*0.8
     })
     //次日
     const ciri = new Date();
@@ -135,7 +135,7 @@ Page({
         duration:3000,
       })
       return;
-    }else if(startingPrice>that.data.goods.goodsId*0.8){
+    }else if(startingPrice>that.data.goods.goodsPrice*0.8){
       wx.showToast({
         title:"起拍价应不大于商品价格的80%",
         icon:"none",

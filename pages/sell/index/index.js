@@ -79,10 +79,10 @@ Page({
     const goods = that.data.goodsMsg;
     console.log(goods)
     const userInfo = app.globalData.userInfo;
-    if(userInfo.userPhone == null ||userInfo.idCard == null ){
-      wxapi.showToast("请完善个人身份证、电话等信息");
-      return;
-    }
+    // if(userInfo.userPhone == null ||userInfo.idCard == null ){
+    //   wxapi.showToast("请完善个人身份证、电话等信息");
+    //   return;
+    // }
     if(goods.goodsName && isGetOutOfLine(goods.goodsName)){
       wx.showToast({
         title:"该商品涉及敏感词汇，请重新输入",

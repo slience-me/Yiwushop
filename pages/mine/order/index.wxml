@@ -10,8 +10,8 @@
       <view class="text-gray text-sm text-cut">成交价：<text class="text-price text-red">{{item.buyPrice}}</text></view>
     </view>
     <view class="grid col-5 padding-top-sm padding-bottom-sm">
-        <button class="cu-btn round bg-green margin-top-sm margin-bottom-sm margin-left-sm" bindtap="call" data-phone="{{item.sellUser.userPhone}}">电话</button>
-        <button class="cu-btn round bg-green margin-top-sm margin-bottom-sm margin-left-sm" bindtap="chatToSell" data-index="{{index}}">对话</button>
+        <!-- <button class="cu-btn round bg-green margin-top-sm margin-bottom-sm margin-left-sm" bindtap="call" data-phone="{{item.sellUser.userPhone}}">电话</button> -->
+        <button class="cu-btn round bg-green margin-top-sm margin-bottom-sm margin-left-sm" bindtap="chatToSell" data-index="{{index}}">联系对方</button>
         <button class="cu-btn round bg-green margin-top-sm margin-bottom-sm margin-left-sm" bindtap="skipTo" data-url="/pages/mine/complaint/index?ordersId={{item.ordersId}}">投诉</button>
       </view>
   </view>
@@ -27,7 +27,7 @@
       <view class="text-gray text-sm text-cut">成交价：<text class="text-price text-red">{{item.buyPrice}}</text></view>
     </view>
     <view class="grid col-5 padding-top-sm padding-bottom-sm">
-        <button class="cu-btn round bg-green margin-sm" bindtap="call" data-phone="{{item.buyUser.userPhone}}">电话</button>
+        <!-- <button class="cu-btn round bg-green margin-sm" bindtap="call" data-phone="{{item.buyUser.userPhone}}">电话</button> -->
         <button class="cu-btn round bg-green margin-sm" bindtap="chatToBuy" data-index="{{index}}">对话</button>
     </view>
   </view>
